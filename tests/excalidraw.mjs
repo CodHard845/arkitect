@@ -579,6 +579,31 @@ test('the validator rejects a one-sided binding', () => {
   assert(!r.ok && r.errors.some((e) => /does not list it back/.test(e)), 'one-sided binding must fail');
 });
 
+test('a grouped one-ended arrow is composition and is not warned about', () => {
+  const scene = core.emptyScene();
+  const dot = core.ellipse({ x: 0, y: 0, width: 6, height: 6 });
+  const arr = core.arrow({ x: 0, y: 0, points: [[0, 0], [0, -20]] });
+  arr.startBinding = { elementId: dot.id, focus: 0, gap: 4 };
+  dot.boundElements = [{ id: arr.id, type: 'arrow' }];
+  dot.groupIds = ['glyph'];
+  arr.groupIds = ['glyph'];
+  scene.elements = [dot, arr];
+  const r = validator.validateScene(scene);
+  assert(r.ok, 'a consistent grouped glyph must validate cleanly');
+  assert(!r.warnings.some((w) => /bound at only one end/.test(w)), 'a grouped glyph arrow must not be flagged');
+});
+
+test('a standalone one-ended arrow is still warned about', () => {
+  const scene = core.emptyScene();
+  const box = core.rectangle({ x: 0, y: 0, width: 50, height: 50 });
+  const arr = core.arrow({ x: 0, y: 25, points: [[0, 0], [100, 0]] });
+  arr.endBinding = { elementId: box.id, focus: 0, gap: 4 };
+  box.boundElements = [{ id: arr.id, type: 'arrow' }];
+  scene.elements = [box, arr];
+  const r = validator.validateScene(scene);
+  assert(r.warnings.some((w) => /bound at only one end/.test(w)), 'a real one-ended arrow must still be flagged');
+});
+
 test('the validator rejects an image with no embedded file', () => {
   const scene = core.emptyScene();
   scene.elements = [core.image({ fileId: 'missing', x: 0, y: 0, width: 10, height: 10 })];
