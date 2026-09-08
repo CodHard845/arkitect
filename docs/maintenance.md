@@ -19,7 +19,7 @@ node tests/run-tests.mjs
 
 The bar is **0 failed**, and no test that used to pass may start skipping. On a
 clone with no reference diagrams of your own, the expected shape is
-`111 passed, 0 failed, 7 skipped` — the skips are the tests that need a local
+`112 passed, 0 failed, 7 skipped` — the skips are the tests that need a local
 corpus. A drop in the passing count is a regression even if nothing says FAIL.
 
 ```bash

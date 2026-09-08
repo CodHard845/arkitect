@@ -13,7 +13,7 @@ node tests/run-tests.mjs        # ~2s, offline, no dependencies
 node bin/arkitect.mjs doctor
 ```
 
-On a fresh clone the suite reports roughly `111 passed, 0 failed, 7 skipped`.
+On a fresh clone the suite reports roughly `112 passed, 0 failed, 7 skipped`.
 The skips need reference diagrams of your own — that is the expected result.
 
 The full contract — every invariant, the verification ritual, and what an
