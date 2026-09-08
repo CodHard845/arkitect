@@ -1,0 +1,18 @@
+# Diagram, library and scene files are compared byte-for-byte by the test
+# suite. Line-ending normalisation would rewrite them and break every hash
+# invariant, so treat them as fixed.
+*.drawio         -text
+*.drawio.xml     -text
+*.xml            -text
+*.excalidraw     -text
+*.excalidrawlib  -text
+*.svg            -text
+*.png            binary
+
+# Keep the shell and PowerShell scripts in their native line endings.
+*.ps1            text eol=crlf
+*.mjs            text eol=lf
+*.md             text eol=lf
+
+# Data files are parsed, hashed and diffed; keep their bytes as written.
+*.json           -text

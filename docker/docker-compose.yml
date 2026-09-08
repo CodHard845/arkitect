@@ -1,0 +1,41 @@
+# Excalidraw, running locally.
+#
+#   docker compose -f docker/docker-compose.yml up -d
+#   docker compose -f docker/docker-compose.yml down
+#
+# The official image is the same static app as excalidraw.com, served by nginx
+# on container port 80. It has no backend: scenes live in the browser's local
+# storage and in the files you open, so nothing you draw is uploaded anywhere.
+#
+# Two consequences worth knowing:
+#   - There is no server-side save. The .excalidraw file on disk is the source
+#     of truth; the browser tab is a viewer and editor for it.
+#   - "Browse libraries" in the app reaches out to libraries.excalidraw.com.
+#     That is a public catalogue and sends nothing about your scene, but if the
+#     machine is offline the button simply does nothing. Installing libraries
+#     through `browse-libraries.mjs` gives the same catalogue with a local cache.
+
+services:
+  excalidraw:
+    image: excalidraw/excalidraw:latest
+    container_name: arkitect-excalidraw
+    ports:
+      - "${EXCALIDRAW_PORT:-3000}:80"
+    restart: unless-stopped
+    # The app is entirely client-side; it needs no writable filesystem.
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+    security_opt:
+      - no-new-privileges:true
+    # The image's own healthcheck fetches http://localhost, which resolves to
+    # ::1 inside the container while nginx is configured `listen 80;` - IPv4
+    # only. The container then reports "unhealthy" forever while serving
+    # perfectly well. Same check, addressed explicitly.
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

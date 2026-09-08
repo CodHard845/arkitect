@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security issue
+    url: https://github.com/mouadja02/arkitect/security/advisories/new
+    about: Anything that could send diagram content off the machine. Please report privately.
+  - name: Setting it up with your agent
+    url: https://github.com/mouadja02/arkitect/blob/main/docs/agents.md
+    about: Claude Code, Codex, Cursor, OpenCode, Copilot, Antigravity, Pi.

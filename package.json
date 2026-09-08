@@ -1,0 +1,53 @@
+{
+  "name": "arkitect",
+  "version": "1.0.0",
+  "description": "Your agent draws the architecture. Editable Draw.io and Excalidraw diagrams, generated and edited by coding agents - offline, with 1,400+ bundled icons.",
+  "type": "module",
+  "license": "MIT",
+  "author": "mouadja02",
+  "homepage": "https://github.com/mouadja02/arkitect",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mouadja02/arkitect.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mouadja02/arkitect/issues"
+  },
+  "bin": {
+    "arkitect": "./bin/arkitect.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node tests/run-tests.mjs",
+    "test:drawio": "node tests/run-tests.mjs drawio",
+    "test:excalidraw": "node tests/run-tests.mjs excalidraw",
+    "excalidraw:up": "docker compose -f docker/docker-compose.yml up -d",
+    "excalidraw:down": "docker compose -f docker/docker-compose.yml down"
+  },
+  "keywords": [
+    "drawio",
+    "diagrams.net",
+    "excalidraw",
+    "architecture",
+    "diagram",
+    "flowchart",
+    "system-design",
+    "aws",
+    "claude-code",
+    "agent",
+    "mcp"
+  ],
+  "files": [
+    "bin",
+    "skills",
+    "docker",
+    "docs",
+    "AGENTS.md",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "private": false
+}

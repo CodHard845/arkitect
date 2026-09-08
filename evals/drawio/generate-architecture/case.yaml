@@ -1,0 +1,51 @@
+name: generate-architecture
+description: >
+  A plain request for an AWS architecture diagram should fire arkitect-drawio
+  and produce a validated, native .drawio file with embedded custom icons.
+tags: [generation, style]
+runs: 3
+max_turns: 30
+timeout_seconds: 900
+
+prompt: |
+  Draw me an AWS architecture diagram for a log-ingestion pipeline: an EventBridge
+  schedule triggers a Lambda that lands raw logs in S3, the logs are indexed into
+  OpenSearch, a Bedrock model analyses them, and CloudWatch raises alarms.
+  Save it to ./eval-output/log-ingestion.drawio.
+
+graders:
+  - type: tool_used
+    tool: Skill
+    with_only: true
+    reason: the request should fire the arkitect-drawio skill on its own
+
+  - type: file_exists
+    path: ./eval-output/log-ingestion.drawio
+
+  - type: file_contains
+    path: ./eval-output/log-ingestion.drawio
+    all_of:
+      - "<mxfile"
+      - "<mxGraphModel"
+      - 'vertex="1"'
+      - 'edge="1"'
+      - "image=data:image/"
+      - "edgeStyle=orthogonalEdgeStyle"
+      - "verticalLabelPosition=bottom"
+      - "fontColor=#232F3E"
+    reason: native editable XML carrying embedded icons and the learned style tokens
+
+  - type: file_not_contains
+    path: ./eval-output/log-ingestion.drawio
+    any_of:
+      - ";base64,"
+    reason: >
+      a data URI containing a semicolon breaks the draw.io style parser; the
+      comma-only form must be used inside a cell style
+
+  - type: llm
+    rubric: |
+      The response reports the saved file path, states the architectural
+      assumptions it made, and says that it validated and rendered the diagram.
+      It must not claim to have opened the hosted draw.io editor or to have
+      uploaded anything. Score 1 only if all of that holds.

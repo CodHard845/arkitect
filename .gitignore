@@ -1,0 +1,46 @@
+# Local scratch: renders, summaries, and the pointer to your own reference
+# diagrams. None of it belongs in the repository.
+.analysis/
+tests/output/
+
+# Derived from whatever reference diagrams you point the learning skills at.
+# The digests are salted with an in-repo constant, so committing them would let
+# anyone holding a list of candidate names confirm which appear in your corpus -
+# the very thing the check exists to prevent.
+tests/sensitive-tokens.*.sha256
+
+# Backups written before an in-place update
+*.backup-*.drawio
+*.backup-*.excalidraw
+
+node_modules/
+*.log
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Third-party product logos are cached locally, not committed: they carry their
+# own trademark and licensing terms, and generated diagrams embed the image
+# anyway. Force-add a specific one if you decide you want it in the repo.
+skills/arkitect-drawio/assets/logos/*
+!skills/arkitect-drawio/assets/logos/README.md
+
+# Icons built from third-party logos: same reasoning.
+skills/arkitect-excalidraw/assets/icons/*
+!skills/arkitect-excalidraw/assets/icons/README.md
+
+# A library downloaded on demand from libraries.excalidraw.com is a cache: it
+# belongs to its author and is re-installable from the public catalogue.
+skills/arkitect-excalidraw/assets/libraries/*
+!skills/arkitect-excalidraw/assets/libraries/README.md
+
+# The bundled set is different - it ships with the plugin as the primary source
+# of icons, so a diagram can be drawn offline and the same product always gets
+# the same mark. Credits are in bundled/ATTRIBUTION.md.
+!skills/arkitect-excalidraw/assets/libraries/bundled/
+!skills/arkitect-excalidraw/assets/libraries/bundled/**
+
+# The contact sheets are committed as PNGs, which is what anyone reads. The
+# scenes behind them are regenerable and add megabytes.
+skills/arkitect-excalidraw/assets/libraries/bundled/sheets/*.excalidraw
+skills/arkitect-excalidraw/assets/libraries/bundled/sheets/*.svg

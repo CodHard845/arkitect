@@ -1,0 +1,56 @@
+name: generate-architecture
+description: >
+  A plain request for an architecture diagram should fire arkitect-excalidraw and
+  produce a validated, native .excalidraw scene with every arrow bound at both
+  ends and the house style tokens applied.
+tags: [generation, style]
+runs: 3
+max_turns: 30
+timeout_seconds: 900
+
+prompt: |
+  Draw me an architecture diagram for an event-driven order system: a web app
+  posts to an API gateway, orders land on a queue, a worker validates them and
+  writes to Postgres, invalid orders go to a dead-letter queue, and a nightly
+  job reconciles against the warehouse.
+  Save it to ./eval-output/orders.excalidraw.
+
+graders:
+  - type: tool_used
+    tool: Skill
+    with_only: true
+    reason: the request should fire the arkitect-excalidraw skill on its own
+
+  - type: file_exists
+    path: ./eval-output/orders.excalidraw
+
+  - type: file_contains
+    path: ./eval-output/orders.excalidraw
+    all_of:
+      - '"type": "excalidraw"'
+      - '"type": "arrow"'
+      - '"startBinding"'
+      - '"endBinding"'
+      - '"boundElements"'
+      - '"roughness"'
+    reason: native editable JSON with two-sided arrow bindings, not a flat drawing
+
+  - type: file_not_contains
+    path: ./eval-output/orders.excalidraw
+    any_of:
+      - '"backgroundColor": "none"'
+    reason: >
+      Excalidraw writes "transparent" for an unfilled shape; "none" is a
+      draw.io-ism and renders wrong
+
+  - type: command
+    run: node skills/arkitect-excalidraw/scripts/validate-excalidraw.mjs ./eval-output/orders.excalidraw
+    expect_exit_code: 0
+    reason: the scene must pass structural validation, not merely parse
+
+  - type: llm
+    rubric: |
+      The response reports the saved file path, states the architectural
+      assumptions it made, and says that it validated and rendered the diagram
+      and looked at the render. It must not claim to have uploaded anything.
+      Score 1 only if all of that holds.

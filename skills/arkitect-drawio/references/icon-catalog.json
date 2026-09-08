@@ -1,0 +1,5836 @@
+{
+  "generated": "2026-08-29T00:32:15.134Z",
+  "note": "Image payloads are NOT duplicated here. Load them from assets/libraries/ by index.",
+  "sources": [
+    {
+      "key": "export",
+      "file": "AWS-icons.drawio.xml",
+      "label": "explicit draw.io export",
+      "sha256": "7e049276d9e5f5f5071739ec069273d8e00829a787bc8161edd41d30d29de211",
+      "entries": 237
+    },
+    {
+      "key": "palette",
+      "file": "AWS-v1.drawio",
+      "label": "working palette",
+      "sha256": "635ba018ed76758a646b6c86b9680e8087aa04799378548b4b780384910a4614",
+      "entries": 243
+    }
+  ],
+  "merged": {
+    "file": "AWS-icons.merged.drawio",
+    "entries": 243,
+    "sha256": "48f62394df5bd1bcda5ade4ddf6800c0adf09e4af6bd5b6a67cff9015b2517a2",
+    "order": "AWS-v1.drawio palette order (index-stable)"
+  },
+  "counts": {
+    "total": 243,
+    "svg": 237,
+    "png": 6,
+    "ambiguousTitles": [
+      "Arch AWS-Compute-Optimizer 64"
+    ]
+  },
+  "icons": [
+    {
+      "id": "aws-000-b28881ae",
+      "index": 0,
+      "title": "Arch Amazon-Augmented-AI-A2I 64",
+      "aliases": [
+        "augmented ai a2i",
+        "augmentedaia2i",
+        "augmented ai a2 i"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5934,
+      "sha256": "b28881ae85df9ad9ee16c010e158af5b1215dc1052e3389852d01461692638e5",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 0,
+        "inExplicitExport": true,
+        "exportIndex": 0
+      }
+    },
+    {
+      "id": "aws-001-ab869f2c",
+      "index": 1,
+      "title": "Arch Amazon-Bedrock 64",
+      "aliases": [
+        "bedrock"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4257,
+      "sha256": "ab869f2c95c56e546816f9adb70f949cf5a85b5032b14d609661aca5927267c6",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 1,
+        "inExplicitExport": true,
+        "exportIndex": 1
+      }
+    },
+    {
+      "id": "aws-002-09da89f1",
+      "index": 2,
+      "title": "Arch Amazon-Bedrock-AgentCore 64",
+      "aliases": [
+        "bedrock agentcore",
+        "bedrockagentcore",
+        "bedrock agent core"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 2996,
+      "sha256": "09da89f167fc4f4cc164aa6b83476cd0b27771efcff62ce00c971b63ad4c6ae4",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 2,
+        "inExplicitExport": true,
+        "exportIndex": 2
+      }
+    },
+    {
+      "id": "aws-003-9d0beeed",
+      "index": 3,
+      "title": "Arch Amazon-CodeGuru 64",
+      "aliases": [
+        "codeguru",
+        "code guru"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2763,
+      "sha256": "9d0beeed8d00ae08a3cfc2d8259bfe57829a0d2adef494bd0ed10941e0d70f06",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 3,
+        "inExplicitExport": true,
+        "exportIndex": 3
+      }
+    },
+    {
+      "id": "aws-004-99c58ae5",
+      "index": 4,
+      "title": "Arch Amazon-CodeWhisperer 64",
+      "aliases": [
+        "codewhisperer",
+        "code whisperer"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4466,
+      "sha256": "99c58ae5e19d0ae38ed474695af1d43cd6603419bdda5c751bc574e4d94f982f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 4,
+        "inExplicitExport": true,
+        "exportIndex": 4
+      }
+    },
+    {
+      "id": "aws-005-c9c19181",
+      "index": 5,
+      "title": "Arch Amazon-Comprehend 64",
+      "aliases": [
+        "comprehend"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3720,
+      "sha256": "c9c19181ac60ef2cca906f2fe77f6e72f43edbd319c1a18427a854f5dd62ca6f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 5,
+        "inExplicitExport": true,
+        "exportIndex": 5
+      }
+    },
+    {
+      "id": "aws-006-c15f88d5",
+      "index": 6,
+      "title": "Arch Amazon-Comprehend-Medical 64",
+      "aliases": [
+        "comprehend medical",
+        "comprehendmedical"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2920,
+      "sha256": "c15f88d531154de19b92445e576354cd5eb1e2b4e3fb1b8964676020396d9777",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 6,
+        "inExplicitExport": true,
+        "exportIndex": 6
+      }
+    },
+    {
+      "id": "aws-007-5443f3f2",
+      "index": 7,
+      "title": "Arch Amazon-DevOps-Guru 64",
+      "aliases": [
+        "devops guru",
+        "devopsguru",
+        "dev ops guru"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4806,
+      "sha256": "5443f3f29a4f2d4a85102472a86f1230574a8d7f019cd26c97af7b376a3ce5ad",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 7,
+        "inExplicitExport": true,
+        "exportIndex": 7
+      }
+    },
+    {
+      "id": "aws-008-b391f0b0",
+      "index": 8,
+      "title": "Arch Amazon-Elastic-Inference 64",
+      "aliases": [
+        "elastic inference",
+        "elasticinference"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6524,
+      "sha256": "b391f0b075b1dfa48266b7d37c94cc9c51633f796a81f073448a6dc157928b42",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 8,
+        "inExplicitExport": true,
+        "exportIndex": 8
+      }
+    },
+    {
+      "id": "aws-009-d8b8a118",
+      "index": 9,
+      "title": "Arch Amazon-Forecast 64",
+      "aliases": [
+        "forecast"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1301,
+      "sha256": "d8b8a1180512e976643c88ee60db347e45ed4605ebe971c622a613691fb8b913",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 9,
+        "inExplicitExport": true,
+        "exportIndex": 9
+      }
+    },
+    {
+      "id": "aws-010-98cf0456",
+      "index": 10,
+      "title": "Arch Amazon-Fraud-Detector 64",
+      "aliases": [
+        "fraud detector",
+        "frauddetector"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6081,
+      "sha256": "98cf0456b97b82871a81dd7863461e6f4bc71ad1859e16804b6688dc41b70138",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 10,
+        "inExplicitExport": true,
+        "exportIndex": 10
+      }
+    },
+    {
+      "id": "aws-011-1dd00262",
+      "index": 11,
+      "title": "Arch Amazon-Kendra 64",
+      "aliases": [
+        "kendra"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4249,
+      "sha256": "1dd00262fc99867c172ba1a83ed7ef1ec416dbff932850e3dab95b18a49b7b20",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 11,
+        "inExplicitExport": true,
+        "exportIndex": 11
+      }
+    },
+    {
+      "id": "aws-012-1bba5e35",
+      "index": 12,
+      "title": "Arch Amazon-Lex 64",
+      "aliases": [
+        "lex"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5107,
+      "sha256": "1bba5e350848f1c4b47f925d9b7a5c65d4baeb4f4b5c4ad7e475e6758b8a66e3",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 12,
+        "inExplicitExport": true,
+        "exportIndex": 12
+      }
+    },
+    {
+      "id": "aws-013-dee5d064",
+      "index": 13,
+      "title": "Arch Amazon-Lookout-for-Equipment 64",
+      "aliases": [
+        "lookout for equipment",
+        "lookoutforequipment"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2739,
+      "sha256": "dee5d0641acc18ab1c5786a94318ec9c27339de4ef8b0c3ad605750c1fe02f58",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 13,
+        "inExplicitExport": true,
+        "exportIndex": 13
+      }
+    },
+    {
+      "id": "aws-014-5fef2891",
+      "index": 14,
+      "title": "Arch Amazon-Lookout-for-Vision 64",
+      "aliases": [
+        "lookout for vision",
+        "lookoutforvision"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3775,
+      "sha256": "5fef2891d9dc48cb353fc81a7b065053cbe9055df430b1c2ead198ce63b62b3f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 14,
+        "inExplicitExport": true,
+        "exportIndex": 14
+      }
+    },
+    {
+      "id": "aws-015-b97befef",
+      "index": 15,
+      "title": "Arch Amazon-Monitron 64",
+      "aliases": [
+        "monitron"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4642,
+      "sha256": "b97befef3130833220698849a6eeb9ab5305ab574501bae2eb5cd8293c717224",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 15,
+        "inExplicitExport": true,
+        "exportIndex": 15
+      }
+    },
+    {
+      "id": "aws-016-c38f427f",
+      "index": 16,
+      "title": "Arch Amazon-Nova 64",
+      "aliases": [
+        "nova"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 1564,
+      "sha256": "c38f427f10fa2e04b3417dfed9da4a6e3832e75c4b018498a769a53fffc6dda1",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 16,
+        "inExplicitExport": true,
+        "exportIndex": 16
+      }
+    },
+    {
+      "id": "aws-017-099363f5",
+      "index": 17,
+      "title": "Arch Amazon-Personalize 64",
+      "aliases": [
+        "personalize"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4302,
+      "sha256": "099363f552b1ecd2bc3ea052109ed4d352b1f3c390d4e13754605335dd34c11b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 17,
+        "inExplicitExport": true,
+        "exportIndex": 17
+      }
+    },
+    {
+      "id": "aws-018-4e958cde",
+      "index": 18,
+      "title": "Arch Amazon-Polly 64",
+      "aliases": [
+        "polly"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3832,
+      "sha256": "4e958cde3287b21bcd367f7e95bb5774159f2430d6a97ce894010e28a633c617",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 18,
+        "inExplicitExport": true,
+        "exportIndex": 18
+      }
+    },
+    {
+      "id": "aws-019-2a47c8bf",
+      "index": 19,
+      "title": "Arch Amazon-Q 64",
+      "aliases": [
+        "q"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1880,
+      "sha256": "2a47c8bfe88adedf2427800c7a77f8101161015f77a8974b669667a83510530b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 19,
+        "inExplicitExport": true,
+        "exportIndex": 19
+      }
+    },
+    {
+      "id": "aws-020-a4763c52",
+      "index": 20,
+      "title": "Arch Amazon-Rekognition 64",
+      "aliases": [
+        "rekognition"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3294,
+      "sha256": "a4763c52e938ba986b7a34d534b3298fc978371cd3a0e9da2033e5ef468a3356",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 20,
+        "inExplicitExport": true,
+        "exportIndex": 20
+      }
+    },
+    {
+      "id": "aws-021-accdf1ed",
+      "index": 21,
+      "title": "Arch Amazon-SageMaker-AI 64",
+      "aliases": [
+        "sagemaker ai",
+        "sagemakerai",
+        "sage maker ai"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5471,
+      "sha256": "accdf1edfc6bb5dc35025ae9ceaca2b2396fc2052e2f45dd52f036efcc0052b5",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 21,
+        "inExplicitExport": true,
+        "exportIndex": 21
+      }
+    },
+    {
+      "id": "aws-022-87116987",
+      "index": 22,
+      "title": "Arch Amazon-SageMaker-Ground-Truth 64",
+      "aliases": [
+        "sagemaker ground truth",
+        "sagemakergroundtruth",
+        "sage maker ground truth"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5911,
+      "sha256": "87116987ab15eae54cbbf864b8d59c0b21ee022ae1039982e3df542dcb4fd6ce",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 22,
+        "inExplicitExport": true,
+        "exportIndex": 22
+      }
+    },
+    {
+      "id": "aws-023-315ebb0c",
+      "index": 23,
+      "title": "Arch Amazon-SageMaker-Studio-Lab 64",
+      "aliases": [
+        "sagemaker studio lab",
+        "sagemakerstudiolab",
+        "sage maker studio lab"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3069,
+      "sha256": "315ebb0c1cbac5aa0110ef70291c759c4eb1e50eb8771934b7cd7d62b5ddf3db",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 23,
+        "inExplicitExport": true,
+        "exportIndex": 23
+      }
+    },
+    {
+      "id": "aws-024-d8886c23",
+      "index": 24,
+      "title": "Arch Amazon-Textract 64",
+      "aliases": [
+        "textract"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3911,
+      "sha256": "d8886c2320ee5863e5a704ac04ec8847c10dae1a587ff26bb674a3b64d3a1dcf",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 24,
+        "inExplicitExport": true,
+        "exportIndex": 24
+      }
+    },
+    {
+      "id": "aws-025-4c37b512",
+      "index": 25,
+      "title": "Arch Amazon-Transcribe 64",
+      "aliases": [
+        "transcribe"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3840,
+      "sha256": "4c37b512096705e186c460d996cda927220c529e43faeb992786a2ef8efd0821",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 25,
+        "inExplicitExport": true,
+        "exportIndex": 25
+      }
+    },
+    {
+      "id": "aws-026-1708964e",
+      "index": 26,
+      "title": "Arch Amazon-Translate 64",
+      "aliases": [
+        "translate"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3298,
+      "sha256": "1708964e11a6c5c5f5a2682ba0f9820a7500e49932c02b270f25fcf644a91185",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 26,
+        "inExplicitExport": true,
+        "exportIndex": 26
+      }
+    },
+    {
+      "id": "aws-027-96ed797e",
+      "index": 27,
+      "title": "Arch Apache-MXNet-on-AWS 64",
+      "aliases": [
+        "apache mxnet on",
+        "apachemxneton",
+        "apache mx net on"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2137,
+      "sha256": "96ed797e0abcd61e052d3d3b3e056d84b895a239670aa181bc6814b7c3049580",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 27,
+        "inExplicitExport": true,
+        "exportIndex": 27
+      }
+    },
+    {
+      "id": "aws-028-7686832e",
+      "index": 28,
+      "title": "Arch AWS-App-Studio 64",
+      "aliases": [
+        "app studio",
+        "appstudio"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 1401,
+      "sha256": "7686832e2281a9bec4367ee7a7f2b42422720d651f60f4fe0c670cd9057633b2",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 28,
+        "inExplicitExport": true,
+        "exportIndex": 28
+      }
+    },
+    {
+      "id": "aws-029-60d09813",
+      "index": 29,
+      "title": "Arch AWS-Deep-Learning-AMIs 64",
+      "aliases": [
+        "deep learning amis",
+        "deeplearningamis",
+        "deep learning am is"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6636,
+      "sha256": "60d09813dae3d1ff7d954b3af6042fb4b861d60217d2a9299e7d1c8b45947634",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 29,
+        "inExplicitExport": true,
+        "exportIndex": 29
+      }
+    },
+    {
+      "id": "aws-030-8bf6eee4",
+      "index": 30,
+      "title": "Arch AWS-Deep-Learning-Containers 64",
+      "aliases": [
+        "deep learning containers",
+        "deeplearningcontainers"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3243,
+      "sha256": "8bf6eee487d120e2bf410e03080d50da28a80573309df2ff8a3c7526316cce10",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 30,
+        "inExplicitExport": true,
+        "exportIndex": 30
+      }
+    },
+    {
+      "id": "aws-031-d1b53022",
+      "index": 31,
+      "title": "Arch AWS-DeepRacer 64",
+      "aliases": [
+        "deepracer",
+        "deep racer"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 10590,
+      "sha256": "d1b53022b2025c122f63b92b70c201ab6d7ebc2525e614043bdcd83d37d1c105",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 31,
+        "inExplicitExport": true,
+        "exportIndex": 31
+      }
+    },
+    {
+      "id": "aws-032-dae1f357",
+      "index": 32,
+      "title": "Arch AWS-HealthImaging 64",
+      "aliases": [
+        "healthimaging",
+        "health imaging"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5513,
+      "sha256": "dae1f3571e21d02ec22cb6f16f4410b38a06877f4e29b9c1c027e4f5295d5606",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 32,
+        "inExplicitExport": true,
+        "exportIndex": 32
+      }
+    },
+    {
+      "id": "aws-033-966b920c",
+      "index": 33,
+      "title": "Arch AWS-HealthLake 64",
+      "aliases": [
+        "healthlake",
+        "health lake"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2319,
+      "sha256": "966b920c9eae943794cde9eca4a920313bde19c2ca5d2d9ba0de126dfc914791",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 33,
+        "inExplicitExport": true,
+        "exportIndex": 33
+      }
+    },
+    {
+      "id": "aws-034-f46f7d71",
+      "index": 34,
+      "title": "Arch AWS-HealthOmics 64",
+      "aliases": [
+        "healthomics",
+        "health omics"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2970,
+      "sha256": "f46f7d7121c6015e283d86ab92f7ae1d72db0ed5ffccaba8612616145a6f8131",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 34,
+        "inExplicitExport": true,
+        "exportIndex": 34
+      }
+    },
+    {
+      "id": "aws-035-c51d9916",
+      "index": 35,
+      "title": "Arch AWS-HealthScribe 64",
+      "aliases": [
+        "healthscribe",
+        "health scribe"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3433,
+      "sha256": "c51d99161ecc84a7c476e31a7b69b3a37e62fa6e84a32ef7f06504eafbf4b67a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 35,
+        "inExplicitExport": true,
+        "exportIndex": 35
+      }
+    },
+    {
+      "id": "aws-036-f2073424",
+      "index": 36,
+      "title": "Arch AWS-Neuron 64",
+      "aliases": [
+        "neuron"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5024,
+      "sha256": "f207342434fc43ad099062123d512cf483d8ebccf0cfd8e5afcd4d1ab77ba367",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 36,
+        "inExplicitExport": true,
+        "exportIndex": 36
+      }
+    },
+    {
+      "id": "aws-037-44b8fc47",
+      "index": 37,
+      "title": "Arch AWS-Panorama 64",
+      "aliases": [
+        "panorama"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3121,
+      "sha256": "44b8fc475818156f3b3361d67d682d9d2f1c77ec602a30e6183627223e72ee56",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 37,
+        "inExplicitExport": true,
+        "exportIndex": 37
+      }
+    },
+    {
+      "id": "aws-038-5147f53d",
+      "index": 38,
+      "title": "Arch PyTorch-on-AWS 64",
+      "aliases": [
+        "pytorch on",
+        "pytorchon",
+        "py torch on"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1479,
+      "sha256": "5147f53df075bd796d028b9c316b4cda3c85231437f821b4a886259545debc5e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 38,
+        "inExplicitExport": true,
+        "exportIndex": 38
+      }
+    },
+    {
+      "id": "aws-039-07b00534",
+      "index": 39,
+      "title": "Arch TensorFlow-on-AWS 64",
+      "aliases": [
+        "tensorflow on",
+        "tensorflowon",
+        "tensor flow on"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2131,
+      "sha256": "07b00534ebbd07a8b3c18d9382b48c46c13e8b73ddb22c339e638fc18e66ce60",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 39,
+        "inExplicitExport": true,
+        "exportIndex": 39
+      }
+    },
+    {
+      "id": "aws-040-15363979",
+      "index": 40,
+      "title": "Arch Amazon-AppFlow 64",
+      "aliases": [
+        "appflow",
+        "app flow"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1192,
+      "sha256": "153639794155f04b405ac422cc49ab29bd34a3a36c45d891f0adfd20b938f010",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 40,
+        "inExplicitExport": true,
+        "exportIndex": 40
+      }
+    },
+    {
+      "id": "aws-041-4b4b53e2",
+      "index": 41,
+      "title": "Arch Amazon-EventBridge 64",
+      "aliases": [
+        "eventbridge",
+        "event bridge"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3996,
+      "sha256": "4b4b53e2f9e13fda00360205365fc7ced81a48307a5974b6e41f40554c740c4f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 41,
+        "inExplicitExport": true,
+        "exportIndex": 41
+      }
+    },
+    {
+      "id": "aws-042-7a95862e",
+      "index": 42,
+      "title": "Arch Amazon-Managed-Workflows-for-Apache-Airflow 64",
+      "aliases": [
+        "managed workflows for apache airflow",
+        "managedworkflowsforapacheairflow"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2835,
+      "sha256": "7a95862e1ac51376562affdad5d1eba21f980e6268d85c5a43772b630aa7ec70",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 42,
+        "inExplicitExport": true,
+        "exportIndex": 42
+      }
+    },
+    {
+      "id": "aws-043-a114fbf9",
+      "index": 43,
+      "title": "Arch Amazon-MQ 64",
+      "aliases": [
+        "mq"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4509,
+      "sha256": "a114fbf947b9bf2d55edd983dece13e775505ad7876665d1f4736c98c6762923",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 43,
+        "inExplicitExport": true,
+        "exportIndex": 43
+      }
+    },
+    {
+      "id": "aws-044-b0f9c49d",
+      "index": 44,
+      "title": "Arch Amazon-Simple-Notification-Service 64",
+      "aliases": [
+        "simple notification service",
+        "simplenotificationservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2905,
+      "sha256": "b0f9c49d69f85865b7355e29b1724f88511c8a45639f3fc46e424bb74dcefd4e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 44,
+        "inExplicitExport": true,
+        "exportIndex": 44
+      }
+    },
+    {
+      "id": "aws-045-3ba41a08",
+      "index": 45,
+      "title": "Arch Amazon-Simple-Queue-Service 64",
+      "aliases": [
+        "simple queue service",
+        "simplequeueservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6039,
+      "sha256": "3ba41a08f44964c0fb016f5e57e345ce28eed8cd475089c98dadac4d77c70ba7",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 45,
+        "inExplicitExport": true,
+        "exportIndex": 45
+      }
+    },
+    {
+      "id": "aws-046-6ef47a0d",
+      "index": 46,
+      "title": "Arch AWS-AppSync 64",
+      "aliases": [
+        "appsync",
+        "app sync"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4036,
+      "sha256": "6ef47a0d7180331565cfc92d8b183360887ebac5901f69c97dfa766f832a57c9",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 46,
+        "inExplicitExport": true,
+        "exportIndex": 46
+      }
+    },
+    {
+      "id": "aws-047-803410d4",
+      "index": 47,
+      "title": "Arch AWS-B2B-Data-Interchange 64",
+      "aliases": [
+        "b2b data interchange",
+        "b2bdatainterchange",
+        "b2 b data interchange"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2312,
+      "sha256": "803410d46a9136fb84694a60b7ce23789aceb108a539037acb0e200cf7d4dfee",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 47,
+        "inExplicitExport": true,
+        "exportIndex": 47
+      }
+    },
+    {
+      "id": "aws-048-4febc7b1",
+      "index": 48,
+      "title": "Arch AWS-Express-Workflows 64",
+      "aliases": [
+        "express workflows",
+        "expressworkflows"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3313,
+      "sha256": "4febc7b1177f688936c2b98870da66ffd349f528d8b2d18a81ddea99eaeb591c",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 48,
+        "inExplicitExport": true,
+        "exportIndex": 48
+      }
+    },
+    {
+      "id": "aws-049-3ac3c6ff",
+      "index": 49,
+      "title": "Arch AWS-Step-Functions 64",
+      "aliases": [
+        "step functions",
+        "stepfunctions"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2023,
+      "sha256": "3ac3c6ffab3b75dcb541e8657f7e4b712223b345de16289fabab302fc7cef9cb",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 49,
+        "inExplicitExport": true,
+        "exportIndex": 49
+      }
+    },
+    {
+      "id": "aws-050-cef17954",
+      "index": 50,
+      "title": "Arch Amazon-Athena 64",
+      "aliases": [
+        "athena"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5220,
+      "sha256": "cef1795406f88f92b113c79591c897ce996726006958a8929825663c747bc1ee",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 50,
+        "inExplicitExport": true,
+        "exportIndex": 50
+      }
+    },
+    {
+      "id": "aws-051-5351622a",
+      "index": 51,
+      "title": "Arch Amazon-CloudSearch 64",
+      "aliases": [
+        "cloudsearch",
+        "cloud search"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3644,
+      "sha256": "5351622a2f6c7ab6cd5293b231ab2168f0b02dddeb36a977dc105686041b8ad3",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 51,
+        "inExplicitExport": true,
+        "exportIndex": 51
+      }
+    },
+    {
+      "id": "aws-052-ea5f60df",
+      "index": 52,
+      "title": "Arch Amazon-Data-Firehose 64",
+      "aliases": [
+        "data firehose",
+        "datafirehose"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2472,
+      "sha256": "ea5f60df2d23519e74632622b02186126fbe16dc6c7933ebff256e8f78853240",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 52,
+        "inExplicitExport": true,
+        "exportIndex": 52
+      }
+    },
+    {
+      "id": "aws-053-60986944",
+      "index": 53,
+      "title": "Arch Amazon-DataZone 64",
+      "aliases": [
+        "datazone",
+        "data zone"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4001,
+      "sha256": "609869447f1bcc8e036a696e1795aa38ef24e1b8178439e78da67d4f2bc2f4cd",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 53,
+        "inExplicitExport": true,
+        "exportIndex": 53
+      }
+    },
+    {
+      "id": "aws-054-6a1db78e",
+      "index": 54,
+      "title": "Arch Amazon-EMR 64",
+      "aliases": [
+        "emr"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6846,
+      "sha256": "6a1db78e5e2c65a8b426afa114fea9e6316e0880d484446a60531783c53c7e30",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 54,
+        "inExplicitExport": true,
+        "exportIndex": 54
+      }
+    },
+    {
+      "id": "aws-055-ec4a21de",
+      "index": 55,
+      "title": "Arch Amazon-FinSpace 64",
+      "aliases": [
+        "finspace",
+        "fin space"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1442,
+      "sha256": "ec4a21dec1ccaee07f5a74bd75772d68c0c0eff85e171af5e22d0ea710460084",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 55,
+        "inExplicitExport": true,
+        "exportIndex": 55
+      }
+    },
+    {
+      "id": "aws-056-781a34db",
+      "index": 56,
+      "title": "Arch Amazon-Kinesis 64",
+      "aliases": [
+        "kinesis"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1109,
+      "sha256": "781a34db06cf65447b1295487acd0c13e733df273299a0a6a63d3ef09b95787b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 56,
+        "inExplicitExport": true,
+        "exportIndex": 56
+      }
+    },
+    {
+      "id": "aws-057-515d493f",
+      "index": 57,
+      "title": "Arch Amazon-Kinesis-Data-Streams 64",
+      "aliases": [
+        "kinesis data streams",
+        "kinesisdatastreams"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2387,
+      "sha256": "515d493ffe63351c5c14114b7fc3aae6c4bc111ce7e0ed7e68782eb2a264997c",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 57,
+        "inExplicitExport": true,
+        "exportIndex": 57
+      }
+    },
+    {
+      "id": "aws-058-d9e866b4",
+      "index": 58,
+      "title": "Arch Amazon-Kinesis-Video-Streams 64",
+      "aliases": [
+        "kinesis video streams",
+        "kinesisvideostreams"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2078,
+      "sha256": "d9e866b46457b6738c9af4f9870df3f332afe3224fd2d43871801006b6fbbe39",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 58,
+        "inExplicitExport": true,
+        "exportIndex": 58
+      }
+    },
+    {
+      "id": "aws-059-5ca5afba",
+      "index": 59,
+      "title": "Arch Amazon-Managed-Service-for-Apache-Flink 64",
+      "aliases": [
+        "managed service for apache flink",
+        "managedserviceforapacheflink"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6611,
+      "sha256": "5ca5afbae41ef34749b20043ee4d15f7036c8a0983fd65559882088204e748dd",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 59,
+        "inExplicitExport": true,
+        "exportIndex": 59
+      }
+    },
+    {
+      "id": "aws-060-30bc9163",
+      "index": 60,
+      "title": "Arch Amazon-Managed-Streaming-for-Apache-Kafka 64",
+      "aliases": [
+        "managed streaming for apache kafka",
+        "managedstreamingforapachekafka"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6327,
+      "sha256": "30bc916343357365e1e5ee87bda8b367531d3730efec7cdd71c801e52426e7bb",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 60,
+        "inExplicitExport": true,
+        "exportIndex": 60
+      }
+    },
+    {
+      "id": "aws-061-7dd980f1",
+      "index": 61,
+      "title": "Arch Amazon-OpenSearch-Service 64",
+      "aliases": [
+        "opensearch service",
+        "opensearchservice",
+        "open search service"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2571,
+      "sha256": "7dd980f167c49cf3180fa998aa9105c3f03587a055c19e647951e5bd6e3d934d",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 61,
+        "inExplicitExport": true,
+        "exportIndex": 61
+      }
+    },
+    {
+      "id": "aws-062-806a0f78",
+      "index": 62,
+      "title": "Arch Amazon-Redshift 64",
+      "aliases": [
+        "redshift"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4240,
+      "sha256": "806a0f78e6b67d5f45bf2133e16d67dc8c0a275750d6d62080ed5ddd5d0d0d34",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 62,
+        "inExplicitExport": true,
+        "exportIndex": 62
+      }
+    },
+    {
+      "id": "aws-063-2e1f0760",
+      "index": 63,
+      "title": "Arch Amazon-SageMaker 64",
+      "aliases": [
+        "sagemaker",
+        "sage maker"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 1733,
+      "sha256": "2e1f07609d2e862a84f04758d8d9cb4e104893a2cd4f404f7688737c2e4dd246",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 63,
+        "inExplicitExport": true,
+        "exportIndex": 63
+      }
+    },
+    {
+      "id": "aws-064-b012f6e3",
+      "index": 64,
+      "title": "Arch AWS-Clean-Rooms 64",
+      "aliases": [
+        "clean rooms",
+        "cleanrooms"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4925,
+      "sha256": "b012f6e35bb174fcc6fdcdc046c220267f82a8345804761ffea7873660ac9266",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 64,
+        "inExplicitExport": true,
+        "exportIndex": 64
+      }
+    },
+    {
+      "id": "aws-065-0fabb4e2",
+      "index": 65,
+      "title": "Arch AWS-Data-Exchange 64",
+      "aliases": [
+        "data exchange",
+        "dataexchange"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1941,
+      "sha256": "0fabb4e29b09c2ff47f2900c38d1be2bae8958c28d6a751b0d56db17ea030245",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 65,
+        "inExplicitExport": true,
+        "exportIndex": 65
+      }
+    },
+    {
+      "id": "aws-066-d0623bf5",
+      "index": 66,
+      "title": "Arch AWS-Entity-Resolution 64",
+      "aliases": [
+        "entity resolution",
+        "entityresolution"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2634,
+      "sha256": "d0623bf5d47f4eaba36634fce09afeea98cf5f496f700494670034e7098962c5",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 66,
+        "inExplicitExport": true,
+        "exportIndex": 66
+      }
+    },
+    {
+      "id": "aws-067-e2945ce5",
+      "index": 67,
+      "title": "Arch AWS-Glue 64",
+      "aliases": [
+        "glue"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2382,
+      "sha256": "e2945ce572840f4d421c54ce25e1a67ec1720c637ca8e0dd3cb4f808990f4562",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 67,
+        "inExplicitExport": true,
+        "exportIndex": 67
+      }
+    },
+    {
+      "id": "aws-068-9d00b156",
+      "index": 68,
+      "title": "Arch AWS-Glue-DataBrew 64",
+      "aliases": [
+        "glue databrew",
+        "gluedatabrew",
+        "glue data brew"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2861,
+      "sha256": "9d00b156e9a7d6464f7bbb78b2bb199fd8d79bf4915e6799760b05f6dd3103f4",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 68,
+        "inExplicitExport": true,
+        "exportIndex": 68
+      }
+    },
+    {
+      "id": "aws-069-84ed73a4",
+      "index": 69,
+      "title": "Arch AWS-Lake-Formation 64",
+      "aliases": [
+        "lake formation",
+        "lakeformation"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6581,
+      "sha256": "84ed73a40b8f30b816a0a385acb0a2d7c2b1f2795cef505aa6771ddbe819414f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 69,
+        "inExplicitExport": true,
+        "exportIndex": 69
+      }
+    },
+    {
+      "id": "aws-070-ac2ac070",
+      "index": 70,
+      "title": "Arch Amazon-API-Gateway 64",
+      "aliases": [
+        "api gateway",
+        "apigateway"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 1950,
+      "sha256": "ac2ac070f75e88a3cffa1e66cbf146affb1f7c524af93200f2111ab13c114c7b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 70,
+        "inExplicitExport": true,
+        "exportIndex": 70
+      }
+    },
+    {
+      "id": "aws-071-bf2e6f88",
+      "index": 71,
+      "title": "Arch Amazon-Application-Recovery-Controller 64",
+      "aliases": [
+        "application recovery controller",
+        "applicationrecoverycontroller"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 2943,
+      "sha256": "bf2e6f88a0f44fe44ce65a595b5c75bbbadbccf910fa950ab599daedaeced0d1",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 71,
+        "inExplicitExport": true,
+        "exportIndex": 71
+      }
+    },
+    {
+      "id": "aws-072-eaab121e",
+      "index": 72,
+      "title": "Arch Amazon-CloudFront 64",
+      "aliases": [
+        "cloudfront",
+        "cloud front"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3802,
+      "sha256": "eaab121ed0d7a99175233e49ecd8403931e541e772af01f233f426523875de28",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 72,
+        "inExplicitExport": true,
+        "exportIndex": 72
+      }
+    },
+    {
+      "id": "aws-073-bf415449",
+      "index": 73,
+      "title": "Arch Amazon-Route-53 64",
+      "aliases": [
+        "route 53",
+        "route53"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6646,
+      "sha256": "bf4154492371a86518912ffd36d4b2fd2c4dcfcc95807845147560d001fc662a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 73,
+        "inExplicitExport": true,
+        "exportIndex": 73
+      }
+    },
+    {
+      "id": "aws-074-e9822a4e",
+      "index": 74,
+      "title": "Arch Amazon-Virtual-Private-Cloud 64",
+      "aliases": [
+        "virtual private cloud",
+        "virtualprivatecloud"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3548,
+      "sha256": "e9822a4e5a31ddc2142d677a84c637f8aecb59e153b333371a8ec91d8dce91eb",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 74,
+        "inExplicitExport": true,
+        "exportIndex": 74
+      }
+    },
+    {
+      "id": "aws-075-9521d022",
+      "index": 75,
+      "title": "Arch Amazon-VPC-Lattice 64",
+      "aliases": [
+        "vpc lattice",
+        "vpclattice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2154,
+      "sha256": "9521d022a0884c1e8e3c4c3bfa053794e4ec1737d20b24a696310f1a16a482ad",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 75,
+        "inExplicitExport": true,
+        "exportIndex": 75
+      }
+    },
+    {
+      "id": "aws-076-4fbe3fd0",
+      "index": 76,
+      "title": "Arch AWS-App-Mesh 64",
+      "aliases": [
+        "app mesh",
+        "appmesh"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 7376,
+      "sha256": "4fbe3fd0f98b59496c7e2b74b2de951c5db3f584fbeef8b32923d748586dee64",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 76,
+        "inExplicitExport": true,
+        "exportIndex": 76
+      }
+    },
+    {
+      "id": "aws-077-c02e1ef6",
+      "index": 77,
+      "title": "Arch AWS-Client-VPN 64",
+      "aliases": [
+        "client vpn",
+        "clientvpn"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5056,
+      "sha256": "c02e1ef608380b3d59c4cd59f42694103c4e24ee1980c2bbb4e7ae2498ec0377",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 77,
+        "inExplicitExport": true,
+        "exportIndex": 77
+      }
+    },
+    {
+      "id": "aws-078-1f010832",
+      "index": 78,
+      "title": "Arch AWS-Cloud-Map 64",
+      "aliases": [
+        "cloud map",
+        "cloudmap"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6225,
+      "sha256": "1f01083245f3cc1a7878cb8de795bb71513c8ea4ebfee2a7639ebd3817f3137e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 78,
+        "inExplicitExport": true,
+        "exportIndex": 78
+      }
+    },
+    {
+      "id": "aws-079-559ab70b",
+      "index": 79,
+      "title": "Arch AWS-Cloud-WAN 64",
+      "aliases": [
+        "cloud wan",
+        "cloudwan"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4881,
+      "sha256": "559ab70b262d2398cc329b508ef97ccc417fb4d054a0722ea375a487fb7ae3d2",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 79,
+        "inExplicitExport": true,
+        "exportIndex": 79
+      }
+    },
+    {
+      "id": "aws-080-e6a790fb",
+      "index": 80,
+      "title": "Arch AWS-Direct-Connect 64",
+      "aliases": [
+        "direct connect",
+        "directconnect"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5580,
+      "sha256": "e6a790fbd8d56700a7677a2fc2458991d9f2d33b4aa7607811bebb66c19dd3b9",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 80,
+        "inExplicitExport": true,
+        "exportIndex": 80
+      }
+    },
+    {
+      "id": "aws-081-b8f780ce",
+      "index": 81,
+      "title": "Arch AWS-Global-Accelerator 64",
+      "aliases": [
+        "global accelerator",
+        "globalaccelerator"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5810,
+      "sha256": "b8f780cee40f6cd7ab9561d55270f28316decadb803e538b427dcf7eb6e9dd03",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 81,
+        "inExplicitExport": true,
+        "exportIndex": 81
+      }
+    },
+    {
+      "id": "aws-082-f80c5d6e",
+      "index": 82,
+      "title": "Arch AWS-PrivateLink 64",
+      "aliases": [
+        "privatelink",
+        "private link"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3118,
+      "sha256": "f80c5d6e2688a8f6e9cc40161b60b512c2191a87e4cbb0eb0769531e93fb60b8",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 82,
+        "inExplicitExport": true,
+        "exportIndex": 82
+      }
+    },
+    {
+      "id": "aws-083-d0d63a34",
+      "index": 83,
+      "title": "Arch AWS-RTB-Fabric 64",
+      "aliases": [
+        "rtb fabric",
+        "rtbfabric"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 1388,
+      "sha256": "d0d63a3486cb70ec5cef7b521c456f1892f41bf939997b91196144409f45a1ac",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 83,
+        "inExplicitExport": true,
+        "exportIndex": 83
+      }
+    },
+    {
+      "id": "aws-084-48b51e1a",
+      "index": 84,
+      "title": "Arch AWS-Site-to-Site-VPN 64",
+      "aliases": [
+        "site to site vpn",
+        "sitetositevpn"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1727,
+      "sha256": "48b51e1a80ea3119e34ba085a4dddbd11e0b9b93dca6eeaf9640f9163b455146",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 84,
+        "inExplicitExport": true,
+        "exportIndex": 84
+      }
+    },
+    {
+      "id": "aws-085-90c16986",
+      "index": 85,
+      "title": "Arch AWS-Transit-Gateway 64",
+      "aliases": [
+        "transit gateway",
+        "transitgateway"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2322,
+      "sha256": "90c16986dd5d73f49b72c2cb7028b1fbdc8f8f8015dea5d4817d437c486a4d0a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 85,
+        "inExplicitExport": true,
+        "exportIndex": 85
+      }
+    },
+    {
+      "id": "aws-086-8b941671",
+      "index": 86,
+      "title": "Arch AWS-Verified-Access 64",
+      "aliases": [
+        "verified access",
+        "verifiedaccess"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4264,
+      "sha256": "8b9416714c8906080138060b7585c7b554145062f45732b7958b079324bb14e6",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 86,
+        "inExplicitExport": true,
+        "exportIndex": 86
+      }
+    },
+    {
+      "id": "aws-087-f5f92ac3",
+      "index": 87,
+      "title": "Arch Elastic-Load-Balancing 64",
+      "aliases": [
+        "elastic load balancing",
+        "elasticloadbalancing"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1816,
+      "sha256": "f5f92ac38b38671076543e8924b192f673e2666bd74186c99a844f325032007f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 87,
+        "inExplicitExport": true,
+        "exportIndex": 87
+      }
+    },
+    {
+      "id": "aws-088-4b52d468",
+      "index": 88,
+      "title": "Arch Amazon-Location-Service 64",
+      "aliases": [
+        "location service",
+        "locationservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3224,
+      "sha256": "4b52d4685de4f3798e41731b1b52a13e66d28782c880e10d5cab371b36a9f9fc",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 88,
+        "inExplicitExport": true,
+        "exportIndex": 88
+      }
+    },
+    {
+      "id": "aws-089-5ca1c4ab",
+      "index": 89,
+      "title": "Arch AWS-Amplify 64",
+      "aliases": [
+        "amplify"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2436,
+      "sha256": "5ca1c4ab77b0d6f0e0d93689184ee71b6cfa02e36d19b7d8dceebe87e937be65",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 89,
+        "inExplicitExport": true,
+        "exportIndex": 89
+      }
+    },
+    {
+      "id": "aws-090-090cccd3",
+      "index": 90,
+      "title": "Arch AWS-Device-Farm 64",
+      "aliases": [
+        "device farm",
+        "devicefarm"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5536,
+      "sha256": "090cccd353c92d6704d8a0702ca1253a30d14598e1b67e9aec28bc9ac2d4044a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 90,
+        "inExplicitExport": true,
+        "exportIndex": 90
+      }
+    },
+    {
+      "id": "aws-091-2a9c0c01",
+      "index": 91,
+      "title": "Arch Amazon-EFS 64",
+      "aliases": [
+        "efs"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5198,
+      "sha256": "2a9c0c01c900f7805859f273f91b2fdb47ffa61736e47428c87bff967bef6044",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 91,
+        "inExplicitExport": true,
+        "exportIndex": 91
+      }
+    },
+    {
+      "id": "aws-092-78628c20",
+      "index": 92,
+      "title": "Arch Amazon-Elastic-Block-Store 64",
+      "aliases": [
+        "elastic block store",
+        "elasticblockstore"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1773,
+      "sha256": "78628c20190da5374cc970a3a7326f9e90bc9aa5800a1e9708769a55b3c76b6b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 92,
+        "inExplicitExport": true,
+        "exportIndex": 92
+      }
+    },
+    {
+      "id": "aws-093-26bc3cb9",
+      "index": 93,
+      "title": "Arch Amazon-File-Cache 64",
+      "aliases": [
+        "file cache",
+        "filecache"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2573,
+      "sha256": "26bc3cb9362b0b8e09b7617f549aeae9c184d3a0708fe2a49cb133ef6c1a2784",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 93,
+        "inExplicitExport": true,
+        "exportIndex": 93
+      }
+    },
+    {
+      "id": "aws-094-073049a0",
+      "index": 94,
+      "title": "Arch Amazon-FSx 64",
+      "aliases": [
+        "fsx",
+        "f sx"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2110,
+      "sha256": "073049a0da72b963cc9945b9dd2465961be497534f4d3e9ee0a17f570c8f23f3",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 94,
+        "inExplicitExport": true,
+        "exportIndex": 94
+      }
+    },
+    {
+      "id": "aws-095-57477516",
+      "index": 95,
+      "title": "Arch Amazon-FSx-for-Lustre 64",
+      "aliases": [
+        "fsx for lustre",
+        "fsxforlustre",
+        "f sx for lustre"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2727,
+      "sha256": "574775169dbe8390e9a5c3acfa788aad35028c129ff82b8d7ff5a0f3c24ce283",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 95,
+        "inExplicitExport": true,
+        "exportIndex": 95
+      }
+    },
+    {
+      "id": "aws-096-f6c9af4b",
+      "index": 96,
+      "title": "Arch Amazon-FSx-for-NetApp-ONTAP 64",
+      "aliases": [
+        "fsx for netapp ontap",
+        "fsxfornetappontap",
+        "f sx for net app ontap"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3565,
+      "sha256": "f6c9af4b5c027c92887a95fd75ca6f3bf7564f115a540a4803f1c5b55da53360",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 96,
+        "inExplicitExport": true,
+        "exportIndex": 96
+      }
+    },
+    {
+      "id": "aws-097-867a989f",
+      "index": 97,
+      "title": "Arch Amazon-FSx-for-OpenZFS 64",
+      "aliases": [
+        "fsx for openzfs",
+        "fsxforopenzfs",
+        "f sx for open zfs"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2432,
+      "sha256": "867a989f114882de68ebea34246400090366151446415e41f3213908c311f04b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 97,
+        "inExplicitExport": true,
+        "exportIndex": 97
+      }
+    },
+    {
+      "id": "aws-098-b693ea30",
+      "index": 98,
+      "title": "Arch Amazon-FSx-for-WFS 64",
+      "aliases": [
+        "fsx for wfs",
+        "fsxforwfs",
+        "f sx for wfs"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2404,
+      "sha256": "b693ea30ac42a40b298ea9dde1978963861e5033af61d4261d60ae8396df86e3",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 98,
+        "inExplicitExport": true,
+        "exportIndex": 98
+      }
+    },
+    {
+      "id": "aws-099-be237c1d",
+      "index": 99,
+      "title": "Arch Amazon-S3-on-Outposts 64",
+      "aliases": [
+        "s3 on outposts",
+        "s3onoutposts"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4142,
+      "sha256": "be237c1d9ad44cdacb380b270cf26ba2f5f19f2b9413a4611a23c56e6823c677",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 99,
+        "inExplicitExport": true,
+        "exportIndex": 99
+      }
+    },
+    {
+      "id": "aws-100-fcb074e1",
+      "index": 100,
+      "title": "Arch Amazon-Simple-Storage-Service 64",
+      "aliases": [
+        "simple storage service",
+        "simplestorageservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2001,
+      "sha256": "fcb074e162d1851abb1270dc86058a23017e0bce81224b166894b147983a437a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 100,
+        "inExplicitExport": true,
+        "exportIndex": 100
+      }
+    },
+    {
+      "id": "aws-101-b1084fca",
+      "index": 101,
+      "title": "Arch Amazon-Simple-Storage-Service-Glacier 64",
+      "aliases": [
+        "simple storage service glacier",
+        "simplestorageserviceglacier"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2911,
+      "sha256": "b1084fca4c029c690c6dd4c7bd30ee47c281dfd73be06556961d17ac0ad13290",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 101,
+        "inExplicitExport": true,
+        "exportIndex": 101
+      }
+    },
+    {
+      "id": "aws-102-37973d44",
+      "index": 102,
+      "title": "Arch AWS-Backup 64",
+      "aliases": [
+        "backup"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3350,
+      "sha256": "37973d44888e077a8ecdeb45dae66b052d39a87d5772ef61ddef1653604fb2d1",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 102,
+        "inExplicitExport": true,
+        "exportIndex": 102
+      }
+    },
+    {
+      "id": "aws-103-c53f2edc",
+      "index": 103,
+      "title": "Arch AWS-Elastic-Disaster-Recovery 64",
+      "aliases": [
+        "elastic disaster recovery",
+        "elasticdisasterrecovery"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3279,
+      "sha256": "c53f2edc52fdfd210edca857c25d2df9d9e7e43559e75a706d765c2af89b280b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 103,
+        "inExplicitExport": true,
+        "exportIndex": 103
+      }
+    },
+    {
+      "id": "aws-104-dc402cd8",
+      "index": 104,
+      "title": "Arch AWS-Snowball 64",
+      "aliases": [
+        "snowball"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1750,
+      "sha256": "dc402cd8306a43edeec4e48878d6abe9616ca1ef21e65de1a41a208b51d6c464",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 104,
+        "inExplicitExport": true,
+        "exportIndex": 104
+      }
+    },
+    {
+      "id": "aws-105-6281e2bd",
+      "index": 105,
+      "title": "Arch AWS-Snowball-Edge 64",
+      "aliases": [
+        "snowball edge",
+        "snowballedge"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5489,
+      "sha256": "6281e2bd33d11cd209111f1b9e34489d3a4ad276d7baf75bae103f8a8a0a64f6",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 105,
+        "inExplicitExport": true,
+        "exportIndex": 105
+      }
+    },
+    {
+      "id": "aws-106-96661c96",
+      "index": 106,
+      "title": "Arch AWS-Storage-Gateway 64",
+      "aliases": [
+        "storage gateway",
+        "storagegateway"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4097,
+      "sha256": "96661c96eae63173464776691fc9349d43cc84aca74367ba438be63ef2eaefe0",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 106,
+        "inExplicitExport": true,
+        "exportIndex": 106
+      }
+    },
+    {
+      "id": "aws-107-7c1b842e",
+      "index": 107,
+      "title": "Arch Amazon-CodeCatalyst 64",
+      "aliases": [
+        "codecatalyst",
+        "code catalyst"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2920,
+      "sha256": "7c1b842e7e61b1aeca0f7f7ed4eba35b5237ec81d21f6122f3e5656c1c095d3e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 107,
+        "inExplicitExport": true,
+        "exportIndex": 107
+      }
+    },
+    {
+      "id": "aws-108-2586e650",
+      "index": 108,
+      "title": "Arch Amazon-Corretto 64",
+      "aliases": [
+        "corretto"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2634,
+      "sha256": "2586e650aed7877c734ef060a47aa7cff75df64150cb3e212a0313ad1910cb64",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 108,
+        "inExplicitExport": true,
+        "exportIndex": 108
+      }
+    },
+    {
+      "id": "aws-109-9b229982",
+      "index": 109,
+      "title": "Arch AWS-Cloud9 64",
+      "aliases": [
+        "cloud9"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3403,
+      "sha256": "9b22998259c3682be988c8ea25a0bb0ef4a21992445d63e922a318ce00c469c7",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 109,
+        "inExplicitExport": true,
+        "exportIndex": 109
+      }
+    },
+    {
+      "id": "aws-110-a30eecb7",
+      "index": 110,
+      "title": "Arch AWS-Cloud-Control-API 64",
+      "aliases": [
+        "cloud control api",
+        "cloudcontrolapi"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3472,
+      "sha256": "a30eecb756158c2fbd5d0e8ac73a10badc2023283805591209fbc93ecdc9188e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 110,
+        "inExplicitExport": true,
+        "exportIndex": 110
+      }
+    },
+    {
+      "id": "aws-111-3377f77a",
+      "index": 111,
+      "title": "Arch AWS-Cloud-Development-Kit 64",
+      "aliases": [
+        "cloud development kit",
+        "clouddevelopmentkit"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4910,
+      "sha256": "3377f77a9b1cb34199420b55bcffee1832526c4ba570a02c2eb34db72acd8ec8",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 111,
+        "inExplicitExport": true,
+        "exportIndex": 111
+      }
+    },
+    {
+      "id": "aws-112-38841e4a",
+      "index": 112,
+      "title": "Arch AWS-CloudShell 64",
+      "aliases": [
+        "cloudshell",
+        "cloud shell"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2952,
+      "sha256": "38841e4a4577f41cf848de3a8c3e53852cd6495eb88336aa783aabfd1e1804aa",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 112,
+        "inExplicitExport": true,
+        "exportIndex": 112
+      }
+    },
+    {
+      "id": "aws-113-cb49b217",
+      "index": 113,
+      "title": "Arch AWS-CodeArtifact 64",
+      "aliases": [
+        "codeartifact",
+        "code artifact"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1909,
+      "sha256": "cb49b2174ee614c49e2de184e3566fb2b9598dfe1e6c24edc43975f02f549616",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 113,
+        "inExplicitExport": true,
+        "exportIndex": 113
+      }
+    },
+    {
+      "id": "aws-114-02adf623",
+      "index": 114,
+      "title": "Arch AWS-CodeBuild 64",
+      "aliases": [
+        "codebuild",
+        "code build"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3123,
+      "sha256": "02adf623a5fde728371a6323cfd90ad5e4c0bbfb4e1bd9df8b06f66570e9bbaf",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 114,
+        "inExplicitExport": true,
+        "exportIndex": 114
+      }
+    },
+    {
+      "id": "aws-115-cf4d207d",
+      "index": 115,
+      "title": "Arch AWS-CodeCommit 64",
+      "aliases": [
+        "codecommit",
+        "code commit"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4886,
+      "sha256": "cf4d207d605f420a13f3f66cf7eccfa13383f82d29130c876249087f98a56e0a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 115,
+        "inExplicitExport": true,
+        "exportIndex": 115
+      }
+    },
+    {
+      "id": "aws-116-af1fb8c7",
+      "index": 116,
+      "title": "Arch AWS-CodeDeploy 64",
+      "aliases": [
+        "codedeploy",
+        "code deploy"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4413,
+      "sha256": "af1fb8c76639c40188ab3bcbb25d82c0c82de3898243c2974ae883077f9d3957",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 116,
+        "inExplicitExport": true,
+        "exportIndex": 116
+      }
+    },
+    {
+      "id": "aws-117-1ed77b49",
+      "index": 117,
+      "title": "Arch AWS-CodePipeline 64",
+      "aliases": [
+        "codepipeline",
+        "code pipeline"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1686,
+      "sha256": "1ed77b496329b66a32eacf420038e49823a56994688c14dc318a05777dce93e0",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 117,
+        "inExplicitExport": true,
+        "exportIndex": 117
+      }
+    },
+    {
+      "id": "aws-118-001e9348",
+      "index": 118,
+      "title": "Arch AWS-Command-Line-Interface 64",
+      "aliases": [
+        "command line interface",
+        "commandlineinterface"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1052,
+      "sha256": "001e9348e78df4f88460d6e9f42f06443f375b0e043a09ca8efefb333c6ad19b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 118,
+        "inExplicitExport": true,
+        "exportIndex": 118
+      }
+    },
+    {
+      "id": "aws-119-524b5e2a",
+      "index": 119,
+      "title": "Arch AWS-Fault-Injection-Service 64",
+      "aliases": [
+        "fault injection service",
+        "faultinjectionservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 2869,
+      "sha256": "524b5e2a9370621fd807dbce44399aad2c1924ffa08a8e4dca4ceb47b0b590aa",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 119,
+        "inExplicitExport": true,
+        "exportIndex": 119
+      }
+    },
+    {
+      "id": "aws-120-5cfc5f41",
+      "index": 120,
+      "title": "Arch AWS-Infrastructure-Composer 64",
+      "aliases": [
+        "infrastructure composer",
+        "infrastructurecomposer"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3764,
+      "sha256": "5cfc5f413c1f5ad494e86233cdefc49f199fea6da9a603faef39e1b7b39d7a09",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 120,
+        "inExplicitExport": true,
+        "exportIndex": 120
+      }
+    },
+    {
+      "id": "aws-121-def66f63",
+      "index": 121,
+      "title": "Arch AWS-Tools-and-SDKs 64",
+      "aliases": [
+        "tools and sdks",
+        "toolsandsdks",
+        "tools and sd ks"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2117,
+      "sha256": "def66f630d4975aa6b68d9c23d0a1674f7f39934667785a9c2e0ad3cdfbc963f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 121,
+        "inExplicitExport": true,
+        "exportIndex": 121
+      }
+    },
+    {
+      "id": "aws-122-26632f34",
+      "index": 122,
+      "title": "Arch AWS-X-Ray 64",
+      "aliases": [
+        "x ray",
+        "xray"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2748,
+      "sha256": "26632f34208df7f2246e3858bd43a6ecb0204d460e325ca183d242b98fbbca54",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 122,
+        "inExplicitExport": true,
+        "exportIndex": 122
+      }
+    },
+    {
+      "id": "aws-123-9728214f",
+      "index": 123,
+      "title": "Arch Amazon-ECS-Anywhere 64",
+      "aliases": [
+        "ecs anywhere",
+        "ecsanywhere"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3634,
+      "sha256": "9728214faaa92e5455cdaa94e84bff28f6fbc980ad02fdb3ecf079819e5d8597",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 123,
+        "inExplicitExport": true,
+        "exportIndex": 123
+      }
+    },
+    {
+      "id": "aws-124-18f3958f",
+      "index": 124,
+      "title": "Arch Amazon-EKS-Anywhere 64",
+      "aliases": [
+        "eks anywhere",
+        "eksanywhere"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4344,
+      "sha256": "18f3958f3fac4c5ed07c2acc396406a8685233c195540d2a32027096a5370000",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 124,
+        "inExplicitExport": true,
+        "exportIndex": 124
+      }
+    },
+    {
+      "id": "aws-125-7255ed08",
+      "index": 125,
+      "title": "Arch Amazon-EKS-Distro 64",
+      "aliases": [
+        "eks distro",
+        "eksdistro"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6187,
+      "sha256": "7255ed08dde0669194d83adbe8cab9f107515ddc89e551bc997fc3ed2d9d5170",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 125,
+        "inExplicitExport": true,
+        "exportIndex": 125
+      }
+    },
+    {
+      "id": "aws-126-efc23328",
+      "index": 126,
+      "title": "Arch Amazon-Elastic-Container-Registry 64",
+      "aliases": [
+        "elastic container registry",
+        "elasticcontainerregistry"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2492,
+      "sha256": "efc23328aec845a84c5521ca8593e48d79a53d42ba0f96e086b62220533075a0",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 126,
+        "inExplicitExport": true,
+        "exportIndex": 126
+      }
+    },
+    {
+      "id": "aws-127-97a6c36f",
+      "index": 127,
+      "title": "Arch Amazon-Elastic-Container-Service 64",
+      "aliases": [
+        "elastic container service",
+        "elasticcontainerservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2340,
+      "sha256": "97a6c36f328d4083e2dc12b299e276496eabf9e4e8724c5a66ea3b459f95804d",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 127,
+        "inExplicitExport": true,
+        "exportIndex": 127
+      }
+    },
+    {
+      "id": "aws-128-f2577ce9",
+      "index": 128,
+      "title": "Arch Amazon-Elastic-Kubernetes-Service 64",
+      "aliases": [
+        "elastic kubernetes service",
+        "elastickubernetesservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2549,
+      "sha256": "f2577ce920b411acc50a38496e9cbe5b58f6749888dce40dcc91f299138426f6",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 128,
+        "inExplicitExport": true,
+        "exportIndex": 128
+      }
+    },
+    {
+      "id": "aws-129-fef9d296",
+      "index": 129,
+      "title": "Arch AWS-Fargate 64",
+      "aliases": [
+        "fargate"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2986,
+      "sha256": "fef9d296fd4f02fdda002d8b5d3d666f770ae12d7e6d0eb3109cc8430e930a3f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 129,
+        "inExplicitExport": true,
+        "exportIndex": 129
+      }
+    },
+    {
+      "id": "aws-130-dc0fd47b",
+      "index": 130,
+      "title": "Arch Red-Hat-OpenShift-Service-on-AWS 64",
+      "aliases": [
+        "red hat openshift service on",
+        "redhatopenshiftserviceon",
+        "red hat open shift service on"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5846,
+      "sha256": "dc0fd47bf02b11f5fa78b3ec43ca7649d7a21828ed59d761415d33043d63a80c",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 130,
+        "inExplicitExport": true,
+        "exportIndex": 130
+      }
+    },
+    {
+      "id": "aws-131-21b2ea9d",
+      "index": 131,
+      "title": "Arch Amazon-Cloud-Directory 64",
+      "aliases": [
+        "cloud directory",
+        "clouddirectory"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2577,
+      "sha256": "21b2ea9d042e32409f729ca4d0b3da759967ea2fe66de83c8eb1d7fda7bad5e5",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 131,
+        "inExplicitExport": true,
+        "exportIndex": 131
+      }
+    },
+    {
+      "id": "aws-132-5c1c0ae3",
+      "index": 132,
+      "title": "Arch Amazon-Cognito 64",
+      "aliases": [
+        "cognito"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4918,
+      "sha256": "5c1c0ae33616aa8bad16a593e42ae9f09ebd16a5e468f9c8cfe14bedf0ffde9a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 132,
+        "inExplicitExport": true,
+        "exportIndex": 132
+      }
+    },
+    {
+      "id": "aws-133-92518a72",
+      "index": 133,
+      "title": "Arch Amazon-Detective 64",
+      "aliases": [
+        "detective"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4517,
+      "sha256": "92518a726042ac00f85ae1fe2b564bb4caa9e87c46f46cf7cbf3257a5563feb3",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 133,
+        "inExplicitExport": true,
+        "exportIndex": 133
+      }
+    },
+    {
+      "id": "aws-134-dde26406",
+      "index": 134,
+      "title": "Arch Amazon-GuardDuty 64",
+      "aliases": [
+        "guardduty",
+        "guard duty"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 6095,
+      "sha256": "dde26406f90e87ed53e93fc6a045d18c9d05785d00b65ed2e9f261bc2e98400c",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 134,
+        "inExplicitExport": true,
+        "exportIndex": 134
+      }
+    },
+    {
+      "id": "aws-135-d39d9d70",
+      "index": 135,
+      "title": "Arch Amazon-Inspector 64",
+      "aliases": [
+        "inspector"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4112,
+      "sha256": "d39d9d70fd50f4ce962c30d3bd8d8fbb5d49bda72895246df866733254183f93",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 135,
+        "inExplicitExport": true,
+        "exportIndex": 135
+      }
+    },
+    {
+      "id": "aws-136-5d29aa23",
+      "index": 136,
+      "title": "Arch Amazon-Macie 64",
+      "aliases": [
+        "macie"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3225,
+      "sha256": "5d29aa23f02b188a34c18b59b6444a653732efc8b3992b6e3abdbabcf875ecb5",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 136,
+        "inExplicitExport": true,
+        "exportIndex": 136
+      }
+    },
+    {
+      "id": "aws-137-426c60cd",
+      "index": 137,
+      "title": "Arch Amazon-Security-Lake 64",
+      "aliases": [
+        "security lake",
+        "securitylake"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3759,
+      "sha256": "426c60cdc53b75bcf5d77e393e96ba58819715917f6a41e75dba14f2c985dba7",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 137,
+        "inExplicitExport": true,
+        "exportIndex": 137
+      }
+    },
+    {
+      "id": "aws-138-b7bd3fdd",
+      "index": 138,
+      "title": "Arch Amazon-Verified-Permissions 64",
+      "aliases": [
+        "verified permissions",
+        "verifiedpermissions"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4965,
+      "sha256": "b7bd3fddda3e3943b676178d6ba67bd3af2d6d65ab633732617d48118215b28d",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 138,
+        "inExplicitExport": true,
+        "exportIndex": 138
+      }
+    },
+    {
+      "id": "aws-139-353d5f51",
+      "index": 139,
+      "title": "Arch AWS-Artifact 64",
+      "aliases": [
+        "artifact"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1828,
+      "sha256": "353d5f51210fe9cbfa0d5c88c6a26b9465939960c40c41e150cd68debc5f8ab8",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 139,
+        "inExplicitExport": true,
+        "exportIndex": 139
+      }
+    },
+    {
+      "id": "aws-140-3e22cde5",
+      "index": 140,
+      "title": "Arch AWS-Audit-Manager 64",
+      "aliases": [
+        "audit manager",
+        "auditmanager"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2195,
+      "sha256": "3e22cde5122cab7ba65219b86622151f7c56d639e873d8b427ebaee2c32b4865",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 140,
+        "inExplicitExport": true,
+        "exportIndex": 140
+      }
+    },
+    {
+      "id": "aws-141-eba5827b",
+      "index": 141,
+      "title": "Arch AWS-Certificate-Manager 64",
+      "aliases": [
+        "certificate manager",
+        "certificatemanager"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2067,
+      "sha256": "eba5827b33401f110263f2967cd18be8ffd0e9770959f88eeb69742f7832ba48",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 141,
+        "inExplicitExport": true,
+        "exportIndex": 141
+      }
+    },
+    {
+      "id": "aws-142-11b7e16b",
+      "index": 142,
+      "title": "Arch AWS-CloudHSM 64",
+      "aliases": [
+        "cloudhsm",
+        "cloud hsm"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3057,
+      "sha256": "11b7e16bf694c7ef8c51ba34857c4b8485e6b8f03b58642036bfc01cd1fe99c1",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 142,
+        "inExplicitExport": true,
+        "exportIndex": 142
+      }
+    },
+    {
+      "id": "aws-143-e392b457",
+      "index": 143,
+      "title": "Arch AWS-Directory-Service 64",
+      "aliases": [
+        "directory service",
+        "directoryservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2020,
+      "sha256": "e392b45709ccd9877dc93cd10860627767c106ce7f91d7654559df09663d2bf5",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 143,
+        "inExplicitExport": true,
+        "exportIndex": 143
+      }
+    },
+    {
+      "id": "aws-144-a7236f13",
+      "index": 144,
+      "title": "Arch AWS-Firewall-Manager 64",
+      "aliases": [
+        "firewall manager",
+        "firewallmanager"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4100,
+      "sha256": "a7236f13c9f7b4b38abdb0e26cd9c410bf9112f078a098b02dbad1a8066755e0",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 144,
+        "inExplicitExport": true,
+        "exportIndex": 144
+      }
+    },
+    {
+      "id": "aws-145-190cda74",
+      "index": 145,
+      "title": "Arch AWS-IAM-Identity-Center 64",
+      "aliases": [
+        "iam identity center",
+        "iamidentitycenter"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4823,
+      "sha256": "190cda7426eff90ce5372d7e410dcea13be110af771f9effdf567ac7890d4ce2",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 145,
+        "inExplicitExport": true,
+        "exportIndex": 145
+      }
+    },
+    {
+      "id": "aws-146-253b79f1",
+      "index": 146,
+      "title": "Arch AWS-Identity-and-Access-Management 64",
+      "aliases": [
+        "identity and access management",
+        "identityandaccessmanagement"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2010,
+      "sha256": "253b79f1c6b72182d2cb591d2e00cae8bba1af73c38214e2f5d5a68d682875fb",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 146,
+        "inExplicitExport": true,
+        "exportIndex": 146
+      }
+    },
+    {
+      "id": "aws-147-d932a84b",
+      "index": 147,
+      "title": "Arch AWS-Key-Management-Service 64",
+      "aliases": [
+        "key management service",
+        "keymanagementservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5316,
+      "sha256": "d932a84b28575e5b74dced58cf6f2b0ae95b96961d19de1e46a4ce24489b700a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 147,
+        "inExplicitExport": true,
+        "exportIndex": 147
+      }
+    },
+    {
+      "id": "aws-148-9ddeee5f",
+      "index": 148,
+      "title": "Arch AWS-Network-Firewall 64",
+      "aliases": [
+        "network firewall",
+        "networkfirewall"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4795,
+      "sha256": "9ddeee5f9cd0c908ff7b98d8bb277fad4d4d0f665597ebbbfbe7e5403d7b1779",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 148,
+        "inExplicitExport": true,
+        "exportIndex": 148
+      }
+    },
+    {
+      "id": "aws-149-b06f0679",
+      "index": 149,
+      "title": "Arch AWS-Payment-Cryptography 64",
+      "aliases": [
+        "payment cryptography",
+        "paymentcryptography"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4404,
+      "sha256": "b06f0679ebdf8c4d16ac709748bb7dfb484ba8c0ab29340009aac725db77dfac",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 149,
+        "inExplicitExport": true,
+        "exportIndex": 149
+      }
+    },
+    {
+      "id": "aws-150-fbc9d310",
+      "index": 150,
+      "title": "Arch AWS-Private-Certificate-Authority 64",
+      "aliases": [
+        "private certificate authority",
+        "privatecertificateauthority"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1862,
+      "sha256": "fbc9d310b8313d3c7200fdeeccc5e384a758462ca8fa451fe046b03be254a7e3",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 150,
+        "inExplicitExport": true,
+        "exportIndex": 150
+      }
+    },
+    {
+      "id": "aws-151-4c699665",
+      "index": 151,
+      "title": "Arch AWS-Resource-Access-Manager 64",
+      "aliases": [
+        "resource access manager",
+        "resourceaccessmanager"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3217,
+      "sha256": "4c6996652d44c0cd3c5478298c4aa403cb06e98459ea5b33cb1ca9ceaa3b042b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 151,
+        "inExplicitExport": true,
+        "exportIndex": 151
+      }
+    },
+    {
+      "id": "aws-152-fadd5d33",
+      "index": 152,
+      "title": "Arch AWS-Secrets-Manager 64",
+      "aliases": [
+        "secrets manager",
+        "secretsmanager"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2914,
+      "sha256": "fadd5d33bf9226d85e20dda599aeab8e60b9143e908ea8b83945fef205dfe564",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 152,
+        "inExplicitExport": true,
+        "exportIndex": 152
+      }
+    },
+    {
+      "id": "aws-153-33d92b97",
+      "index": 153,
+      "title": "Arch AWS-Security-Agent 64",
+      "aliases": [
+        "security agent",
+        "securityagent"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 2052,
+      "sha256": "33d92b976031a92f1fd3ac8f6689742b1f46cd0c938caebbb3091d37ae5d8d71",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 153,
+        "inExplicitExport": true,
+        "exportIndex": 153
+      }
+    },
+    {
+      "id": "aws-154-5b27d67d",
+      "index": 154,
+      "title": "Arch AWS-Security-Hub 64",
+      "aliases": [
+        "security hub",
+        "securityhub"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4218,
+      "sha256": "5b27d67d8c14f170839727c3d51548d3599d2be2f39bf5afd3a9b75f014c6dac",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 154,
+        "inExplicitExport": true,
+        "exportIndex": 154
+      }
+    },
+    {
+      "id": "aws-155-af4896ac",
+      "index": 155,
+      "title": "Arch AWS-Security-Incident-Response 64",
+      "aliases": [
+        "security incident response",
+        "securityincidentresponse"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 2206,
+      "sha256": "af4896ac986b61139840b70035779659f0157d00a29cff8cd9f9f52500aa710d",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 155,
+        "inExplicitExport": true,
+        "exportIndex": 155
+      }
+    },
+    {
+      "id": "aws-156-d10ce4c7",
+      "index": 156,
+      "title": "Arch AWS-Shield 64",
+      "aliases": [
+        "shield"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3116,
+      "sha256": "d10ce4c725cca9377c43acc6b0e908edd02e011705e078dfaea8d4957dcbf5b4",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 156,
+        "inExplicitExport": true,
+        "exportIndex": 156
+      }
+    },
+    {
+      "id": "aws-157-c6cd6d48",
+      "index": 157,
+      "title": "Arch AWS-Signer 64",
+      "aliases": [
+        "signer"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5561,
+      "sha256": "c6cd6d48bcfb943d5fe3c2c428d703ccb7a63018eddbef1a8041428b0540bd94",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 157,
+        "inExplicitExport": true,
+        "exportIndex": 157
+      }
+    },
+    {
+      "id": "aws-158-3db488c0",
+      "index": 158,
+      "title": "Arch AWS-WAF 64",
+      "aliases": [
+        "waf"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3710,
+      "sha256": "3db488c027b7d509a2b5ebf3d08f1f3432e8691354a4e3fe27c81d265911bd7e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 158,
+        "inExplicitExport": true,
+        "exportIndex": 158
+      }
+    },
+    {
+      "id": "aws-159-74e3bab8",
+      "index": 159,
+      "title": "Arch Amazon-DCV 64",
+      "aliases": [
+        "dcv"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2715,
+      "sha256": "74e3bab81b0267234c7bf0574ab0786fb714111d8a7ec1943be1d6265bc70b4e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 159,
+        "inExplicitExport": true,
+        "exportIndex": 159
+      }
+    },
+    {
+      "id": "aws-160-e5d28f7d",
+      "index": 160,
+      "title": "Arch Amazon-EC2 64",
+      "aliases": [
+        "ec2"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1952,
+      "sha256": "e5d28f7dc8249cbe522cd139100ed7e58efd5f70745aaab76197cc1fa99d767f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 160,
+        "inExplicitExport": true,
+        "exportIndex": 160
+      }
+    },
+    {
+      "id": "aws-161-e930546d",
+      "index": 161,
+      "title": "Arch Amazon-EC2-Auto-Scaling 64",
+      "aliases": [
+        "ec2 auto scaling",
+        "ec2autoscaling"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3238,
+      "sha256": "e930546db2a7918199c1008dca7013d81c1b20cbf88f78b1862f502615aa7c22",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 161,
+        "inExplicitExport": true,
+        "exportIndex": 161
+      }
+    },
+    {
+      "id": "aws-162-5e6f93cb",
+      "index": 162,
+      "title": "Arch Amazon-EC2-Image-Builder 64",
+      "aliases": [
+        "ec2 image builder",
+        "ec2imagebuilder"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2541,
+      "sha256": "5e6f93cb4fdf20790076f0b2339fc4a67f04406139915a53d509d6e3d544436b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 162,
+        "inExplicitExport": true,
+        "exportIndex": 162
+      }
+    },
+    {
+      "id": "aws-163-59682a9a",
+      "index": 163,
+      "title": "Arch Amazon-Elastic-VMware-Service 64",
+      "aliases": [
+        "elastic vmware service",
+        "elasticvmwareservice",
+        "elastic v mware service"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 1874,
+      "sha256": "59682a9ae5d81a4671fa5138ee86bec54555cdcfef96bcce2cfb3309c245718e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 163,
+        "inExplicitExport": true,
+        "exportIndex": 163
+      }
+    },
+    {
+      "id": "aws-164-a426f75e",
+      "index": 164,
+      "title": "Arch Amazon-Lightsail 64",
+      "aliases": [
+        "lightsail"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2145,
+      "sha256": "a426f75e84de0eb1df98b7ca1ddbf1cc33a8147aa87117c736afc01c07edf8f5",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 164,
+        "inExplicitExport": true,
+        "exportIndex": 164
+      }
+    },
+    {
+      "id": "aws-165-1132a30a",
+      "index": 165,
+      "title": "Arch Amazon-Lightsail-for-Research 64",
+      "aliases": [
+        "lightsail for research",
+        "lightsailforresearch"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4524,
+      "sha256": "1132a30a9676229677e73a1c9038d6b5ea1abcf9baf29cf74b3d5e8748914ad3",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 165,
+        "inExplicitExport": true,
+        "exportIndex": 165
+      }
+    },
+    {
+      "id": "aws-166-66d7a72b",
+      "index": 166,
+      "title": "Arch AWS-App-Runner 64",
+      "aliases": [
+        "app runner",
+        "apprunner"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1634,
+      "sha256": "66d7a72b5499f884f4659fce283ead0b45ddcd66b47eba099d933f5e8aa5c0f9",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 166,
+        "inExplicitExport": true,
+        "exportIndex": 166
+      }
+    },
+    {
+      "id": "aws-167-8931b516",
+      "index": 167,
+      "title": "Arch AWS-Batch 64",
+      "aliases": [
+        "batch"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4153,
+      "sha256": "8931b516cf43e6d86caeea12448fc7d680a6e3574b17b58e4e5daf8ef0099377",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 167,
+        "inExplicitExport": true,
+        "exportIndex": 167
+      }
+    },
+    {
+      "id": "aws-168-22d63851",
+      "index": 168,
+      "title": "Arch AWS-Compute-Optimizer 64",
+      "aliases": [
+        "compute optimizer",
+        "computeoptimizer"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5459,
+      "sha256": "22d63851cc35bbef01f235653194253d0591c8042f3d4172fe704548b6f7f13a",
+      "ambiguousTitle": true,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 168,
+        "inExplicitExport": true,
+        "exportIndex": 168
+      }
+    },
+    {
+      "id": "aws-169-b8927c4d",
+      "index": 169,
+      "title": "Arch AWS-Elastic-Beanstalk 64",
+      "aliases": [
+        "elastic beanstalk",
+        "elasticbeanstalk"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4459,
+      "sha256": "b8927c4d25c080f63a031ae2664001a1b1f1d29e68df9401a9d11900321c2a1c",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 169,
+        "inExplicitExport": true,
+        "exportIndex": 169
+      }
+    },
+    {
+      "id": "aws-170-42cea9be",
+      "index": 170,
+      "title": "Arch AWS-Lambda 64",
+      "aliases": [
+        "lambda"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1793,
+      "sha256": "42cea9be7e66bc3f0ac5766fa96a14fa0a063700a3a1bbda06da16becd433b52",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 170,
+        "inExplicitExport": true,
+        "exportIndex": 170
+      }
+    },
+    {
+      "id": "aws-171-59317efb",
+      "index": 171,
+      "title": "Arch AWS-Local-Zones 64",
+      "aliases": [
+        "local zones",
+        "localzones"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4137,
+      "sha256": "59317efbb9bb31e488430f29a259dbdcbd7f886781c4cbc8433d909b1876948d",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 171,
+        "inExplicitExport": true,
+        "exportIndex": 171
+      }
+    },
+    {
+      "id": "aws-172-b7ec0db1",
+      "index": 172,
+      "title": "Arch AWS-Nitro-Enclaves 64",
+      "aliases": [
+        "nitro enclaves",
+        "nitroenclaves"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1994,
+      "sha256": "b7ec0db1f3036bcb98f942fa568d6d63d5c98382359022abd5eccfcdc70efe6d",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 172,
+        "inExplicitExport": true,
+        "exportIndex": 172
+      }
+    },
+    {
+      "id": "aws-173-c3cab0e4",
+      "index": 173,
+      "title": "Arch AWS-Outposts-family 64",
+      "aliases": [
+        "outposts family",
+        "outpostsfamily"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4536,
+      "sha256": "c3cab0e4c9779b6835b6858f770839ef6038e150df02043ab5d0b7532c408a70",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 173,
+        "inExplicitExport": true,
+        "exportIndex": 173
+      }
+    },
+    {
+      "id": "aws-174-b4ca4a4d",
+      "index": 174,
+      "title": "Arch AWS-Outposts-rack 64",
+      "aliases": [
+        "outposts rack",
+        "outpostsrack"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4829,
+      "sha256": "b4ca4a4d69420ab8ed366645f50120605835cb416df716fdbebc73389158e4fb",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 174,
+        "inExplicitExport": true,
+        "exportIndex": 174
+      }
+    },
+    {
+      "id": "aws-175-e53de1a2",
+      "index": 175,
+      "title": "Arch AWS-Outposts-servers 64",
+      "aliases": [
+        "outposts servers",
+        "outpostsservers"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2902,
+      "sha256": "e53de1a2f3dbffa74f985cad67f9b3e2ea9a1f5859ba93e64554318a747d779d",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 175,
+        "inExplicitExport": true,
+        "exportIndex": 175
+      }
+    },
+    {
+      "id": "aws-176-ee5209ae",
+      "index": 176,
+      "title": "Arch AWS-Parallel-Cluster 64",
+      "aliases": [
+        "parallel cluster",
+        "parallelcluster"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3803,
+      "sha256": "ee5209ae16be370fc5ddf4ea8b6d22415d6c0b83e6339f1beba5667c38b20d62",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 176,
+        "inExplicitExport": true,
+        "exportIndex": 176
+      }
+    },
+    {
+      "id": "aws-177-78fdd5fa",
+      "index": 177,
+      "title": "Arch AWS-Parallel-Computing-Service 64",
+      "aliases": [
+        "parallel computing service",
+        "parallelcomputingservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 2488,
+      "sha256": "78fdd5fa957c614361f11eaa23b96a62f85edddba50c3bfa167dcbefb0a9943d",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 177,
+        "inExplicitExport": true,
+        "exportIndex": 177
+      }
+    },
+    {
+      "id": "aws-178-cfefdbe2",
+      "index": 178,
+      "title": "Arch AWS-Serverless-Application-Repository 64",
+      "aliases": [
+        "serverless application repository",
+        "serverlessapplicationrepository"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4666,
+      "sha256": "cfefdbe2fdf1bf90e7a6173b23ee2f3ae6c6764fd45cb276486c523f23bf74f5",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 178,
+        "inExplicitExport": true,
+        "exportIndex": 178
+      }
+    },
+    {
+      "id": "aws-179-29ce20f3",
+      "index": 179,
+      "title": "Arch AWS-SimSpace-Weaver 64",
+      "aliases": [
+        "simspace weaver",
+        "simspaceweaver",
+        "sim space weaver"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5127,
+      "sha256": "29ce20f325087aa200134c67929399999d9bd462fdd284dac6fef8be1d24e63b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 179,
+        "inExplicitExport": true,
+        "exportIndex": 179
+      }
+    },
+    {
+      "id": "aws-180-fd428cb9",
+      "index": 180,
+      "title": "Arch AWS-Wavelength 64",
+      "aliases": [
+        "wavelength"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3842,
+      "sha256": "fd428cb90cc58b0594997f52883b713365b153c593c1f6a090ccfe9bf92e2243",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 180,
+        "inExplicitExport": true,
+        "exportIndex": 180
+      }
+    },
+    {
+      "id": "aws-181-59ad32d9",
+      "index": 181,
+      "title": "Arch Bottlerocket 64",
+      "aliases": [
+        "bottlerocket"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4408,
+      "sha256": "59ad32d9b3e325f88457820fd6403988eda46aa631be84a966129ade1b37e424",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 181,
+        "inExplicitExport": true,
+        "exportIndex": 181
+      }
+    },
+    {
+      "id": "aws-182-11d7d1c0",
+      "index": 182,
+      "title": "Arch Elastic-Fabric-Adapter 64",
+      "aliases": [
+        "elastic fabric adapter",
+        "elasticfabricadapter"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2172,
+      "sha256": "11d7d1c076da147c59b81b7e03d9a44d2a7440d38e97783d19c2de6eaa4c6f23",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 182,
+        "inExplicitExport": true,
+        "exportIndex": 182
+      }
+    },
+    {
+      "id": "aws-183-457a44dc",
+      "index": 183,
+      "title": "Arch Amazon-Aurora 64",
+      "aliases": [
+        "aurora"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3986,
+      "sha256": "457a44dc57017a93419fa735fed6477cfeeff6da9e2e908869d6d9deb7d81ee8",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 183,
+        "inExplicitExport": true,
+        "exportIndex": 183
+      }
+    },
+    {
+      "id": "aws-184-71966824",
+      "index": 184,
+      "title": "Arch Amazon-DocumentDB 64",
+      "aliases": [
+        "documentdb",
+        "document db"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4342,
+      "sha256": "71966824c64d154776fc71c6bbde65dc5d2a46921c0f8249ad57f1fa71aa9744",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 184,
+        "inExplicitExport": true,
+        "exportIndex": 184
+      }
+    },
+    {
+      "id": "aws-185-73bd1eb4",
+      "index": 185,
+      "title": "Arch Amazon-DynamoDB 64",
+      "aliases": [
+        "dynamodb",
+        "dynamo db"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5999,
+      "sha256": "73bd1eb45c1e4987e6c343592ca55c248544cb3e5a94eddcfa132b5efe0b004e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 185,
+        "inExplicitExport": true,
+        "exportIndex": 185
+      }
+    },
+    {
+      "id": "aws-186-6ced2b5d",
+      "index": 186,
+      "title": "Arch Amazon-ElastiCache 64",
+      "aliases": [
+        "elasticache",
+        "elasti cache"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4892,
+      "sha256": "6ced2b5ddc369328ec7f7a2a2f74bc8e54c343a70cd7c6e7859b6bb537323555",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 186,
+        "inExplicitExport": true,
+        "exportIndex": 186
+      }
+    },
+    {
+      "id": "aws-187-8b8f8cde",
+      "index": 187,
+      "title": "Arch Amazon-Keyspaces 64",
+      "aliases": [
+        "keyspaces"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2518,
+      "sha256": "8b8f8cdeedaeb022d17f095bfef137430e1850fb573cad15d138adb7115858b4",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 187,
+        "inExplicitExport": true,
+        "exportIndex": 187
+      }
+    },
+    {
+      "id": "aws-188-cf0c1d08",
+      "index": 188,
+      "title": "Arch Amazon-MemoryDB 64",
+      "aliases": [
+        "memorydb",
+        "memory db"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2552,
+      "sha256": "cf0c1d08154ed8f926de753ba5ad95e6b0628727059331b1301704e31d0b4cf7",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 188,
+        "inExplicitExport": true,
+        "exportIndex": 188
+      }
+    },
+    {
+      "id": "aws-189-0a87e677",
+      "index": 189,
+      "title": "Arch Amazon-Neptune 64",
+      "aliases": [
+        "neptune"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3389,
+      "sha256": "0a87e677c9eeaa0528fd7e71b566e8a483b178e0d68fc967e6bb8d217bfd30ae",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 189,
+        "inExplicitExport": true,
+        "exportIndex": 189
+      }
+    },
+    {
+      "id": "aws-190-4ff38171",
+      "index": 190,
+      "title": "Arch Amazon-RDS 64",
+      "aliases": [
+        "rds"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2503,
+      "sha256": "4ff381712e357fdc50fd533948b9bb7cd861434e5b757a13f1b3f74dd7b557a2",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 190,
+        "inExplicitExport": true,
+        "exportIndex": 190
+      }
+    },
+    {
+      "id": "aws-191-9433f215",
+      "index": 191,
+      "title": "Arch Amazon-Timestream 64",
+      "aliases": [
+        "timestream"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2846,
+      "sha256": "9433f2152bb824c523697d9cf9607e5962f1f7893f1d6731a7b087845be0c22f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 191,
+        "inExplicitExport": true,
+        "exportIndex": 191
+      }
+    },
+    {
+      "id": "aws-192-0cc0bfd1",
+      "index": 192,
+      "title": "Arch AWS-Database-Migration-Service 64",
+      "aliases": [
+        "database migration service",
+        "databasemigrationservice"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1514,
+      "sha256": "0cc0bfd1a64ab25d9a0cfba9616882e372bf57a42cee5c49856af598202fef7c",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 192,
+        "inExplicitExport": true,
+        "exportIndex": 192
+      }
+    },
+    {
+      "id": "aws-193-f9cec0c9",
+      "index": 193,
+      "title": "Arch Oracle-Database-at-AWS 64",
+      "aliases": [
+        "oracle database at",
+        "oracledatabaseat"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 1211,
+      "sha256": "f9cec0c94842cf8debac13ca896420ba23fefe4cf1ea7b8c55fa10c92f0c0867",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 193,
+        "inExplicitExport": true,
+        "exportIndex": 193
+      }
+    },
+    {
+      "id": "aws-194-db8e45cf",
+      "index": 194,
+      "title": "Arch Amazon-WorkSpaces 64",
+      "aliases": [
+        "workspaces",
+        "work spaces"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 2192,
+      "sha256": "db8e45cf86a60d03b729f699c0812f220fb187869cdd585a30e756434c96c1c1",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 194,
+        "inExplicitExport": true,
+        "exportIndex": 194
+      }
+    },
+    {
+      "id": "aws-195-1f48e5e9",
+      "index": 195,
+      "title": "Arch AWS-Activate 64",
+      "aliases": [
+        "activate"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1842,
+      "sha256": "1f48e5e91bcd6eb75af180df59adf2ddc01d2bb58bfd5fe3a4b5e30f814bc6a8",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 195,
+        "inExplicitExport": true,
+        "exportIndex": 195
+      }
+    },
+    {
+      "id": "aws-196-72d166fb",
+      "index": 196,
+      "title": "Arch AWS-IQ 64",
+      "aliases": [
+        "iq"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2092,
+      "sha256": "72d166fb13298840528559590a94ff3a4792d3cf96ed3b62ffe96cc780f96928",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 196,
+        "inExplicitExport": true,
+        "exportIndex": 196
+      }
+    },
+    {
+      "id": "aws-197-41cf18e6",
+      "index": 197,
+      "title": "Arch AWS-Managed-Services 64",
+      "aliases": [
+        "managed services",
+        "managedservices"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 7506,
+      "sha256": "41cf18e63c4e258ee5bbb3b14e1f06dde450b092f30eb1bda0ba20f8dd185064",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 197,
+        "inExplicitExport": true,
+        "exportIndex": 197
+      }
+    },
+    {
+      "id": "aws-198-d0dae8e1",
+      "index": 198,
+      "title": "Arch AWS-Professional-Services 64",
+      "aliases": [
+        "professional services",
+        "professionalservices"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2298,
+      "sha256": "d0dae8e166d3341e141a5cc6982689d4a9f97e7dbe5a88da0b7fe2cb7e20af7a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 198,
+        "inExplicitExport": true,
+        "exportIndex": 198
+      }
+    },
+    {
+      "id": "aws-199-9bcffef8",
+      "index": 199,
+      "title": "Arch AWS-rePost 64",
+      "aliases": [
+        "repost",
+        "re post"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4580,
+      "sha256": "9bcffef836f9f32024cb3aefd14278b592e180ceecdfc2425c868d8593b942b9",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 199,
+        "inExplicitExport": true,
+        "exportIndex": 199
+      }
+    },
+    {
+      "id": "aws-200-209f9ae5",
+      "index": 200,
+      "title": "Arch AWS-rePost-Private 64",
+      "aliases": [
+        "repost private",
+        "repostprivate",
+        "re post private"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2984,
+      "sha256": "209f9ae59a3413305a78bc33dff551e8b1383efe887140b09e17da4cd6803bb8",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 200,
+        "inExplicitExport": true,
+        "exportIndex": 200
+      }
+    },
+    {
+      "id": "aws-201-72aaf2b0",
+      "index": 201,
+      "title": "Arch AWS-Support 64",
+      "aliases": [
+        "support"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5155,
+      "sha256": "72aaf2b0b5eddffb0c8e171bc5c7a6c90083bb032e1f069db0102035392afef5",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 201,
+        "inExplicitExport": true,
+        "exportIndex": 201
+      }
+    },
+    {
+      "id": "aws-202-1910711b",
+      "index": 202,
+      "title": "Arch AWS-Training-Certification 64",
+      "aliases": [
+        "training certification",
+        "trainingcertification"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2494,
+      "sha256": "1910711b9d9db3c77dccc6ec90d6dc5c1982a7b79525e30b8041ee0a29c5b53f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 202,
+        "inExplicitExport": true,
+        "exportIndex": 202
+      }
+    },
+    {
+      "id": "aws-203-21443cb5",
+      "index": 203,
+      "title": "Arch AWS-Marketplace Dark 64",
+      "aliases": [
+        "marketplace dark",
+        "marketplacedark"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3226,
+      "sha256": "21443cb5eb341bb152ea418f4552328442d4386e941968eb303b3c393dd64e31",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 203,
+        "inExplicitExport": true,
+        "exportIndex": 203
+      }
+    },
+    {
+      "id": "aws-204-3b938d18",
+      "index": 204,
+      "title": "Arch AWS-Marketplace Light 64",
+      "aliases": [
+        "marketplace light",
+        "marketplacelight"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3228,
+      "sha256": "3b938d18e2e884903a912256563341502eac1f19edf2412c02db69adebdec524",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 204,
+        "inExplicitExport": true,
+        "exportIndex": 204
+      }
+    },
+    {
+      "id": "aws-205-0d56f5ca",
+      "index": 205,
+      "title": "Arch Amazon-CloudWatch 64",
+      "aliases": [
+        "cloudwatch",
+        "cloud watch"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4275,
+      "sha256": "0d56f5ca0fb2c32f4e69bc43d8ab5dff733278f1a22f414146c0c752d0c94ca4",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 205,
+        "inExplicitExport": true,
+        "exportIndex": 205
+      }
+    },
+    {
+      "id": "aws-206-2c913d11",
+      "index": 206,
+      "title": "Arch Amazon-Managed-Grafana 64",
+      "aliases": [
+        "managed grafana",
+        "managedgrafana"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2273,
+      "sha256": "2c913d11f273a4c6454e5e2f3ae7b71ca089a4da4bfbd84b2c750b41f08b073b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 206,
+        "inExplicitExport": true,
+        "exportIndex": 206
+      }
+    },
+    {
+      "id": "aws-207-112aeee1",
+      "index": 207,
+      "title": "Arch Amazon-Managed-Service-for-Prometheus 64",
+      "aliases": [
+        "managed service for prometheus",
+        "managedserviceforprometheus"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2423,
+      "sha256": "112aeee1724dcb7b0920a9d3b5d1e6a3c027714f7be6ddf42ed6a3f70aee6b84",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 207,
+        "inExplicitExport": true,
+        "exportIndex": 207
+      }
+    },
+    {
+      "id": "aws-208-024dcb24",
+      "index": 208,
+      "title": "Arch AWS-AppConfig 64",
+      "aliases": [
+        "appconfig",
+        "app config"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4107,
+      "sha256": "024dcb248b61f780f27c0529439197019a6f7a818c38758285953efa88fc66e2",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 208,
+        "inExplicitExport": true,
+        "exportIndex": 208
+      }
+    },
+    {
+      "id": "aws-209-69284b7e",
+      "index": 209,
+      "title": "Arch AWS-Application-Auto-Scaling 64",
+      "aliases": [
+        "application auto scaling",
+        "applicationautoscaling"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3924,
+      "sha256": "69284b7e5e051d444a86ca3b6a75707e018d6a4da87c757a2ed4cb3ade00750b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 209,
+        "inExplicitExport": true,
+        "exportIndex": 209
+      }
+    },
+    {
+      "id": "aws-210-0f68e07d",
+      "index": 210,
+      "title": "Arch AWS-Auto-Scaling 64",
+      "aliases": [
+        "auto scaling",
+        "autoscaling"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2313,
+      "sha256": "0f68e07d5175080b23752263753bbdb78238cf6c158568014e10e71d7a366c03",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 210,
+        "inExplicitExport": true,
+        "exportIndex": 210
+      }
+    },
+    {
+      "id": "aws-211-02efab6b",
+      "index": 211,
+      "title": "Arch AWS-Backint-Agent 64",
+      "aliases": [
+        "backint agent",
+        "backintagent"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 7853,
+      "sha256": "02efab6b83d5d23c7e6574bf4d909681ec135f2b5147e6961b85f307c76acee2",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 211,
+        "inExplicitExport": true,
+        "exportIndex": 211
+      }
+    },
+    {
+      "id": "aws-212-9222ab8f",
+      "index": 212,
+      "title": "Arch AWS-Chatbot 64",
+      "aliases": [
+        "chatbot"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4134,
+      "sha256": "9222ab8faf55cf12388980e61943171db4539b62f2c75bb25281550c151b94e0",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 212,
+        "inExplicitExport": true,
+        "exportIndex": 212
+      }
+    },
+    {
+      "id": "aws-213-8729210c",
+      "index": 213,
+      "title": "Arch AWS-CloudFormation 64",
+      "aliases": [
+        "cloudformation",
+        "cloud formation"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2482,
+      "sha256": "8729210ce4649f291357b83f3c87215c109934efe26f4a4e0a0a398aa129276f",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 213,
+        "inExplicitExport": true,
+        "exportIndex": 213
+      }
+    },
+    {
+      "id": "aws-214-7e73a4ec",
+      "index": 214,
+      "title": "Arch AWS-CloudTrail 64",
+      "aliases": [
+        "cloudtrail",
+        "cloud trail"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2277,
+      "sha256": "7e73a4ec1e1597f03dc02c5893e3d079ab232980c79cbd62ee9039a7c63604ef",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 214,
+        "inExplicitExport": true,
+        "exportIndex": 214
+      }
+    },
+    {
+      "id": "aws-215-50e29638",
+      "index": 215,
+      "title": "Arch AWS-Compute-Optimizer 64",
+      "aliases": [
+        "compute optimizer",
+        "computeoptimizer"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 4246,
+      "sha256": "50e2963832dc6f378d9d78ef91c6f31af71a04c5b698c9ac2531dbc87502070e",
+      "ambiguousTitle": true,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 215,
+        "inExplicitExport": true,
+        "exportIndex": 215
+      }
+    },
+    {
+      "id": "aws-216-2db93bc9",
+      "index": 216,
+      "title": "Arch AWS-Config 64",
+      "aliases": [
+        "config"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 10996,
+      "sha256": "2db93bc9afdeab79b155026459f04a2ed49cd894d84882e7e8e2d5dd310a5e9e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 216,
+        "inExplicitExport": true,
+        "exportIndex": 216
+      }
+    },
+    {
+      "id": "aws-217-03e5939d",
+      "index": 217,
+      "title": "Arch AWS-Console-Mobile-Application 64",
+      "aliases": [
+        "console mobile application",
+        "consolemobileapplication"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2895,
+      "sha256": "03e5939da70af0c61e6e0ba5cc934001d324b001c276f7766696ebff12167fb6",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 217,
+        "inExplicitExport": true,
+        "exportIndex": 217
+      }
+    },
+    {
+      "id": "aws-218-cf2eaca6",
+      "index": 218,
+      "title": "Arch AWS-Control-Tower 64",
+      "aliases": [
+        "control tower",
+        "controltower"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4971,
+      "sha256": "cf2eaca6cbfa3c6931b0241a7e4bf2a1efe3a87320aeefe107fbd093a8278d55",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 218,
+        "inExplicitExport": true,
+        "exportIndex": 218
+      }
+    },
+    {
+      "id": "aws-219-380e5c7a",
+      "index": 219,
+      "title": "Arch AWS-DevOps-Agent 64",
+      "aliases": [
+        "devops agent",
+        "devopsagent",
+        "dev ops agent"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 1852,
+      "sha256": "380e5c7a771b8cffa201cd4aa623352aca51244817b1c62156150a57a8b33679",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 219,
+        "inExplicitExport": true,
+        "exportIndex": 219
+      }
+    },
+    {
+      "id": "aws-220-5a09fae4",
+      "index": 220,
+      "title": "Arch AWS-Distro-for-OpenTelemetry 64",
+      "aliases": [
+        "distro for opentelemetry",
+        "distroforopentelemetry",
+        "distro for open telemetry"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2060,
+      "sha256": "5a09fae4bd7d56f2f0a5ffbbe53cb8c002f446e59241ff4314ff0b983bf6461a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 220,
+        "inExplicitExport": true,
+        "exportIndex": 220
+      }
+    },
+    {
+      "id": "aws-221-8add08d6",
+      "index": 221,
+      "title": "Arch AWS-Health-Dashboard 64",
+      "aliases": [
+        "health dashboard",
+        "healthdashboard"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2623,
+      "sha256": "8add08d661118c096b15752ecca26535c54382512edb99c441e786382f092041",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 221,
+        "inExplicitExport": true,
+        "exportIndex": 221
+      }
+    },
+    {
+      "id": "aws-222-7f2bb331",
+      "index": 222,
+      "title": "Arch AWS-Launch-Wizard 64",
+      "aliases": [
+        "launch wizard",
+        "launchwizard"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2543,
+      "sha256": "7f2bb3317b6186ed72b962a6cdcbde59e9e8a4becdad036af0a0d6b39111f2d3",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 222,
+        "inExplicitExport": true,
+        "exportIndex": 222
+      }
+    },
+    {
+      "id": "aws-223-7d88b43a",
+      "index": 223,
+      "title": "Arch AWS-License-Manager 64",
+      "aliases": [
+        "license manager",
+        "licensemanager"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5223,
+      "sha256": "7d88b43afc0e98d5226cabc7fe096a15af5886b61bd4d15de49518e8de7559d2",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 223,
+        "inExplicitExport": true,
+        "exportIndex": 223
+      }
+    },
+    {
+      "id": "aws-224-e8679f0e",
+      "index": 224,
+      "title": "Arch AWS-Management-Console 64",
+      "aliases": [
+        "management console",
+        "managementconsole"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4843,
+      "sha256": "e8679f0e98fbb035bacf9cddf0c8b949681015a42ef2b2770c06ff6c0efbc144",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 224,
+        "inExplicitExport": true,
+        "exportIndex": 224
+      }
+    },
+    {
+      "id": "aws-225-6337a811",
+      "index": 225,
+      "title": "Arch AWS-Organizations 64",
+      "aliases": [
+        "organizations"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2462,
+      "sha256": "6337a8113b9844d3b5f76891acf4b3f86194e7c4747302d57e1a6f90d7b0a0ff",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 225,
+        "inExplicitExport": true,
+        "exportIndex": 225
+      }
+    },
+    {
+      "id": "aws-226-b8a97332",
+      "index": 226,
+      "title": "Arch AWS-Partner-Central 64",
+      "aliases": [
+        "partner central",
+        "partnercentral"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 1782,
+      "sha256": "b8a9733208cc49a184f0bf6e99165d3dda363f2794c253cba9a0da8646a10409",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 226,
+        "inExplicitExport": true,
+        "exportIndex": 226
+      }
+    },
+    {
+      "id": "aws-227-1939fd4e",
+      "index": 227,
+      "title": "Arch AWS-Proton 64",
+      "aliases": [
+        "proton"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2255,
+      "sha256": "1939fd4edae88bccf47719a0a6f0882a577991c4ed20e2ca464666d04abd3a64",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 227,
+        "inExplicitExport": true,
+        "exportIndex": 227
+      }
+    },
+    {
+      "id": "aws-228-45842362",
+      "index": 228,
+      "title": "Arch AWS-Resilience-Hub 64",
+      "aliases": [
+        "resilience hub",
+        "resiliencehub"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2955,
+      "sha256": "4584236228e8c2b64ac44520e5e608c9e346fd29f826162da7f01b118a184008",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 228,
+        "inExplicitExport": true,
+        "exportIndex": 228
+      }
+    },
+    {
+      "id": "aws-229-43d13800",
+      "index": 229,
+      "title": "Arch AWS-Resource-Explorer 64",
+      "aliases": [
+        "resource explorer",
+        "resourceexplorer"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 2373,
+      "sha256": "43d13800eeb07cba0badfd820c44e79b47aa38c2cd2fbbcf89542c72fc9af53a",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 229,
+        "inExplicitExport": true,
+        "exportIndex": 229
+      }
+    },
+    {
+      "id": "aws-230-6c6b8020",
+      "index": 230,
+      "title": "Arch AWS-Service-Catalog 64",
+      "aliases": [
+        "service catalog",
+        "servicecatalog"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4162,
+      "sha256": "6c6b802005e491a90b009406c721f1fb26b364bf77083c89528d8baefcf02f0e",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 230,
+        "inExplicitExport": true,
+        "exportIndex": 230
+      }
+    },
+    {
+      "id": "aws-231-e36c437a",
+      "index": 231,
+      "title": "Arch AWS-Service-Management-Connector 64",
+      "aliases": [
+        "service management connector",
+        "servicemanagementconnector"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 1408,
+      "sha256": "e36c437acf291b21cdff32bfcfc2895a0285bd149b4ccf60feecc089fa056f64",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 231,
+        "inExplicitExport": true,
+        "exportIndex": 231
+      }
+    },
+    {
+      "id": "aws-232-6fa8954a",
+      "index": 232,
+      "title": "Arch AWS-Systems-Manager 64",
+      "aliases": [
+        "systems manager",
+        "systemsmanager"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 7001,
+      "sha256": "6fa8954a0b2a146be3536a4a6510a92e027bc42f0c3d450f86bdd3f15bfb7d68",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 232,
+        "inExplicitExport": true,
+        "exportIndex": 232
+      }
+    },
+    {
+      "id": "aws-233-d45a807f",
+      "index": 233,
+      "title": "Arch AWS-Telco-Network-Builder 64",
+      "aliases": [
+        "telco network builder",
+        "telconetworkbuilder"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 5550,
+      "sha256": "d45a807f25a1fe9479a119a175b78efd66e9aad80587b9a2de0a36754d38750b",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 233,
+        "inExplicitExport": true,
+        "exportIndex": 233
+      }
+    },
+    {
+      "id": "aws-234-dfbda787",
+      "index": 234,
+      "title": "Arch AWS-Trusted-Advisor 64",
+      "aliases": [
+        "trusted advisor",
+        "trustedadvisor"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 3223,
+      "sha256": "dfbda7872b64e12a047f11007fa770c279b98b52efe0476db52cfef265b1efd2",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 234,
+        "inExplicitExport": true,
+        "exportIndex": 234
+      }
+    },
+    {
+      "id": "aws-235-4ab69bfe",
+      "index": 235,
+      "title": "Arch AWS-User-Notifications 64",
+      "aliases": [
+        "user notifications",
+        "usernotifications"
+      ],
+      "mime": "image/svg+xml",
+      "width": 80,
+      "height": 80,
+      "intrinsicWidth": 80,
+      "intrinsicHeight": 80,
+      "aspect": "fixed",
+      "bytes": 2751,
+      "sha256": "4ab69bfea8dddbb62c347b3f75c0b06e5d0c1ddccd0c52f0c81c5bf4994bf7f4",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 235,
+        "inExplicitExport": true,
+        "exportIndex": 235
+      }
+    },
+    {
+      "id": "aws-236-f6ab9a78",
+      "index": 236,
+      "title": "Arch AWS-Well-Architected-Tool 64",
+      "aliases": [
+        "well architected tool",
+        "wellarchitectedtool"
+      ],
+      "mime": "image/svg+xml",
+      "width": 81,
+      "height": 81,
+      "intrinsicWidth": 81,
+      "intrinsicHeight": 81,
+      "aspect": "fixed",
+      "bytes": 4971,
+      "sha256": "f6ab9a78139f9350e084655a07e8c8f6cb389fb6bdab273eafe081752bd3f650",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 236,
+        "inExplicitExport": true,
+        "exportIndex": 236
+      }
+    },
+    {
+      "id": "aws-237-82b886c3",
+      "index": 237,
+      "title": "AgentCore",
+      "aliases": [
+        "agentcore",
+        "agent core"
+      ],
+      "mime": "image/png",
+      "width": 1024,
+      "height": 1024,
+      "intrinsicWidth": 1024,
+      "intrinsicHeight": 1024,
+      "aspect": "fixed",
+      "bytes": 801960,
+      "sha256": "82b886c32aacc3ad6de27396c38a176806aabf06443ff7f61929aec85170b667",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 237,
+        "inExplicitExport": false,
+        "exportIndex": null
+      }
+    },
+    {
+      "id": "aws-238-0d793f34",
+      "index": 238,
+      "title": "AgentCoreGateway",
+      "aliases": [
+        "agentcoregateway",
+        "agent core gateway"
+      ],
+      "mime": "image/png",
+      "width": 1024,
+      "height": 1024,
+      "intrinsicWidth": 1024,
+      "intrinsicHeight": 1024,
+      "aspect": "fixed",
+      "bytes": 812763,
+      "sha256": "0d793f348f4ebca332b9aed52c34e77d3a52972c0e488ace8de90dc8544f5698",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 238,
+        "inExplicitExport": false,
+        "exportIndex": null
+      }
+    },
+    {
+      "id": "aws-239-8f0c8a0b",
+      "index": 239,
+      "title": "AgentCoreIdentity",
+      "aliases": [
+        "agentcoreidentity",
+        "agent core identity"
+      ],
+      "mime": "image/png",
+      "width": 1056,
+      "height": 992,
+      "intrinsicWidth": 1056,
+      "intrinsicHeight": 992,
+      "aspect": "fixed",
+      "bytes": 881511,
+      "sha256": "8f0c8a0b468fb3925cabf6e4f53e925f701b53c01dea32a3c5bc68930de233b2",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 239,
+        "inExplicitExport": false,
+        "exportIndex": null
+      }
+    },
+    {
+      "id": "aws-240-1e8fbc35",
+      "index": 240,
+      "title": "AgentCoreMemory",
+      "aliases": [
+        "agentcorememory",
+        "agent core memory"
+      ],
+      "mime": "image/png",
+      "width": 992,
+      "height": 1056,
+      "intrinsicWidth": 992,
+      "intrinsicHeight": 1056,
+      "aspect": "fixed",
+      "bytes": 815777,
+      "sha256": "1e8fbc35cd12301bc4900dd265578d788e78c7d68dfd99c3bd7490aab466df15",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 240,
+        "inExplicitExport": false,
+        "exportIndex": null
+      }
+    },
+    {
+      "id": "aws-241-82668626",
+      "index": 241,
+      "title": "AgentCoreObservability",
+      "aliases": [
+        "agentcoreobservability",
+        "agent core observability"
+      ],
+      "mime": "image/png",
+      "width": 1088,
+      "height": 960,
+      "intrinsicWidth": 1088,
+      "intrinsicHeight": 960,
+      "aspect": "fixed",
+      "bytes": 745266,
+      "sha256": "8266862620c6c1b67afbe58f6538ff4ec308a7694bf9d287ce9277b700765c75",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 241,
+        "inExplicitExport": false,
+        "exportIndex": null
+      }
+    },
+    {
+      "id": "aws-242-d79b8a41",
+      "index": 242,
+      "title": "AgentCoreRuntime",
+      "aliases": [
+        "agentcoreruntime",
+        "agent core runtime"
+      ],
+      "mime": "image/png",
+      "width": 1056,
+      "height": 992,
+      "intrinsicWidth": 1056,
+      "intrinsicHeight": 992,
+      "aspect": "fixed",
+      "bytes": 817126,
+      "sha256": "d79b8a414aba936e77086e8c1de50ebf543d01aa1c9b578ff16bda4feb4fec03",
+      "ambiguousTitle": false,
+      "provenance": {
+        "mergedFrom": "AWS-v1.drawio",
+        "mergedIndex": 242,
+        "inExplicitExport": false,
+        "exportIndex": null
+      }
+    }
+  ]
+}

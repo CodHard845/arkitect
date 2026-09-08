@@ -1,0 +1,83 @@
+Arkitect
+Copyright (c) 2026 mouadja02
+Licensed under the MIT License (see LICENSE).
+
+This project bundles and builds on work belonging to other people. The MIT
+licence above covers Arkitect's own code, documentation, generators and style
+records. It does not, and cannot, relicense any of the following.
+
+--------------------------------------------------------------------------------
+AWS Architecture Icons
+--------------------------------------------------------------------------------
+
+  skills/arkitect-drawio/assets/libraries/AWS-icons.drawio.xml
+  skills/arkitect-drawio/assets/libraries/AWS-v1.drawio
+  skills/arkitect-drawio/assets/libraries/AWS-icons.merged.drawio
+
+The 243-entry Draw.io palette is built from the AWS Architecture Icons asset
+package published by Amazon Web Services, Inc. at
+
+  https://aws.amazon.com/architecture/icons/
+
+The icons remain the property of Amazon Web Services, Inc. and are used here to
+draw architecture diagrams, which is what the asset package is published for.
+Their use is subject to the AWS Trademark Guidelines and the terms stated on
+that page:
+
+  https://aws.amazon.com/trademark-guidelines/
+
+Amazon Web Services, AWS and the marks of individual AWS services are
+trademarks of Amazon.com, Inc. or its affiliates. Arkitect is not affiliated
+with, endorsed by, or sponsored by Amazon Web Services.
+
+--------------------------------------------------------------------------------
+Excalidraw libraries
+--------------------------------------------------------------------------------
+
+  skills/arkitect-excalidraw/assets/libraries/bundled/*.excalidrawlib
+
+36 libraries, 1,162 items, obtained from the public Excalidraw library
+catalogue at
+
+  https://libraries.excalidraw.com/
+
+Each library belongs to its author and remains under the licence its author
+published it under. Every library, its author and its item count are listed in
+
+  skills/arkitect-excalidraw/assets/libraries/bundled/ATTRIBUTION.md
+
+They are committed here so that a diagram can be drawn offline and so that the
+same product always gets the same mark. Follow the catalogue link before
+reusing a library outside a diagram.
+
+Several libraries contain vendor marks - Microsoft Azure, Google Cloud,
+Snowflake, and others. Those marks belong to their respective owners and are
+used only to label the products they represent.
+
+--------------------------------------------------------------------------------
+Tools this project drives
+--------------------------------------------------------------------------------
+
+Draw.io / diagrams.net is a product of JGraph Ltd, distributed under the
+Apache License 2.0. Arkitect writes its file format and optionally calls the
+Draw.io Desktop binary and the Draw.io MCP server; it does not redistribute
+either.
+
+  https://github.com/jgraph/drawio
+
+Excalidraw is distributed under the MIT License by the Excalidraw team.
+Arkitect writes its scene format and optionally runs the official
+`excalidraw/excalidraw` container image; it does not redistribute the
+application.
+
+  https://github.com/excalidraw/excalidraw
+
+--------------------------------------------------------------------------------
+Product logos
+--------------------------------------------------------------------------------
+
+Logos fetched at your request by `arkitect drawio logo` or
+`arkitect excalidraw make-icon` are cached under
+`skills/*/assets/{logos,icons}/` and are deliberately NOT committed to this
+repository. Each such logo remains the trademark of its owner, is fetched from a
+source you name, and is used only to label the product it belongs to.

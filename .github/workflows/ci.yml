@@ -1,0 +1,67 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.os }} · node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: ['20', '22']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      # There is nothing to install. That is the point.
+      - name: Suite
+        run: node tests/run-tests.mjs
+
+      - name: CLI smoke test
+        run: |
+          node bin/arkitect.mjs version
+          node bin/arkitect.mjs doctor
+          node bin/arkitect.mjs drawio icon "bedrock"
+          node bin/arkitect.mjs excalidraw icon "postgres"
+
+  plugin:
+    name: plugin manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # claude-code is not installed on the runner, so validate the shape of the
+      # manifests and the skills the same way the suite does, without the CLI.
+      - name: Manifests parse and every skill has frontmatter
+        run: |
+          node -e "
+            const fs = require('fs');
+            const p = JSON.parse(fs.readFileSync('.claude-plugin/plugin.json', 'utf8'));
+            const m = JSON.parse(fs.readFileSync('.claude-plugin/marketplace.json', 'utf8'));
+            if (p.name !== 'arkitect') throw new Error('plugin name');
+            if (m.plugins[0].name !== 'arkitect') throw new Error('marketplace name');
+            const skills = fs.readdirSync('skills');
+            if (skills.length !== 4) throw new Error('expected 4 skills, found ' + skills.length);
+            for (const s of skills) {
+              const md = fs.readFileSync('skills/' + s + '/SKILL.md', 'utf8');
+              if (!md.startsWith('---')) throw new Error(s + ': no frontmatter');
+              if (!md.includes('name: ' + s)) throw new Error(s + ': name mismatch');
+            }
+            console.log('ok  ' + skills.length + ' skills, manifests valid');
+          "

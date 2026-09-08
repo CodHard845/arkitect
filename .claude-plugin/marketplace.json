@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "arkitect",
+  "description": "Editable Draw.io and Excalidraw architecture, system and flow diagrams, drawn by your coding agent - offline, with 1,400+ bundled icons",
+  "owner": {
+    "name": "mouadja02",
+    "email": "mouadpro02@gmail.com",
+    "url": "https://github.com/mouadja02"
+  },
+  "plugins": [
+    {
+      "name": "arkitect",
+      "description": "Your agent draws the architecture. Creates and edits native, editable Draw.io (.drawio) and Excalidraw (.excalidraw) diagrams - cloud and system architectures, data pipelines, agentic systems, network views and flow diagrams - with 1,400+ bundled icons, a learned house style, and everything running locally.",
+      "source": "./",
+      "category": "productivity",
+      "keywords": ["drawio", "excalidraw", "architecture", "diagram", "flowchart", "system-design"]
+    }
+  ]
+}
