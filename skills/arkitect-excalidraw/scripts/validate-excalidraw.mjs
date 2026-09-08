@@ -124,7 +124,7 @@ export function validateScene(scene, { path = '<scene>' } = {}) {
     if (!el.startBinding && !el.endBinding) {
       floating++;
       if (!decorative) warnings.push(`arrow "${el.id}" is bound at neither end; it will not follow the shapes it connects`);
-    } else if (!el.startBinding || !el.endBinding) {
+    } else if ((!el.startBinding || !el.endBinding) && !decorative) {
       warnings.push(`arrow "${el.id}" is bound at only one end`);
     }
   }
