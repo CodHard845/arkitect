@@ -165,6 +165,16 @@ test('a non-merge adapter refuses to clobber without --force', () => {
   assert(readFileSync(join(dir, '.cursor', 'rules', 'arkitect.mdc'), 'utf8').includes('Arkitect'), '--force did not replace it');
 });
 
+test('install refuses to write into the Arkitect checkout itself', () => {
+  // It would append a copy of the pointer block, absolute path and all, to the
+  // very contract file the block tells agents to read.
+  const before = readFileSync(join(ROOT, 'AGENTS.md'), 'utf8');
+  let code = 0;
+  try { cli(['install', '--all'], { cwd: ROOT, stdio: 'pipe' }); } catch (e) { code = e.status; }
+  eq(code, 2, 'self-install should exit 2');
+  eq(readFileSync(join(ROOT, 'AGENTS.md'), 'utf8'), before, 'AGENTS.md was modified');
+});
+
 test('--print writes nothing to disk', () => {
   const dir = join(TMP, 'print');
   mkdirSync(dir, { recursive: true });

@@ -172,6 +172,7 @@ claude mcp add --scope user drawio -- npx --yes --ignore-scripts @drawio/mcp
 | [docs/icons.md](docs/icons.md) | the bundled icon sets, placeholders, logos, tracing |
 | [docs/style.md](docs/style.md) | the house style, and how to replace it with your own |
 | [docs/testing.md](docs/testing.md) | the offline suite, the redaction check, the evals |
+| [docs/maintenance.md](docs/maintenance.md) | the contract for changing this repo — invariants, and what is never automated |
 | [docs/privacy.md](docs/privacy.md) | exactly what touches the network, and what never does |
 
 ## The skills

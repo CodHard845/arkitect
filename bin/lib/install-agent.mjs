@@ -152,6 +152,16 @@ export function install(root, argv) {
     return 0;
   }
 
+  // Writing the pointer block into Arkitect's own checkout would append a copy
+  // of itself - with an absolute local path - to the contract file it points at.
+  if (resolve(target) === resolve(root) && !flags.has('--print')) {
+    console.error('refusing to install into the Arkitect checkout itself.');
+    console.error('Run this from the project you want diagrams in:');
+    console.error(`  cd ~/my-project && node ${join(root, 'bin', 'arkitect.mjs')} install --all`);
+    console.error('Or pass --dir <path>, or --print to see the block without writing it.');
+    return 2;
+  }
+
   let bad = 0;
   for (const name of chosen) {
     const adapter = ADAPTERS[name];

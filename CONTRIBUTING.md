@@ -16,6 +16,10 @@ node bin/arkitect.mjs doctor
 On a fresh clone the suite reports roughly `111 passed, 0 failed, 7 skipped`.
 The skips need reference diagrams of your own — that is the expected result.
 
+The full contract — every invariant, the verification ritual, and what an
+automated maintainer may and may not do — is in
+[docs/maintenance.md](docs/maintenance.md). The highlights:
+
 ## The rules that are not negotiable
 
 **Zero runtime dependencies.** Every script is plain Node 20+. If something
