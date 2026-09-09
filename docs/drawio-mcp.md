@@ -127,20 +127,34 @@ drawio docs/architecture.drawio                  # Linux
 
 ## Rendering to PNG
 
-Draw.io Desktop does the rendering; the helper script exists because of an
-off-by-one:
+Draw.io Desktop does the rendering locally; no hosted editor or MCP open tool
+is involved. The Node helper runs on Linux, macOS and Windows:
+
+```bash
+node bin/arkitect.mjs drawio render docs/architecture.drawio --all --out-dir .analysis/renders --width 2200
+# Direct script, same options:
+node skills/arkitect-drawio/scripts/render-drawio.mjs docs/architecture.drawio --page-index 0
+```
+
+`--all` counts pages in the file. `--drawio-exe` or `DRAWIO_EXE` overrides
+executable discovery. Outputs are `<base>.p<0-based index>.<format>`; PNG is
+the default. On Linux without `DISPLAY`, `xvfb-run -a` is used when available.
+See [CLI rendering](cli.md#rendering) for all options and troubleshooting.
+
+Linux arm64 Draw.io Desktop 24.7.17 is calibrated **0-based**: index 0 exports
+the first page, 1 the second; an out-of-range 2 clamps to the second in a
+two-page file. Windows 29.0.3 is documented **1-based**, so the Node helper
+adds 1 on Windows only. macOS uses 0-based indexes provisionally (not calibrated).
+Always pass Arkitect 0-based indexes, matching the analyzer and MCP `list_pages`.
+
+The existing Windows PowerShell helper is unchanged, including its translation:
 
 ```powershell
 ./skills/arkitect-drawio/scripts/render-drawio.ps1 `
-  -Path docs/architecture.drawio -OutDir .analysis/renders -Width 2200
+  -Path docs/architecture.drawio -All -OutDir .analysis/renders -Width 2200
 ```
 
-Draw.io Desktop 29.0.3 on Windows treats `--page-index` as **1-based**, so `0`
-and `1` both export the first page. The script takes a 0-based index and
-translates. Always go through the script rather than calling the executable
-directly.
-
-`-All` renders every page. `-DrawioExe` points at a non-default install.
+Its `-DrawioExe` option still points at a non-default install.
 
 ## Troubleshooting
 

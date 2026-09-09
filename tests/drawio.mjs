@@ -8,7 +8,7 @@
 // .analysis/sources.local.json (gitignored). Without that file those tests
 // skip rather than fail, so the suite still runs on a clean checkout.
 
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync, readdirSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, relative } from 'node:path';
@@ -58,6 +58,173 @@ const logos = await import(`file://${join(SCRIPTS, 'fetch-logo.mjs').replace(/\\
 const validator = await import(`file://${join(SCRIPTS, 'validate-drawio.mjs').replace(/\\/g, '/')}`);
 
 const LIB_DIR = join(SKILL, 'assets', 'libraries');
+
+// ------------------------------------------------------------- portable rendering
+
+const rendererPath = join(SCRIPTS, 'render-drawio.mjs');
+const renderer = existsSync(rendererPath) ? await import(new URL('../skills/arkitect-drawio/scripts/render-drawio.mjs', import.meta.url)) : {};
+function rejects(fn, pattern) {
+  let error;
+  try { fn(); } catch (e) { error = e; }
+  assert(error && pattern.test(error.message), `expected ${pattern}, got ${error?.message ?? 'no error'}`);
+}
+
+test('renderer parses defaults, explicit options and rejects invalid CLI input', () => {
+  assert(typeof renderer.parseArgs === 'function', 'renderer parseArgs is missing');
+  const defaults = renderer.parseArgs(['a.drawio']);
+  eq(JSON.stringify(defaults), JSON.stringify({ file: 'a.drawio', pageIndex: 0, all: false, width: 2200, outDir: '.', format: 'png', drawioExe: undefined, disableGpu: false, noSandbox: false }), 'defaults');
+  const opts = renderer.parseArgs(['--all', 'a.drawio', '--page-index', '2', '--width', '800', '--out-dir', 'with spaces', '--format', 'svg', '--drawio-exe', '/custom app', '--disable-gpu', '--no-sandbox']);
+  eq(opts.pageIndex, 2, 'page index'); eq(opts.width, 800, 'width');
+  eq(opts.outDir, 'with spaces', 'directory'); eq(opts.format, 'svg', 'format');
+  eq(opts.drawioExe, '/custom app', 'override'); assert(opts.all && opts.disableGpu && opts.noSandbox, 'switches');
+  for (const args of [[], ['a', 'b'], ['a', '--unknown'], ['a', '--width'], ['a', '--width', '0'], ['a', '--width', '1.5'], ['a', '--page-index', '-1'], ['a', '--page-index', 'NaN'], ['a', '--page-index', '9007199254740992'], ['a', '--out-dir'], ['a', '--format', '../png'], ['a', '--drawio-exe']]) {
+    rejects(() => renderer.parseArgs(args), /usage|unknown|expected|positive|non-negative|format/i);
+  }
+  assert(renderer.parseArgs(['--help']).help, 'help without file');
+});
+
+test('renderer discovers every platform candidate in priority order and reports all misses', () => {
+  assert(typeof renderer.discoverDrawio === 'function', 'discoverDrawio missing');
+  for (const platform of ['linux', 'darwin', 'win32']) {
+    const onWindows = platform === 'win32';
+    const env = { DRAWIO_EXE: '/environment/drawio', PATH: onWindows ? 'C:\\Tools;D:\\Apps' : '/tools:/apps' };
+    const candidates = ['/override/drawio', env.DRAWIO_EXE,
+      ...(onWindows ? ['C:\\Tools\\drawio.exe', 'D:\\Apps\\drawio.exe'] : ['/tools/drawio', '/apps/drawio']),
+      '/opt/drawio/drawio', '/usr/bin/drawio', '/Applications/draw.io.app/Contents/MacOS/draw.io',
+      'C:\\Program Files\\draw.io\\draw.io.exe', 'C:\\Program Files (x86)\\draw.io\\draw.io.exe'];
+    for (let i = 0; i < candidates.length; i++) {
+      const tried = [];
+      eq(renderer.discoverDrawio('/override/drawio', { platform, env, isExecutable: p => { tried.push(p); return p === candidates[i]; } }), candidates[i], 'chosen candidate');
+      eq(JSON.stringify(tried), JSON.stringify(candidates.slice(0, i + 1)), 'probe order');
+    }
+    let message = '';
+    try { renderer.discoverDrawio('/override/drawio', { platform, env, isExecutable: () => false }); } catch (e) { message = e.message; }
+    for (const path of candidates) assert(message.includes(path), `error omits ${path}`);
+  }
+});
+
+test('renderer exports zero-based named pages with platform-specific CLI indexes and opt-in Electron flags', () => {
+  assert(typeof renderer.render === 'function', 'render missing');
+  const file = join(TMP, 'two pages.drawio');
+  writeFileSync(file, '<mxfile><diagram id="a">compressed</diagram><diagram id="b"/></mxfile>');
+  for (const platform of ['linux', 'win32', 'darwin']) {
+    const lines = []; const calls = [];
+    const outDir = join(TMP, `render-${platform}`);
+    const options = renderer.parseArgs([file, '--all', '--width', '600', '--out-dir', outDir, '--format', 'svg', '--drawio-exe', '/custom app', '--disable-gpu', '--no-sandbox']);
+    const result = renderer.render(options, { platform, env: { DISPLAY: ':1' }, isExecutable: p => p === '/custom app', log: s => lines.push(s), runner: (exe, args, opts) => {
+      calls.push({ exe, args, opts });
+      writeFileSync(args[args.indexOf('-o') + 1], '<svg/>');
+      return { status: 9, stderr: 'Chromium cache noise' };
+    } });
+    assert(result.ok, 'fresh nonempty output must win over noisy nonzero exit');
+    eq(calls.length, 2, 'all diagram elements'); eq(lines.length, 2, 'one report per page');
+    calls.forEach(({ exe, args, opts }, i) => {
+      eq(exe, '/custom app', 'no shell splitting');
+      eq(JSON.stringify(args), JSON.stringify(['-x', '-f', 'svg', '--page-index', String(platform === 'win32' ? i + 1 : i), '--width', '600', '-o', join(outDir, `two pages.p${i}.svg`), file, '--disable-gpu', '--no-sandbox']), 'argv');
+      assert(!opts.shell, 'must not use a shell');
+      assert(lines[i].includes(`rendered page ${i}`) && lines[i].includes('(6 bytes)'), 'report includes index and size');
+    });
+  }
+  const calls = [];
+  const result = renderer.render(renderer.parseArgs([file, '--page-index', '1', '--out-dir', join(TMP, 'single')]), {
+    platform: 'linux', env: { PATH: '/tools' }, isExecutable: p => p === '/tools/drawio', log: () => {},
+    runner: (exe, args) => { calls.push(args); writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 }; },
+  });
+  assert(result.ok, 'single page succeeds'); eq(calls.length, 1, 'one selected page');
+  assert(!calls[0].includes('--disable-gpu') && !calls[0].includes('--no-sandbox'), 'flags never enabled implicitly');
+  eq(calls[0][calls[0].indexOf('--page-index') + 1], '1', 'Linux index preserved');
+});
+
+test('renderer wraps only headless Linux with available xvfb-run and logs the wrapper', () => {
+  const file = join(TMP, 'headless.drawio'); writeFileSync(file, '<mxGraphModel/>');
+  for (const [platform, display, haveXvfb, wrapped] of [
+    ['linux', '', true, true], ['linux', ':7', true, false], ['linux', '', false, false], ['darwin', '', true, false], ['win32', '', true, false],
+  ]) {
+    const lines = []; let invocation;
+    renderer.render(renderer.parseArgs([file, '--all', '--out-dir', join(TMP, 'headless')]), {
+      platform, env: { PATH: '/tools', DISPLAY: display },
+      isExecutable: p => p.includes('drawio') || (haveXvfb && p.endsWith('xvfb-run')),
+      log: s => lines.push(s), runner: (exe, args) => {
+        invocation = { exe, args }; writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 };
+      },
+    });
+    eq(invocation.exe.endsWith('xvfb-run'), wrapped, 'wrapper selection');
+    eq(lines.some(s => s.includes('xvfb-run -a')), wrapped, 'wrapper log');
+    if (wrapped) eq(JSON.stringify(invocation.args.slice(0, 3)), JSON.stringify(['-a', '/tools/drawio', '-x']), 'wrapper argv');
+  }
+});
+
+test('renderer backs up before export, rejects stale or empty output and continues after failure', () => {
+  const file = join(TMP, 'freshness.drawio'); writeFileSync(file, '<mxfile><diagram/><diagram/></mxfile>');
+  const outDir = join(TMP, 'freshness'); mkdirSync(outDir);
+  const target = join(outDir, 'freshness.p0.png'); writeFileSync(target, 'original');
+  const lines = []; let calls = 0;
+  const deps = { platform: 'linux', env: {}, isExecutable: () => true, log: s => lines.push(s), runner: (exe, args) => {
+    calls++;
+    if (calls === 1) {
+      assert(!existsSync(target), 'stale output still present during export');
+      const backups = readdirSync(outDir).filter(p => p.includes('backup-'));
+      eq(backups.length, 1, 'backup exists before invocation');
+      eq(readFileSync(join(outDir, backups[0]), 'utf8'), 'original', 'backup bytes');
+      return { status: 0, stderr: 'no export' };
+    }
+    writeFileSync(args[args.indexOf('-o') + 1], 'new'); return { status: 1 };
+  } };
+  const options = renderer.parseArgs([file, '--all', '--out-dir', outDir]);
+  const result = renderer.render(options, deps);
+  assert(!result.ok && !result.pages[0].ok && result.pages[1].ok, 'mixed outcome fails overall');
+  eq(calls, 2, 'continue after failed page'); eq(lines.length, 2, 'one report each');
+  assert(lines[0].includes('FAILED') && lines[0].includes('(0 bytes)'), 'failed report');
+  eq(readFileSync(target, 'utf8'), 'original', 'restore previous output on failed export');
+  const again = renderer.render({ ...options, all: false }, { ...deps, runner: (exe, args) => {
+    writeFileSync(args[args.indexOf('-o') + 1], ''); return { status: 0 };
+  } });
+  assert(!again.ok, 'empty fresh file cannot succeed');
+  eq(readdirSync(outDir).filter(p => p.includes('backup-')).length, 2, 'unique backups even in same second');
+  eq(readFileSync(target, 'utf8'), 'original', 'empty export restores original');
+  const thrown = renderer.render({ ...options, all: false }, { ...deps, runner: () => { throw new Error('spawn failed'); } });
+  assert(!thrown.ok, 'spawn failure reported');
+  eq(readFileSync(target, 'utf8'), 'original', 'spawn failure restores original');
+  rejects(() => renderer.render({ ...options, file: join(TMP, 'absent.drawio') }, deps), /no such diagram/i);
+});
+
+test('renderer CLI exposes help, validates arguments and propagates through the dispatcher', () => {
+  for (const prefix of [[rendererPath], [join(ROOT, 'bin', 'arkitect.mjs'), 'drawio', 'render']]) {
+    const run = args => spawnSync(process.execPath, [...prefix, ...args], { encoding: 'utf8' });
+    const help = run(['--help']); eq(help.status, 0, 'help status');
+    assert(help.stdout.includes('--page-index') && help.stdout.includes('--drawio-exe'), 'renderer help surfaced');
+    const invalid = run(['a.drawio', '--width', '0']);
+    eq(invalid.status, 2, 'argument failure status'); assert(invalid.stderr.includes('positive'), 'argument diagnostic');
+    const missing = run([join(TMP, 'missing.drawio')]);
+    eq(missing.status, 1, 'missing input status'); assert(missing.stderr.includes('No such diagram'), 'missing input diagnostic');
+    // Node is an existing executable but cannot accept Draw.io flags; proves the
+    // real subprocess failure path without installing or launching Desktop.
+    const noOutput = run([join(TMP, 'headless.drawio'), '--drawio-exe', process.execPath, '--out-dir', join(TMP, 'cli-failure')]);
+    eq(noOutput.status, 1, 'no-output export status'); assert(noOutput.stdout.includes('FAILED'), 'export failure report');
+  }
+  const help = execFileSync(process.execPath, [join(ROOT, 'bin', 'arkitect.mjs'), '--help'], { encoding: 'utf8' });
+  assert(help.includes('arkitect drawio render'), 'dispatcher command listing');
+});
+
+// Opt-in local integration: ARKITECT_DRAWIO_SMOKE=1 node tests/drawio.mjs.
+// Default tests remain offline/deterministic with no new prerequisite skips.
+if (process.env.ARKITECT_DRAWIO_SMOKE === '1') test('installed Desktop exports distinct synthetic pages as real PNGs', () => {
+  let exe;
+  try { exe = renderer.discoverDrawio(); } catch { return 'skip'; }
+  const file = join(TMP, 'desktop-smoke.drawio');
+  const page = (id, color, width) => `<diagram id="${id}" name="${id}"><mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="2" value="${id}" style="fillColor=${color};" vertex="1" parent="1"><mxGeometry x="10" y="10" width="${width}" height="80" as="geometry"/></mxCell></root></mxGraphModel></diagram>`;
+  writeFileSync(file, `<mxfile>${page('first', '#ff0000', 160)}${page('second', '#0000ff', 320)}</mxfile>`);
+  const outDir = join(TMP, 'desktop-smoke');
+  const result = spawnSync(process.execPath, [join(ROOT, 'bin', 'arkitect.mjs'), 'drawio', 'render', file, '--all', '--width', '600', '--out-dir', outDir, '--drawio-exe', exe, '--disable-gpu'], { encoding: 'utf8', timeout: 120000 });
+  eq(result.status, 0, `Desktop export: ${result.stdout} ${result.stderr}`);
+  const pages = [0, 1].map(i => readFileSync(join(outDir, `desktop-smoke.p${i}.png`)));
+  for (const png of pages) {
+    eq(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a', 'PNG signature');
+    eq(png.readUInt32BE(16), 600, 'PNG width');
+    assert(png.length > 100, 'nontrivial PNG');
+  }
+  assert(!pages[0].equals(pages[1]), 'both exports selected the same page');
+});
 
 // ------------------------------------------------------------- library
 

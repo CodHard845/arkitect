@@ -75,10 +75,24 @@ node bin/arkitect.mjs excalidraw validate docs/arch.excalidraw
 node bin/arkitect.mjs excalidraw render docs/arch.excalidraw --out .analysis/renders
 ```
 
-Rendering a `.drawio` to PNG uses Draw.io Desktop through
-`skills/arkitect-drawio/scripts/render-drawio.ps1` (PowerShell; it corrects a
-page-index off-by-one, so go through the script). Excalidraw renders with
-`arkitect excalidraw render`, no app required.
+Rendering a `.drawio` to PNG uses local Draw.io Desktop on Linux/macOS/Windows:
+
+```bash
+node bin/arkitect.mjs drawio render docs/arch.drawio --all --out-dir .analysis/renders
+```
+
+The Node helper discovers the app and uses Xvfb on headless Linux when available.
+Indexes are always 0-based: Linux 24.7.17 uses them directly; Windows 29.0.3
+needs translation to 1-based. macOS uses 0-based indexes provisionally (not yet
+calibrated). The existing `skills/arkitect-drawio/scripts/render-drawio.ps1`
+remains supported unchanged. See `docs/cli.md` for overrides and troubleshooting.
+Excalidraw renders with `arkitect excalidraw render`, no app required.
+
+Draw.io generator changes must be built, validated, rendered and visually
+inspected before a PR. Never commit renders; only renders built from committed
+repository templates may be attached to a PR. Real architecture stays local.
+If a host update breaks rendering, report 🔴 and explicitly fall back to
+validate-only until repaired; do not silently omit visual verification.
 
 Every script also runs directly out of `skills/*/scripts/` if you prefer.
 Full reference: `docs/cli.md`.

@@ -62,13 +62,28 @@ Read `references/style-guide.md` before laying anything out, and
    check them against the render.
 
 7. **Render and actually look at it.**
-   ```powershell
-   ./scripts/render-drawio.ps1 -Path "path/to/diagram.drawio" -OutDir .analysis/renders -Width 2200
+   ```bash
+   node scripts/render-drawio.mjs "path/to/diagram.drawio" --out-dir .analysis/renders --width 2200
+   # Or from the repository root:
+   node bin/arkitect.mjs drawio render "path/to/diagram.drawio" --all --out-dir .analysis/renders
    ```
+   Uses local Draw.io Desktop on Linux, macOS and Windows, with automatic
+   `xvfb-run -a` wrapping on Linux without `DISPLAY` when available. Override
+   discovery with `--drawio-exe` or `DRAWIO_EXE`. Outputs are
+   `<base>.p<0-based index>.png`. The PowerShell helper remains unchanged:
+   `./scripts/render-drawio.ps1 -Path "path/to/diagram.drawio" -OutDir .analysis/renders`.
    Read the PNG back as an image. Iterate until spacing, hierarchy, routing and label
    legibility hold up. A diagram that validates but reads badly is not done.
-   Note: this draw.io build treats `--page-index` as 1-based; the script takes a 0-based
-   index and translates, so always go through the script.
+   Both helpers accept 0-based indexes. Linux arm64 Desktop 24.7.17 is
+   calibrated 0-based; Windows 29.0.3 requires a +1 translation. macOS uses
+   0-based indexes provisionally (not calibrated).
+   Judge export success by a fresh non-empty output, not Chromium stderr noise.
+   Extra Electron flags are opt-in: `--disable-gpu` for observed GPU errors,
+   `--no-sandbox` only for a diagnosed sandbox failure. Never add them blindly.
+   After a host update breaks rendering, report 🔴 and explicitly fall back to
+   validate-only until fixed. Generator changes need a build, render and visual
+   inspection before a PR; only committed-template renders may be attached.
+   Never commit a render or upload real architecture.
 
 8. **Open it on request.** `& 'C:\Program Files\draw.io\draw.io.exe' "<file>"`.
 

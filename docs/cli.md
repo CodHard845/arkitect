@@ -25,6 +25,7 @@ arkitect drawio logo --list
 arkitect drawio logo --inspect snowflake              # size, transparency, source
 arkitect drawio build spec.json --out docs/arch.drawio
 arkitect drawio validate docs/arch.drawio
+arkitect drawio render docs/arch.drawio --all --out-dir .analysis/renders
 arkitect drawio analyze docs/arch.drawio --page 0 --cells
 arkitect drawio analyze docs/arch.drawio --page 0 --images
 arkitect drawio library --verify                      # 14 library invariants
@@ -199,9 +200,11 @@ your first spec.**
 silently disappears. Draw.io's own files use `data:image/svg+xml,<base64>`. The
 scripts handle it; hand-written XML must too.
 
-**Draw.io page indexing is off by one.** Draw.io Desktop 29.0.3 on Windows
-treats `--page-index` as 1-based. `render-drawio.ps1` takes a 0-based index and
-translates — go through the script.
+**Draw.io page indexing varies by build.** Linux arm64 Desktop 24.7.17 is
+0-based; Windows Desktop 29.0.3 is 1-based. `arkitect drawio render` always
+accepts 0-based indexes and translates on Windows. macOS follows 0-based
+indexing provisionally; it has not been calibrated. The PowerShell helper
+retains its existing Windows translation.
 
 **Excalidraw arrow points are relative.** An arrow's `x`/`y` is its first point
 and `points[0]` is `[0,0]`. Absolute coordinates in `points` move the arrow
@@ -217,10 +220,60 @@ Full format notes:
 
 ## Rendering
 
+```bash
+arkitect drawio render docs/arch.drawio --page-index 0 --width 2200 --out-dir .analysis/renders --format png
+arkitect drawio render docs/arch.drawio --all --drawio-exe /path/to/drawio
+```
+
+Options: `<file>` is required; `--page-index N` is 0-based (default `0`),
+`--all` selects every `<diagram>`, `--width` defaults to `2200`, `--out-dir`
+to `.`, and `--format` to `png`. Output names are `<base>.p<N>.<format>`.
+The direct entry point is `skills/arkitect-drawio/scripts/render-drawio.mjs`.
+The existing PowerShell invocation above remains supported unchanged.
+
+The normal suite tests parsing, discovery, page translation and export handling
+without requiring Desktop. For the optional real two-page PNG smoke test, run
+`ARKITECT_DRAWIO_SMOKE=1 node tests/drawio.mjs` (PowerShell:
+`$env:ARKITECT_DRAWIO_SMOKE='1'; node tests/drawio.mjs`). This additional test
+skips when Desktop is absent; no existing tests acquire new prerequisites.
+
+Executable discovery: explicit `--drawio-exe` takes precedence; otherwise
+`DRAWIO_EXE`, `drawio` on PATH, `/opt/drawio/drawio`, `/usr/bin/drawio`,
+`/Applications/draw.io.app/Contents/MacOS/draw.io`, then
+`C:\Program Files\draw.io\draw.io.exe` and
+`C:\Program Files (x86)\draw.io\draw.io.exe`. Missing-app errors list the
+candidates tried. Rendering is local; never use the hosted editor.
+
+On Linux without `DISPLAY`, the helper announces and uses `xvfb-run -a` if
+available. Install Xvfb separately when needed, and set `HOME` under cron/ssh.
+Only add `--disable-gpu` for observed GPU failures, or `--no-sandbox` for a
+diagnosed sandbox/user-namespace failure; neither is enabled blindly.
+
+**Calibration:** Ubuntu Raspberry Pi arm64, Draw.io Desktop 24.7.17: a
+two-page copy of the committed starter template with a visible second-page
+marker exported first/second/second for CLI indexes 0/1/2. Linux therefore
+passes indexes unchanged. Windows 29.0.3 uses the existing documented +1
+translation; macOS follows 0-based provisionally, not yet calibrated.
+
+This Pi exports successfully without extra flags, but logs a GPU initialization
+error. `--disable-gpu` suppresses it; `--no-sandbox` is not needed. This build
+requires Electron flags **after the input filename** when called directly:
+
+```bash
+xvfb-run -a drawio -x -f png --width 2200 --page-index 0 -o out.png input.drawio --disable-gpu
+```
+
+The helper handles that ordering. Chromium stderr warnings are noise; success
+requires a fresh non-empty output. Existing outputs are backed up before
+replacement. Read the PNG back before delivery. If rendering breaks after a
+host update, report 🔴 and explicitly fall back to validate-only until fixed.
+Never commit renders or upload real architecture; PR attachments must come
+only from committed repository templates.
+
 | | Draw.io | Excalidraw |
 |---|---|---|
-| command | `render-drawio.ps1` | `arkitect excalidraw render`, or `render-excalidraw.ps1` for PNG |
-| needs | Draw.io Desktop | nothing (SVG) / Edge or Chrome (PNG) |
+| command | `arkitect drawio render`, or unchanged `render-drawio.ps1` | `arkitect excalidraw render`, or `render-excalidraw.ps1` for PNG |
+| needs | Draw.io Desktop; Xvfb for headless Linux | nothing (SVG) / Edge or Chrome (PNG) |
 | fidelity | exact | geometry exact; fonts substituted, fills flat |
 
 The Excalidraw preview is a preview, not an export: Excalidraw's fonts are not
