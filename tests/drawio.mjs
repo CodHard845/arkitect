@@ -8,7 +8,7 @@
 // .analysis/sources.local.json (gitignored). Without that file those tests
 // skip rather than fail, so the suite still runs on a clean checkout.
 
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync, readdirSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, relative } from 'node:path';
@@ -58,6 +58,324 @@ const logos = await import(`file://${join(SCRIPTS, 'fetch-logo.mjs').replace(/\\
 const validator = await import(`file://${join(SCRIPTS, 'validate-drawio.mjs').replace(/\\/g, '/')}`);
 
 const LIB_DIR = join(SKILL, 'assets', 'libraries');
+
+test('mxfile preserves raw decoded/compressed pages and wrapper bytes while ignoring fake tags', () => {
+  const file = join(TMP, 'raw-pages.drawio');
+  const inner = '\r\n<mxGraphModel><root><mxCell id="0" value="é &amp; x"/></root></mxGraphModel>\r\n';
+  const packed = deflateRawSync(Buffer.from(encodeURIComponent(inner), 'binary')).toString('base64');
+  const raw = [`<diagram id="a" name="A > B">${inner}</diagram>`, `<diagram id="b">\r\n${packed}\r\n</diagram>`, '<diagram id="c"/>'];
+  const opening = '<mxfile host="local > desktop"\r\n agent=\'test\' compressed="true">';
+  writeFileSync(file, opening + '<!-- <diagram>fake</diagram> -->'
+    + '<![CDATA[ > <diagram>fake</diagram><diagram/> ]]>'
+    + '<diagram-extra>fake</diagram-extra>' + raw.join('\r\n') + '</mxfile>');
+  const mx = core.readMxfile(file);
+  eq(mx.pages.length, 3, 'real page count including self closing');
+  eq(mx.opening, opening, 'verbatim wrapper opening');
+  raw.forEach((page, i) => eq(mx.pages[i].raw, page, `raw page ${i}`));
+  eq(mx.pages[0].xml, inner, 'uncompressed XML API');
+  eq(mx.pages[1].xml, inner, 'decoded compressed XML API');
+  eq(mx.pages[1].compressed, true, 'compressed metadata');
+  eq(mx.pages[2].xml, '', 'empty page XML');
+});
+
+// ------------------------------------------------------------- portable rendering
+
+const rendererPath = join(SCRIPTS, 'render-drawio.mjs');
+const renderer = existsSync(rendererPath) ? await import(new URL('../skills/arkitect-drawio/scripts/render-drawio.mjs', import.meta.url)) : {};
+function rejects(fn, pattern) {
+  let error;
+  try { fn(); } catch (e) { error = e; }
+  assert(error && pattern.test(error.message), `expected ${pattern}, got ${error?.message ?? 'no error'}`);
+}
+
+test('renderer parses defaults, explicit options and rejects invalid CLI input', () => {
+  assert(typeof renderer.parseArgs === 'function', 'renderer parseArgs is missing');
+  const defaults = renderer.parseArgs(['a.drawio']);
+  eq(JSON.stringify(defaults), JSON.stringify({ file: 'a.drawio', pageIndex: 0, all: false, width: 2200, outDir: '.', format: 'png', drawioExe: undefined, disableGpu: false, noSandbox: false, pageIndexPassthrough: false }), 'defaults');
+  const opts = renderer.parseArgs(['--all', 'a.drawio', '--page-index', '2', '--width', '800', '--out-dir', 'with spaces', '--format', 'svg', '--drawio-exe', '/custom app', '--disable-gpu', '--no-sandbox']);
+  eq(opts.pageIndex, 2, 'page index'); eq(opts.width, 800, 'width');
+  eq(opts.outDir, 'with spaces', 'directory'); eq(opts.format, 'svg', 'format');
+  eq(opts.drawioExe, '/custom app', 'override'); assert(opts.all && opts.disableGpu && opts.noSandbox, 'switches');
+  for (const args of [[], ['a', 'b'], ['a', '--unknown'], ['a', '--width'], ['a', '--width', '0'], ['a', '--width', '1.5'], ['a', '--page-index', '-1'], ['a', '--page-index', 'NaN'], ['a', '--page-index', '9007199254740992'], ['a', '--out-dir'], ['a', '--format', '../png'], ['a', '--drawio-exe']]) {
+    rejects(() => renderer.parseArgs(args), /usage|unknown|expected|positive|non-negative|format/i);
+  }
+  assert(renderer.parseArgs(['--help']).help, 'help without file');
+});
+
+test('renderer discovers auto-discovery candidates in priority order and reports all misses', () => {
+  assert(typeof renderer.discoverDrawio === 'function', 'discoverDrawio missing');
+  for (const platform of ['linux', 'darwin', 'win32']) {
+    const onWindows = platform === 'win32';
+    const env = { PATH: onWindows ? 'C:\\Tools;D:\\Apps' : '/tools:/apps' };
+    const candidates = [
+      ...(onWindows ? ['C:\\Tools\\drawio.exe', 'D:\\Apps\\drawio.exe'] : ['/tools/drawio', '/apps/drawio']),
+      '/opt/drawio/drawio', '/usr/bin/drawio', '/Applications/draw.io.app/Contents/MacOS/draw.io',
+      'C:\\Program Files\\draw.io\\draw.io.exe', 'C:\\Program Files (x86)\\draw.io\\draw.io.exe'];
+    for (let i = 0; i < candidates.length; i++) {
+      const tried = [];
+      eq(renderer.discoverDrawio(undefined, { platform, env, isExecutable: p => { tried.push(p); return p === candidates[i]; } }), candidates[i], 'chosen candidate');
+      eq(JSON.stringify(tried), JSON.stringify(candidates.slice(0, i + 1)), 'probe order');
+    }
+    let message = '';
+    try { renderer.discoverDrawio(undefined, { platform, env, isExecutable: () => false }); } catch (e) { message = e.message; }
+    for (const path of candidates) assert(message.includes(path), `error omits ${path}`);
+  }
+});
+
+test('renderer pins an explicit override and never falls through to auto-discovery', () => {
+  assert(typeof renderer.discoverDrawio === 'function', 'discoverDrawio missing');
+  for (const platform of ['linux', 'darwin', 'win32']) {
+    let probes = 0; let message = '';
+    try { renderer.discoverDrawio('/override/drawio', { platform, env: {}, isExecutable: p => { probes++; return false; } }); } catch (e) { message = e.message; }
+    assert(message.includes('--drawio-exe'), 'names --drawio-exe');
+    assert(message.includes('/override/drawio'), 'names the override path');
+    eq(probes, 1, 'override probes exactly once and never falls through');
+
+    probes = 0; message = '';
+    try { renderer.discoverDrawio(undefined, { platform, env: { DRAWIO_EXE: '/environment/drawio' }, isExecutable: p => { probes++; return false; } }); } catch (e) { message = e.message; }
+    assert(message.includes('DRAWIO_EXE'), 'names DRAWIO_EXE');
+    assert(message.includes('/environment/drawio'), 'names the env path');
+    eq(probes, 1, 'env pin probes exactly once and never falls through');
+
+    probes = 0;
+    eq(renderer.discoverDrawio('/override/drawio', { platform, env: { DRAWIO_EXE: '/environment/drawio' }, isExecutable: p => { probes++; return p === '/override/drawio'; } }), '/override/drawio', 'executable override wins over env');
+    eq(probes, 1, 'executable override probes once');
+  }
+});
+
+test('renderer splits zero-based pages on all platforms and preserves opt-in Electron flags', () => {
+  assert(typeof renderer.render === 'function', 'render missing');
+  const file = join(TMP, 'two pages.drawio');
+  const opening = '<mxfile host="desktop > local"\r\n compressed="true" agent=\'test\'>';
+  const packed = deflateRawSync(Buffer.from(encodeURIComponent('<mxGraphModel><root><mxCell id="0"/></root></mxGraphModel>'))).toString('base64');
+  const raw = ['<diagram id="a">\r\n<mxGraphModel/>\r\n</diagram>', `<diagram id="b">\r\n${packed}\r\n</diagram>`];
+  writeFileSync(file, opening + raw.join('\r\n') + '</mxfile>');
+  for (const platform of ['linux', 'win32', 'darwin']) {
+    const lines = []; const calls = [];
+    const outDir = join(TMP, `render-${platform}`);
+    const options = renderer.parseArgs([file, '--all', '--width', '600', '--out-dir', outDir, '--format', 'svg', '--drawio-exe', '/custom app', '--disable-gpu', '--no-sandbox']);
+    const result = renderer.render(options, { platform, env: { DISPLAY: ':1' }, isExecutable: p => p === '/custom app', log: s => lines.push(s), runner: (exe, args, opts) => {
+      const input = args[args.indexOf('-o') + 2];
+      calls.push({ exe, args, opts, input, bytes: readFileSync(input), count: core.readMxfile(input).pages.length, mode: statSync(dirname(input)).mode & 0o777 });
+      writeFileSync(args[args.indexOf('-o') + 1], '<svg/>');
+      return { status: 9, stderr: 'Chromium cache noise' };
+    } });
+    assert(result.ok, 'fresh nonempty output must win over noisy nonzero exit');
+    eq(calls.length, 2, 'all diagram elements'); eq(lines.length, 2, 'one report per page');
+    calls.forEach(({ exe, args, opts, input, bytes, count, mode }, i) => {
+      eq(exe, '/custom app', 'no shell splitting');
+      eq(JSON.stringify(args), JSON.stringify(['-x', '-f', 'svg', '--width', '600', '-o', join(outDir, `two pages.p${i}.svg`), input, '--disable-gpu', '--no-sandbox']), 'argv without Desktop index');
+      assert(input !== file && input.endsWith('.drawio'), 'private split input');
+      eq(count, 1, 'exactly one page per input');
+      assert(bytes.equals(Buffer.from(opening + raw[i] + '</mxfile>')), 'wrapper and payload bytes preserved');
+      if (process.platform !== 'win32') eq(mode, 0o700, 'private temporary directory');
+      assert(!existsSync(input) && !existsSync(dirname(input)), 'temporary input and directory removed after success');
+      assert(!opts.shell, 'must not use a shell');
+      assert(lines[i].includes(`rendered page ${i}`) && lines[i].includes('(6 bytes)'), 'report includes index and size');
+    });
+  }
+  const calls = [];
+  const result = renderer.render(renderer.parseArgs([file, '--page-index', '1', '--out-dir', join(TMP, 'single')]), {
+    platform: 'linux', env: { PATH: '/tools' }, isExecutable: p => p === '/tools/drawio', log: () => {},
+    runner: (exe, args) => { calls.push(args); writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 }; },
+  });
+  assert(result.ok, 'single page succeeds'); eq(calls.length, 1, 'one selected page');
+  assert(!calls[0].includes('--disable-gpu') && !calls[0].includes('--no-sandbox'), 'flags never enabled implicitly');
+  assert(!calls[0].includes('--page-index'), 'selected page also omits Desktop index');
+});
+
+test('renderer debug passthrough uses the original source and exact raw index on every platform', () => {
+  const file = join(TMP, 'passthrough.drawio');
+  writeFileSync(file, '<mxfile><diagram/><diagram/></mxfile>');
+  for (const platform of ['linux', 'win32', 'darwin']) for (const rawIndex of ['0', '1', '01']) {
+    let invocation;
+    const options = renderer.parseArgs([file, '--page-index', rawIndex, '--page-index-passthrough', '--out-dir', join(TMP, 'passthrough')]);
+    assert(options.pageIndexPassthrough, 'debug switch enabled');
+    const result = renderer.render(options, { platform, env: { DISPLAY: ':1' }, isExecutable: () => true, log: () => {}, runner: (exe, args) => {
+      invocation = args; writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 };
+    } });
+    assert(result.ok, 'passthrough exported');
+    eq(invocation[invocation.indexOf('-o') + 2], file, 'original source, not split');
+    eq(invocation[invocation.indexOf('--page-index') + 1], rawIndex, 'raw CLI index unchanged');
+  }
+});
+
+test('renderer removes split inputs after empty output, spawn failure and reporting failure', () => {
+  const file = join(TMP, 'cleanup.drawio'); writeFileSync(file, '<mxfile><diagram/></mxfile>');
+  for (const failure of ['empty', 'spawn', 'log']) {
+    let input;
+    const run = () => renderer.render(renderer.parseArgs([file, '--out-dir', join(TMP, 'cleanup')]), {
+      platform: 'linux', env: { DISPLAY: ':1' }, isExecutable: () => true,
+      log: () => { if (failure === 'log') throw new Error('report failed'); },
+      runner: (exe, args) => { input = args[args.indexOf('-o') + 2]; if (failure === 'spawn') throw new Error('spawn failed'); return { status: 1 }; },
+    });
+    if (failure === 'log') rejects(run, /report failed/); else assert(!run().ok, 'failure reported');
+    assert(input !== file && !existsSync(input) && !existsSync(dirname(input)), `cleaned after ${failure}`);
+    assert(existsSync(file), 'source never deleted');
+  }
+});
+
+test('renderer validates all and passthrough ranges before discovery or export', () => {
+  const file = join(TMP, 'invalid-ranges.drawio'); writeFileSync(file, '<mxfile><diagram/><diagram/></mxfile>');
+  for (const flags of [[], ['--all'], ['--page-index-passthrough'], ['--all', '--page-index-passthrough']]) {
+    const options = renderer.parseArgs([file, '--page-index', '2', ...flags]);
+    let probes = 0; let calls = 0;
+    rejects(() => renderer.render(options, { isExecutable: () => { probes++; return true; }, runner: () => { calls++; }, log: () => {} }), /out of range/);
+    eq(probes, 0, 'no discovery before validation'); eq(calls, 0, 'no export before validation');
+  }
+});
+
+test('renderer wraps only headless Linux with available xvfb-run and logs the wrapper', () => {
+  const file = join(TMP, 'headless.drawio'); writeFileSync(file, '<mxGraphModel/>');
+  for (const [platform, display, haveXvfb, wrapped] of [
+    ['linux', '', true, true], ['linux', ':7', true, false], ['linux', '', false, false], ['darwin', '', true, false], ['win32', '', true, false],
+  ]) {
+    const lines = []; let invocation;
+    renderer.render(renderer.parseArgs([file, '--all', '--out-dir', join(TMP, 'headless')]), {
+      platform, env: { PATH: '/tools', DISPLAY: display },
+      isExecutable: p => p.includes('drawio') || (haveXvfb && p.endsWith('xvfb-run')),
+      log: s => lines.push(s), runner: (exe, args) => {
+        invocation = { exe, args }; writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 };
+      },
+    });
+    eq(invocation.exe.endsWith('xvfb-run'), wrapped, 'wrapper selection');
+    eq(lines.some(s => s.includes('xvfb-run -a')), wrapped, 'wrapper log');
+    if (wrapped) eq(JSON.stringify(invocation.args.slice(0, 3)), JSON.stringify(['-a', '/tools/drawio', '-x']), 'wrapper argv');
+  }
+});
+
+test('renderer backs up before export, rejects stale or empty output and continues after failure', () => {
+  const file = join(TMP, 'freshness.drawio'); writeFileSync(file, '<mxfile><diagram/><diagram/></mxfile>');
+  const outDir = join(TMP, 'freshness'); mkdirSync(outDir);
+  const target = join(outDir, 'freshness.p0.png'); writeFileSync(target, 'original');
+  const lines = []; let calls = 0;
+  const deps = { platform: 'linux', env: {}, isExecutable: () => true, log: s => lines.push(s), runner: (exe, args) => {
+    calls++;
+    if (calls === 1) {
+      assert(!existsSync(target), 'stale output still present during export');
+      const backups = readdirSync(outDir).filter(p => p.includes('backup-'));
+      eq(backups.length, 1, 'backup exists before invocation');
+      eq(readFileSync(join(outDir, backups[0]), 'utf8'), 'original', 'backup bytes');
+      return { status: 0, stderr: 'no export' };
+    }
+    writeFileSync(args[args.indexOf('-o') + 1], 'new'); return { status: 1 };
+  } };
+  const options = renderer.parseArgs([file, '--all', '--out-dir', outDir]);
+  const result = renderer.render(options, deps);
+  assert(!result.ok && !result.pages[0].ok && result.pages[1].ok, 'mixed outcome fails overall');
+  eq(calls, 2, 'continue after failed page'); eq(lines.length, 2, 'one report each');
+  assert(lines[0].includes('FAILED') && lines[0].includes('(0 bytes)'), 'failed report');
+  eq(readFileSync(target, 'utf8'), 'original', 'restore previous output on failed export');
+  const again = renderer.render({ ...options, all: false }, { ...deps, runner: (exe, args) => {
+    writeFileSync(args[args.indexOf('-o') + 1], ''); return { status: 0 };
+  } });
+  assert(!again.ok, 'empty fresh file cannot succeed');
+  eq(readdirSync(outDir).filter(p => p.includes('backup-')).length, 2, 'unique backups even in same second');
+  eq(readFileSync(target, 'utf8'), 'original', 'empty export restores original');
+  const thrown = renderer.render({ ...options, all: false }, { ...deps, runner: () => { throw new Error('spawn failed'); } });
+  assert(!thrown.ok, 'spawn failure reported');
+  eq(readFileSync(target, 'utf8'), 'original', 'spawn failure restores original');
+  rejects(() => renderer.render({ ...options, file: join(TMP, 'absent.drawio') }, deps), /no such diagram/i);
+});
+
+test('renderer CLI exposes help, validates arguments and propagates through the dispatcher', () => {
+  for (const prefix of [[rendererPath], [join(ROOT, 'bin', 'arkitect.mjs'), 'drawio', 'render']]) {
+    const run = args => spawnSync(process.execPath, [...prefix, ...args], { encoding: 'utf8' });
+    const help = run(['--help']); eq(help.status, 0, 'help status');
+    assert(help.stdout.includes('--page-index') && help.stdout.includes('--drawio-exe'), 'renderer help surfaced');
+    const invalid = run(['a.drawio', '--width', '0']);
+    eq(invalid.status, 2, 'argument failure status'); assert(invalid.stderr.includes('positive'), 'argument diagnostic');
+    const missing = run([join(TMP, 'missing.drawio')]);
+    eq(missing.status, 1, 'missing input status'); assert(missing.stderr.includes('No such diagram'), 'missing input diagnostic');
+    // Node is an existing executable but cannot accept Draw.io flags; proves the
+    // real subprocess failure path without installing or launching Desktop.
+    const noOutput = run([join(TMP, 'headless.drawio'), '--drawio-exe', process.execPath, '--out-dir', join(TMP, 'cli-failure')]);
+    eq(noOutput.status, 1, 'no-output export status'); assert(noOutput.stdout.includes('FAILED'), 'export failure report');
+  }
+  const help = execFileSync(process.execPath, [join(ROOT, 'bin', 'arkitect.mjs'), '--help'], { encoding: 'utf8' });
+  assert(help.includes('arkitect drawio render'), 'dispatcher command listing');
+});
+
+test('renderer rejects an explicit page index beyond the real page count', () => {
+  const file = join(TMP, 'range.drawio');
+  writeFileSync(file, '<mxfile><diagram id="a"/><diagram id="b"/></mxfile>');
+  const outDir = join(TMP, 'range');
+  rejects(() => renderer.render(renderer.parseArgs([file, '--page-index', '2', '--out-dir', outDir]), {
+    platform: 'linux', env: {}, isExecutable: () => true, log: () => {},
+    runner: () => { throw new Error('must not run'); },
+  }), /out of range/i);
+  const calls = [];
+  const ok = renderer.render(renderer.parseArgs([file, '--page-index', '1', '--out-dir', outDir]), {
+    platform: 'linux', env: {}, isExecutable: () => true, log: () => {},
+    runner: (exe, args) => { calls.push(args); writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 }; },
+  });
+  assert(ok.ok && calls.length === 1, 'in-range index still renders');
+});
+
+test('renderer counts only real diagram elements, ignoring comments, CDATA and lookalikes', () => {
+  const file = join(TMP, 'county.drawio');
+  writeFileSync(file, '<mxfile>'
+    + '<diagram id="real1"/>'
+    + '<!-- <diagram id="commented"/> -->'
+    + '<diagram-extra id="lookalike"/>'
+    + '<![CDATA[ <diagram id="cdata"/> ]]>'
+    + '<diagram id="real2"/>'
+    + '</mxfile>');
+  const outDir = join(TMP, 'county');
+  let calls = 0;
+  const result = renderer.render(renderer.parseArgs([file, '--all', '--out-dir', outDir]), {
+    platform: 'linux', env: {}, isExecutable: () => true, log: () => {},
+    runner: (exe, args) => { calls++; writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 }; },
+  });
+  assert(result.ok, 'all real pages render');
+  eq(calls, 2, 'only the two real <diagram> elements export');
+});
+
+test('renderer accepts prototype-key filenames and rejects extra positionals', () => {
+  for (const name of ['constructor', 'toString', 'hasOwnProperty', 'valueOf']) {
+    eq(renderer.parseArgs([name]).file, name, `filename "${name}"`);
+  }
+  rejects(() => renderer.parseArgs(['a.drawio', 'toString']), /Expected one file/i);
+});
+
+test('renderer preserves standalone graph models after declarations and leading comments', () => {
+  const model = '<mxGraphModel><root><mxCell id="0"/></root></mxGraphModel>';
+  const file = join(TMP, 'standalone-prolog.drawio');
+  for (const prefix of ['<?xml version="1.0" encoding="UTF-8"?>\r\n', '<!-- <mxfile><diagram/> -->\n', '<?xml version="1.0"?>\n<!-- first -->\n<!-- second -->\n']) {
+    writeFileSync(file, prefix + model);
+    let input;
+    const result = renderer.render(renderer.parseArgs([file, '--out-dir', join(TMP, 'standalone-prolog')]), {
+      platform: 'linux', env: {}, isExecutable: () => true, log: () => {},
+      runner: (exe, args) => {
+        input = args.at(-1);
+        eq(readFileSync(input, 'utf8'), `<mxfile><diagram>${model}</diagram></mxfile>`, 'only graph XML inside diagram');
+        writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 };
+      },
+    });
+    assert(result.ok, 'standalone XML prolog is supported');
+    assert(!existsSync(input), 'temporary standalone file cleaned');
+  }
+});
+
+// Opt-in local integration: ARKITECT_DRAWIO_SMOKE=1 node tests/drawio.mjs.
+// Default tests remain offline/deterministic with no new prerequisite skips.
+if (process.env.ARKITECT_DRAWIO_SMOKE === '1') test('installed Desktop exports distinct synthetic pages as real PNGs', () => {
+  let exe;
+  try { exe = renderer.discoverDrawio(); } catch { return 'skip'; }
+  const file = join(TMP, 'desktop-smoke.drawio');
+  const page = (id, color, width) => `<diagram id="${id}" name="${id}"><mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="2" value="${id}" style="fillColor=${color};" vertex="1" parent="1"><mxGeometry x="10" y="10" width="${width}" height="80" as="geometry"/></mxCell></root></mxGraphModel></diagram>`;
+  writeFileSync(file, `<mxfile>${page('first', '#ff0000', 160)}${page('second', '#0000ff', 320)}</mxfile>`);
+  const outDir = join(TMP, 'desktop-smoke');
+  const result = spawnSync(process.execPath, [join(ROOT, 'bin', 'arkitect.mjs'), 'drawio', 'render', file, '--all', '--width', '600', '--out-dir', outDir, '--drawio-exe', exe, '--disable-gpu'], { encoding: 'utf8', timeout: 120000 });
+  eq(result.status, 0, `Desktop export: ${result.stdout} ${result.stderr}`);
+  const pages = [0, 1].map(i => readFileSync(join(outDir, `desktop-smoke.p${i}.png`)));
+  for (const png of pages) {
+    eq(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a', 'PNG signature');
+    eq(png.readUInt32BE(16), 600, 'PNG width');
+    assert(png.length > 100, 'nontrivial PNG');
+  }
+  assert(!pages[0].equals(pages[1]), 'both exports selected the same page');
+});
 
 // ------------------------------------------------------------- library
 

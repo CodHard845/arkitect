@@ -29,6 +29,7 @@ const COMMANDS = {
     logo: [DRAWIO, 'fetch-logo.mjs', 'cache a third-party product logo for embedding'],
     build: [DRAWIO, 'build-diagram.mjs', 'generate a .drawio diagram from a spec'],
     validate: [DRAWIO, 'validate-drawio.mjs', 'structural and layout checks on a .drawio file'],
+    render: [DRAWIO, 'render-drawio.mjs', 'export pages locally using Draw.io Desktop'],
     analyze: [DRAWIO, 'analyze-drawio.mjs', 'summarize a .drawio file without loading its XML'],
     library: [DRAWIO, 'extract-library.mjs', 'verify or rebuild the icon library and catalog'],
     learn: [DRAWIO, 'build-knowledge.mjs', 'rebuild the style record from your own diagrams'],
