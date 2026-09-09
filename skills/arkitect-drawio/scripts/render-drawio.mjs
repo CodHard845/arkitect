@@ -97,7 +97,19 @@ function pathCandidates(name, platform, env) {
 }
 
 export function discoverDrawio(override, { platform = process.platform, env = process.env, isExecutable = executable } = {}) {
-  const candidates = [...new Set([override, env.DRAWIO_EXE, ...pathCandidates('drawio', platform, env),
+  // An explicit override is a pin, not a hint. Page indexing differs between
+  // builds, so DRAWIO_EXE / --drawio-exe is how you select the build you mean.
+  // Falling through to a different binary would silently render with the wrong
+  // build, so an unusable override must fail naming it rather than degrade.
+  const explicit = override ?? env.DRAWIO_EXE;
+  if (explicit) {
+    if (!isExecutable(explicit)) {
+      const source = override ? '--drawio-exe' : 'DRAWIO_EXE';
+      throw new Error(`Draw.io Desktop ${source} ${explicit} is not executable.`);
+    }
+    return explicit;
+  }
+  const candidates = [...new Set([...pathCandidates('drawio', platform, env),
     '/opt/drawio/drawio', '/usr/bin/drawio', '/Applications/draw.io.app/Contents/MacOS/draw.io',
     'C:\\Program Files\\draw.io\\draw.io.exe', 'C:\\Program Files (x86)\\draw.io\\draw.io.exe'].filter(Boolean))];
   const found = candidates.find(isExecutable);

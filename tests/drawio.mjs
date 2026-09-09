@@ -102,23 +102,44 @@ test('renderer parses defaults, explicit options and rejects invalid CLI input',
   assert(renderer.parseArgs(['--help']).help, 'help without file');
 });
 
-test('renderer discovers every platform candidate in priority order and reports all misses', () => {
+test('renderer discovers auto-discovery candidates in priority order and reports all misses', () => {
   assert(typeof renderer.discoverDrawio === 'function', 'discoverDrawio missing');
   for (const platform of ['linux', 'darwin', 'win32']) {
     const onWindows = platform === 'win32';
-    const env = { DRAWIO_EXE: '/environment/drawio', PATH: onWindows ? 'C:\\Tools;D:\\Apps' : '/tools:/apps' };
-    const candidates = ['/override/drawio', env.DRAWIO_EXE,
+    const env = { PATH: onWindows ? 'C:\\Tools;D:\\Apps' : '/tools:/apps' };
+    const candidates = [
       ...(onWindows ? ['C:\\Tools\\drawio.exe', 'D:\\Apps\\drawio.exe'] : ['/tools/drawio', '/apps/drawio']),
       '/opt/drawio/drawio', '/usr/bin/drawio', '/Applications/draw.io.app/Contents/MacOS/draw.io',
       'C:\\Program Files\\draw.io\\draw.io.exe', 'C:\\Program Files (x86)\\draw.io\\draw.io.exe'];
     for (let i = 0; i < candidates.length; i++) {
       const tried = [];
-      eq(renderer.discoverDrawio('/override/drawio', { platform, env, isExecutable: p => { tried.push(p); return p === candidates[i]; } }), candidates[i], 'chosen candidate');
+      eq(renderer.discoverDrawio(undefined, { platform, env, isExecutable: p => { tried.push(p); return p === candidates[i]; } }), candidates[i], 'chosen candidate');
       eq(JSON.stringify(tried), JSON.stringify(candidates.slice(0, i + 1)), 'probe order');
     }
     let message = '';
-    try { renderer.discoverDrawio('/override/drawio', { platform, env, isExecutable: () => false }); } catch (e) { message = e.message; }
+    try { renderer.discoverDrawio(undefined, { platform, env, isExecutable: () => false }); } catch (e) { message = e.message; }
     for (const path of candidates) assert(message.includes(path), `error omits ${path}`);
+  }
+});
+
+test('renderer pins an explicit override and never falls through to auto-discovery', () => {
+  assert(typeof renderer.discoverDrawio === 'function', 'discoverDrawio missing');
+  for (const platform of ['linux', 'darwin', 'win32']) {
+    let probes = 0; let message = '';
+    try { renderer.discoverDrawio('/override/drawio', { platform, env: {}, isExecutable: p => { probes++; return false; } }); } catch (e) { message = e.message; }
+    assert(message.includes('--drawio-exe'), 'names --drawio-exe');
+    assert(message.includes('/override/drawio'), 'names the override path');
+    eq(probes, 1, 'override probes exactly once and never falls through');
+
+    probes = 0; message = '';
+    try { renderer.discoverDrawio(undefined, { platform, env: { DRAWIO_EXE: '/environment/drawio' }, isExecutable: p => { probes++; return false; } }); } catch (e) { message = e.message; }
+    assert(message.includes('DRAWIO_EXE'), 'names DRAWIO_EXE');
+    assert(message.includes('/environment/drawio'), 'names the env path');
+    eq(probes, 1, 'env pin probes exactly once and never falls through');
+
+    probes = 0;
+    eq(renderer.discoverDrawio('/override/drawio', { platform, env: { DRAWIO_EXE: '/environment/drawio' }, isExecutable: p => { probes++; return p === '/override/drawio'; } }), '/override/drawio', 'executable override wins over env');
+    eq(probes, 1, 'executable override probes once');
   }
 });
 

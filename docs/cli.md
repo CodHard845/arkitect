@@ -251,12 +251,15 @@ without requiring Desktop. For the optional real two-page PNG smoke test, run
 `$env:ARKITECT_DRAWIO_SMOKE='1'; node tests/drawio.mjs`). This additional test
 skips when Desktop is absent; no existing tests acquire new prerequisites.
 
-Executable discovery: explicit `--drawio-exe` takes precedence; otherwise
-`DRAWIO_EXE`, `drawio` on PATH, `/opt/drawio/drawio`, `/usr/bin/drawio`,
-`/Applications/draw.io.app/Contents/MacOS/draw.io`, then
+Executable discovery: `--drawio-exe` (or `DRAWIO_EXE`) is a strict pin to the
+build you mean, not a hint — if that path is set but not executable, the render
+fails naming it instead of silently falling through to a different binary (page
+indexing differs between builds). Only when neither is set does the helper
+search `drawio` on PATH, then `/opt/drawio/drawio`, `/usr/bin/drawio`,
+`/Applications/draw.io.app/Contents/MacOS/draw.io`,
 `C:\Program Files\draw.io\draw.io.exe` and
-`C:\Program Files (x86)\draw.io\draw.io.exe`. Missing-app errors list the
-candidates tried. Rendering is local; never use the hosted editor.
+`C:\Program Files (x86)\draw.io\draw.io.exe`, in that order. Missing-app errors
+list the candidates tried. Rendering is local; never use the hosted editor.
 
 On Linux without `DISPLAY`, the helper announces and uses `xvfb-run -a` if
 available. Install Xvfb separately when needed, and set `HOME` under cron/ssh.
