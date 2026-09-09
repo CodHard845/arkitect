@@ -206,6 +206,48 @@ test('renderer CLI exposes help, validates arguments and propagates through the 
   assert(help.includes('arkitect drawio render'), 'dispatcher command listing');
 });
 
+test('renderer rejects an explicit page index beyond the real page count', () => {
+  const file = join(TMP, 'range.drawio');
+  writeFileSync(file, '<mxfile><diagram id="a"/><diagram id="b"/></mxfile>');
+  const outDir = join(TMP, 'range');
+  rejects(() => renderer.render(renderer.parseArgs([file, '--page-index', '2', '--out-dir', outDir]), {
+    platform: 'linux', env: {}, isExecutable: () => true, log: () => {},
+    runner: () => { throw new Error('must not run'); },
+  }), /out of range/i);
+  const calls = [];
+  const ok = renderer.render(renderer.parseArgs([file, '--page-index', '1', '--out-dir', outDir]), {
+    platform: 'linux', env: {}, isExecutable: () => true, log: () => {},
+    runner: (exe, args) => { calls.push(args); writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 }; },
+  });
+  assert(ok.ok && calls.length === 1, 'in-range index still renders');
+});
+
+test('renderer counts only real diagram elements, ignoring comments, CDATA and lookalikes', () => {
+  const file = join(TMP, 'county.drawio');
+  writeFileSync(file, '<mxfile>'
+    + '<diagram id="real1"/>'
+    + '<!-- <diagram id="commented"/> -->'
+    + '<diagram-extra id="lookalike"/>'
+    + '<![CDATA[ <diagram id="cdata"/> ]]>'
+    + '<diagram id="real2"/>'
+    + '</mxfile>');
+  const outDir = join(TMP, 'county');
+  let calls = 0;
+  const result = renderer.render(renderer.parseArgs([file, '--all', '--out-dir', outDir]), {
+    platform: 'linux', env: {}, isExecutable: () => true, log: () => {},
+    runner: (exe, args) => { calls++; writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 }; },
+  });
+  assert(result.ok, 'all real pages render');
+  eq(calls, 2, 'only the two real <diagram> elements export');
+});
+
+test('renderer accepts prototype-key filenames and rejects extra positionals', () => {
+  for (const name of ['constructor', 'toString', 'hasOwnProperty', 'valueOf']) {
+    eq(renderer.parseArgs([name]).file, name, `filename "${name}"`);
+  }
+  rejects(() => renderer.parseArgs(['a.drawio', 'toString']), /Expected one file/i);
+});
+
 // Opt-in local integration: ARKITECT_DRAWIO_SMOKE=1 node tests/drawio.mjs.
 // Default tests remain offline/deterministic with no new prerequisite skips.
 if (process.env.ARKITECT_DRAWIO_SMOKE === '1') test('installed Desktop exports distinct synthetic pages as real PNGs', () => {

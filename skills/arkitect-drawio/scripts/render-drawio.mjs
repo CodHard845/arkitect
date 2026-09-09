@@ -17,7 +17,10 @@ export function render(options, { platform = process.platform, env = process.env
   if (xvfb) log('No DISPLAY; using xvfb-run -a for local Draw.io export.');
   const outDir = resolve(options.outDir);
   mkdirSync(outDir, { recursive: true });
-  const count = Math.max(1, (text.match(/<diagram\b/g) ?? []).length);
+  const count = countDiagrams(text);
+  if (!options.all && options.pageIndex >= count) {
+    throw new Error(`Page index ${options.pageIndex} is out of range: "${basename(source)}" has ${count} page${count === 1 ? '' : 's'} (0-${count - 1}).`);
+  }
   const indexes = options.all ? Array.from({ length: count }, (_, i) => i) : [options.pageIndex];
   const pages = [];
   for (const index of indexes) {
@@ -41,10 +44,22 @@ export function render(options, { platform = process.platform, env = process.env
     try { const stat = statSync(output); if (stat.isFile()) size = stat.size; } catch {}
     const ok = size > 0;
     if (!ok && backup) copyFileSync(backup, output);
-    log(`${ok ? `rendered page ${index}` : `page ${index} FAILED`} -> ${output} (${size} bytes)`);
+    // Surface spawn errors (missing xvfb-run, unlaunchable exe) but keep Chromium
+    // stderr as noise: a fresh nonempty export is still the only success signal.
+    const reason = !ok && result?.error ? ` (${result.error.message})` : '';
+    log(`${ok ? `rendered page ${index}` : `page ${index} FAILED`} -> ${output} (${size} bytes)${reason}`);
     pages.push({ index, output, size, ok, backup, status: result.status });
   }
   return { ok: pages.every(p => p.ok), pages };
+}
+
+function countDiagrams(xml) {
+  // Count real <diagram ...> opens only: drop XML comments and CDATA sections,
+  // and do not match lookalike tags such as <diagram-extra>. The lookahead also
+  // accepts <diagram> and the self-closing <diagram/> form. A floor of one keeps
+  // an explicit page 0 exportable for a file with no parseable diagram element.
+  const stripped = xml.replace(/<!--[\s\S]*?-->/g, '').replace(/<!\[CDATA\[[\s\S]*?\]\]>/g, '');
+  return Math.max(1, (stripped.match(/<diagram(?=[\s>/])/g) ?? []).length);
 }
 
 function backupOutput(output) {
@@ -93,8 +108,8 @@ export function parseArgs(args) {
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
     if (arg === '--help' || arg === '-h') return { help: true };
-    if (switches[arg]) { options[switches[arg]] = true; continue; }
-    if (values[arg]) {
+    if (Object.hasOwn(switches, arg)) { options[switches[arg]] = true; continue; }
+    if (Object.hasOwn(values, arg)) {
       const value = args[++i];
       if (!value || value.startsWith('--')) throw new Error(`Expected value for ${arg}`);
       if (arg === '--width' || arg === '--page-index') {
