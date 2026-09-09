@@ -74,9 +74,16 @@ Read `references/style-guide.md` before laying anything out, and
    `./scripts/render-drawio.ps1 -Path "path/to/diagram.drawio" -OutDir .analysis/renders`.
    Read the PNG back as an image. Iterate until spacing, hierarchy, routing and label
    legibility hold up. A diagram that validates but reads badly is not done.
-   Both helpers accept 0-based indexes. Linux arm64 Desktop 24.7.17 is
-   calibrated 0-based; Windows 29.0.3 requires a +1 translation. macOS uses
-   0-based indexes provisionally (not calibrated).
+   Both helpers accept 0-based page numbers. The portable `.mjs` validates N,
+   copies the selected raw `<diagram>` verbatim with original `<mxfile>`
+   attributes into a temporary single-page file, exports WITHOUT Desktop's
+   `--page-index`, and removes the temporary file even on failure. Compressed
+   payloads remain compressed and byte-identical. Do not guess indexing from
+   platform or version: Linux arm64 24.7.17 is 0-based, Windows x64 29.0.3 is
+   1-based. The Windows-original `.ps1` remains unchanged. The opt-in
+   `--page-index-passthrough` flag is only for debugging Desktop; it passes N
+   directly on the original file without translating and can select a different
+   page on a build with different indexing. See `docs/drawio-mcp.md`.
    Judge export success by a fresh non-empty output, not Chromium stderr noise.
    Extra Electron flags are opt-in: `--disable-gpu` for observed GPU errors,
    `--no-sandbox` only for a diagnosed sandbox failure. Never add them blindly.

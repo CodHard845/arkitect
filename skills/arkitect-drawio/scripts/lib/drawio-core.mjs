@@ -45,6 +45,11 @@ function* scanTags(xml) {
       i = end === -1 ? n : end + 3;
       continue;
     }
+    if (xml.startsWith('<![CDATA[', lt)) {
+      const end = xml.indexOf(']]>', lt);
+      i = end === -1 ? n : end + 3;
+      continue;
+    }
     if (xml.startsWith('<?', lt) || xml.startsWith('<!', lt)) {
       const end = xml.indexOf('>', lt);
       i = end === -1 ? n : end + 1;
@@ -69,7 +74,7 @@ function* scanTags(xml) {
     const selfClosing = raw.endsWith('/>');
     const nameMatch = /^<\/?\s*([\w:.-]+)/.exec(raw);
     if (nameMatch) {
-      yield { name: nameMatch[1], raw, closing, selfClosing };
+      yield { name: nameMatch[1], raw, closing, selfClosing, start: lt, end: j + 1 };
     }
     i = j + 1;
   }
@@ -123,16 +128,19 @@ export function decompressPage(b64) {
 
 export function readMxfile(path) {
   const text = readFileSync(path, 'utf8');
-  const header = /<mxfile\b([^>]*)>/.exec(text);
-  const attrs = header ? parseAttrs('<mxfile' + header[1] + '>') : {};
+  let opening = null;
   const pages = [];
-  const re = /<diagram\b([^>]*?)>([\s\S]*?)<\/diagram>/g;
-  let m;
-  while ((m = re.exec(text)) !== null) {
-    const a = parseAttrs('<diagram' + m[1] + '>');
-    const inner = m[2];
+  let page;
+  for (const tag of scanTags(text)) {
+    if (tag.name === 'mxfile' && !tag.closing && opening === null) opening = tag.raw;
+    if (tag.name !== 'diagram') continue;
+    if (!tag.closing) page = tag;
+    if (!page || (!tag.closing && !tag.selfClosing)) continue;
+    const a = parseAttrs(page.raw);
+    const inner = tag.selfClosing ? '' : text.slice(page.end, tag.start);
     const compressed = isCompressedPage(inner);
     pages.push({
+      raw: text.slice(page.start, tag.end),
       name: a.name ?? '',
       id: a.id ?? '',
       compressed,
@@ -140,8 +148,9 @@ export function readMxfile(path) {
         return compressed ? decompressPage(inner) : inner;
       },
     });
+    page = undefined;
   }
-  return { path, attrs, pages, bytes: Buffer.byteLength(text) };
+  return { path, attrs: opening ? parseAttrs(opening) : {}, opening, pages, bytes: Buffer.byteLength(text) };
 }
 
 // ---------------------------------------------------------------- cells

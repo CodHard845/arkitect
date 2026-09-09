@@ -201,10 +201,12 @@ silently disappears. Draw.io's own files use `data:image/svg+xml,<base64>`. The
 scripts handle it; hand-written XML must too.
 
 **Draw.io page indexing varies by build.** Linux arm64 Desktop 24.7.17 is
-0-based; Windows Desktop 29.0.3 is 1-based. `arkitect drawio render` always
-accepts 0-based indexes and translates on Windows. macOS follows 0-based
-indexing provisionally; it has not been calibrated. The PowerShell helper
-retains its existing Windows translation.
+0-based; Windows x64 Desktop 29.0.3 is 1-based. The portable `.mjs` renderer
+avoids that unstable interface: select a 0-based page, copy it verbatim to a
+temporary single-page file, export without Desktop's `--page-index`, clean up.
+There is no platform/version table. The `.ps1` is the Windows original and
+retains its existing translation unchanged. See
+[Page indexing across Draw.io builds](drawio-mcp.md#page-indexing-across-drawio-builds).
 
 **Excalidraw arrow points are relative.** An arrow's `x`/`y` is its first point
 and `points[0]` is `[0,0]`. Absolute coordinates in `points` move the arrow
@@ -228,10 +230,22 @@ arkitect drawio render docs/arch.drawio --all --drawio-exe /path/to/drawio
 Options: `<file>` is required; `--page-index N` is 0-based (default `0`),
 `--all` selects every `<diagram>`, `--width` defaults to `2200`, `--out-dir`
 to `.`, and `--format` to `png`. Output names are `<base>.p<N>.<format>`.
-The direct entry point is `skills/arkitect-drawio/scripts/render-drawio.mjs`.
-The existing PowerShell invocation above remains supported unchanged.
+The portable entry point is `skills/arkitect-drawio/scripts/render-drawio.mjs`.
+The `.ps1` invocation above is the Windows original and remains unchanged.
 
-The normal suite tests parsing, discovery, page translation and export handling
+For each selected page, the Node helper uses `readMxfile()` and copies the full
+raw `<diagram>` element verbatim into a temporary `.drawio`, preserving the
+original `<mxfile ...>` attributes. It exports without Desktop's `--page-index`
+and deletes the temporary file. Compressed payloads are copied byte for byte,
+not decoded/re-encoded. N is checked against the page count before any export.
+One Electron launch per page; no version probing or platform-index heuristics.
+
+`--page-index-passthrough` (boolean, default off) is a debugging escape hatch:
+export the original file with Desktop's `--page-index N` unchanged, without
+splitting or translation. N must still be in range, but which page Desktop
+selects depends on the build. Do not use this switch for normal verification.
+
+The normal suite tests parsing, discovery, verbatim splitting and export handling
 without requiring Desktop. For the optional real two-page PNG smoke test, run
 `ARKITECT_DRAWIO_SMOKE=1 node tests/drawio.mjs` (PowerShell:
 `$env:ARKITECT_DRAWIO_SMOKE='1'; node tests/drawio.mjs`). This additional test
@@ -251,16 +265,17 @@ diagnosed sandbox/user-namespace failure; neither is enabled blindly.
 
 **Calibration:** Ubuntu Raspberry Pi arm64, Draw.io Desktop 24.7.17: a
 two-page copy of the committed starter template with a visible second-page
-marker exported first/second/second for CLI indexes 0/1/2. Linux therefore
-passes indexes unchanged. Windows 29.0.3 uses the existing documented +1
-translation; macOS follows 0-based provisionally, not yet calibrated.
+marker exported first/second/second for CLI indexes 0/1/2. Windows x64 29.0.3
+instead exports the first page for both 0 and 1. These observations explain why
+Arkitect splits instead of relying on Desktop indexing; they are not a version
+or platform lookup table.
 
 This Pi exports successfully without extra flags, but logs a GPU initialization
 error. `--disable-gpu` suppresses it; `--no-sandbox` is not needed. This build
 requires Electron flags **after the input filename** when called directly:
 
 ```bash
-xvfb-run -a drawio -x -f png --width 2200 --page-index 0 -o out.png input.drawio --disable-gpu
+xvfb-run -a drawio -x -f png --width 2200 -o out.png single-page.drawio --disable-gpu
 ```
 
 The helper handles that ordering. Chromium stderr warnings are noise; success

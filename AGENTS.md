@@ -82,9 +82,13 @@ node bin/arkitect.mjs drawio render docs/arch.drawio --all --out-dir .analysis/r
 ```
 
 The Node helper discovers the app and uses Xvfb on headless Linux when available.
-Indexes are always 0-based: Linux 24.7.17 uses them directly; Windows 29.0.3
-needs translation to 1-based. macOS uses 0-based indexes provisionally (not yet
-calibrated). The existing `skills/arkitect-drawio/scripts/render-drawio.ps1`
+Page numbers are always 0-based. The portable Node helper validates the page
+number, copies that page verbatim into a temporary single-page file with the
+original mxfile attributes, exports without Desktop's unstable `--page-index`,
+and deletes the temporary file. Compressed page bytes stay unchanged; no
+platform/version guesses or probing. `--page-index-passthrough` is an explicit
+debugging escape hatch, not the normal rendering path.
+The Windows original `skills/arkitect-drawio/scripts/render-drawio.ps1`
 remains supported unchanged. See `docs/cli.md` for overrides and troubleshooting.
 Excalidraw renders with `arkitect excalidraw render`, no app required.
 

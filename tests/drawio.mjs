@@ -59,6 +59,25 @@ const validator = await import(`file://${join(SCRIPTS, 'validate-drawio.mjs').re
 
 const LIB_DIR = join(SKILL, 'assets', 'libraries');
 
+test('mxfile preserves raw decoded/compressed pages and wrapper bytes while ignoring fake tags', () => {
+  const file = join(TMP, 'raw-pages.drawio');
+  const inner = '\r\n<mxGraphModel><root><mxCell id="0" value="é &amp; x"/></root></mxGraphModel>\r\n';
+  const packed = deflateRawSync(Buffer.from(encodeURIComponent(inner), 'binary')).toString('base64');
+  const raw = [`<diagram id="a" name="A > B">${inner}</diagram>`, `<diagram id="b">\r\n${packed}\r\n</diagram>`, '<diagram id="c"/>'];
+  const opening = '<mxfile host="local > desktop"\r\n agent=\'test\' compressed="true">';
+  writeFileSync(file, opening + '<!-- <diagram>fake</diagram> -->'
+    + '<![CDATA[ > <diagram>fake</diagram><diagram/> ]]>'
+    + '<diagram-extra>fake</diagram-extra>' + raw.join('\r\n') + '</mxfile>');
+  const mx = core.readMxfile(file);
+  eq(mx.pages.length, 3, 'real page count including self closing');
+  eq(mx.opening, opening, 'verbatim wrapper opening');
+  raw.forEach((page, i) => eq(mx.pages[i].raw, page, `raw page ${i}`));
+  eq(mx.pages[0].xml, inner, 'uncompressed XML API');
+  eq(mx.pages[1].xml, inner, 'decoded compressed XML API');
+  eq(mx.pages[1].compressed, true, 'compressed metadata');
+  eq(mx.pages[2].xml, '', 'empty page XML');
+});
+
 // ------------------------------------------------------------- portable rendering
 
 const rendererPath = join(SCRIPTS, 'render-drawio.mjs');
@@ -72,7 +91,7 @@ function rejects(fn, pattern) {
 test('renderer parses defaults, explicit options and rejects invalid CLI input', () => {
   assert(typeof renderer.parseArgs === 'function', 'renderer parseArgs is missing');
   const defaults = renderer.parseArgs(['a.drawio']);
-  eq(JSON.stringify(defaults), JSON.stringify({ file: 'a.drawio', pageIndex: 0, all: false, width: 2200, outDir: '.', format: 'png', drawioExe: undefined, disableGpu: false, noSandbox: false }), 'defaults');
+  eq(JSON.stringify(defaults), JSON.stringify({ file: 'a.drawio', pageIndex: 0, all: false, width: 2200, outDir: '.', format: 'png', drawioExe: undefined, disableGpu: false, noSandbox: false, pageIndexPassthrough: false }), 'defaults');
   const opts = renderer.parseArgs(['--all', 'a.drawio', '--page-index', '2', '--width', '800', '--out-dir', 'with spaces', '--format', 'svg', '--drawio-exe', '/custom app', '--disable-gpu', '--no-sandbox']);
   eq(opts.pageIndex, 2, 'page index'); eq(opts.width, 800, 'width');
   eq(opts.outDir, 'with spaces', 'directory'); eq(opts.format, 'svg', 'format');
@@ -103,24 +122,33 @@ test('renderer discovers every platform candidate in priority order and reports 
   }
 });
 
-test('renderer exports zero-based named pages with platform-specific CLI indexes and opt-in Electron flags', () => {
+test('renderer splits zero-based pages on all platforms and preserves opt-in Electron flags', () => {
   assert(typeof renderer.render === 'function', 'render missing');
   const file = join(TMP, 'two pages.drawio');
-  writeFileSync(file, '<mxfile><diagram id="a">compressed</diagram><diagram id="b"/></mxfile>');
+  const opening = '<mxfile host="desktop > local"\r\n compressed="true" agent=\'test\'>';
+  const packed = deflateRawSync(Buffer.from(encodeURIComponent('<mxGraphModel><root><mxCell id="0"/></root></mxGraphModel>'))).toString('base64');
+  const raw = ['<diagram id="a">\r\n<mxGraphModel/>\r\n</diagram>', `<diagram id="b">\r\n${packed}\r\n</diagram>`];
+  writeFileSync(file, opening + raw.join('\r\n') + '</mxfile>');
   for (const platform of ['linux', 'win32', 'darwin']) {
     const lines = []; const calls = [];
     const outDir = join(TMP, `render-${platform}`);
     const options = renderer.parseArgs([file, '--all', '--width', '600', '--out-dir', outDir, '--format', 'svg', '--drawio-exe', '/custom app', '--disable-gpu', '--no-sandbox']);
     const result = renderer.render(options, { platform, env: { DISPLAY: ':1' }, isExecutable: p => p === '/custom app', log: s => lines.push(s), runner: (exe, args, opts) => {
-      calls.push({ exe, args, opts });
+      const input = args[args.indexOf('-o') + 2];
+      calls.push({ exe, args, opts, input, bytes: readFileSync(input), count: core.readMxfile(input).pages.length, mode: statSync(dirname(input)).mode & 0o777 });
       writeFileSync(args[args.indexOf('-o') + 1], '<svg/>');
       return { status: 9, stderr: 'Chromium cache noise' };
     } });
     assert(result.ok, 'fresh nonempty output must win over noisy nonzero exit');
     eq(calls.length, 2, 'all diagram elements'); eq(lines.length, 2, 'one report per page');
-    calls.forEach(({ exe, args, opts }, i) => {
+    calls.forEach(({ exe, args, opts, input, bytes, count, mode }, i) => {
       eq(exe, '/custom app', 'no shell splitting');
-      eq(JSON.stringify(args), JSON.stringify(['-x', '-f', 'svg', '--page-index', String(platform === 'win32' ? i + 1 : i), '--width', '600', '-o', join(outDir, `two pages.p${i}.svg`), file, '--disable-gpu', '--no-sandbox']), 'argv');
+      eq(JSON.stringify(args), JSON.stringify(['-x', '-f', 'svg', '--width', '600', '-o', join(outDir, `two pages.p${i}.svg`), input, '--disable-gpu', '--no-sandbox']), 'argv without Desktop index');
+      assert(input !== file && input.endsWith('.drawio'), 'private split input');
+      eq(count, 1, 'exactly one page per input');
+      assert(bytes.equals(Buffer.from(opening + raw[i] + '</mxfile>')), 'wrapper and payload bytes preserved');
+      if (process.platform !== 'win32') eq(mode, 0o700, 'private temporary directory');
+      assert(!existsSync(input) && !existsSync(dirname(input)), 'temporary input and directory removed after success');
       assert(!opts.shell, 'must not use a shell');
       assert(lines[i].includes(`rendered page ${i}`) && lines[i].includes('(6 bytes)'), 'report includes index and size');
     });
@@ -132,7 +160,48 @@ test('renderer exports zero-based named pages with platform-specific CLI indexes
   });
   assert(result.ok, 'single page succeeds'); eq(calls.length, 1, 'one selected page');
   assert(!calls[0].includes('--disable-gpu') && !calls[0].includes('--no-sandbox'), 'flags never enabled implicitly');
-  eq(calls[0][calls[0].indexOf('--page-index') + 1], '1', 'Linux index preserved');
+  assert(!calls[0].includes('--page-index'), 'selected page also omits Desktop index');
+});
+
+test('renderer debug passthrough uses the original source and exact raw index on every platform', () => {
+  const file = join(TMP, 'passthrough.drawio');
+  writeFileSync(file, '<mxfile><diagram/><diagram/></mxfile>');
+  for (const platform of ['linux', 'win32', 'darwin']) for (const rawIndex of ['0', '1', '01']) {
+    let invocation;
+    const options = renderer.parseArgs([file, '--page-index', rawIndex, '--page-index-passthrough', '--out-dir', join(TMP, 'passthrough')]);
+    assert(options.pageIndexPassthrough, 'debug switch enabled');
+    const result = renderer.render(options, { platform, env: { DISPLAY: ':1' }, isExecutable: () => true, log: () => {}, runner: (exe, args) => {
+      invocation = args; writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 };
+    } });
+    assert(result.ok, 'passthrough exported');
+    eq(invocation[invocation.indexOf('-o') + 2], file, 'original source, not split');
+    eq(invocation[invocation.indexOf('--page-index') + 1], rawIndex, 'raw CLI index unchanged');
+  }
+});
+
+test('renderer removes split inputs after empty output, spawn failure and reporting failure', () => {
+  const file = join(TMP, 'cleanup.drawio'); writeFileSync(file, '<mxfile><diagram/></mxfile>');
+  for (const failure of ['empty', 'spawn', 'log']) {
+    let input;
+    const run = () => renderer.render(renderer.parseArgs([file, '--out-dir', join(TMP, 'cleanup')]), {
+      platform: 'linux', env: { DISPLAY: ':1' }, isExecutable: () => true,
+      log: () => { if (failure === 'log') throw new Error('report failed'); },
+      runner: (exe, args) => { input = args[args.indexOf('-o') + 2]; if (failure === 'spawn') throw new Error('spawn failed'); return { status: 1 }; },
+    });
+    if (failure === 'log') rejects(run, /report failed/); else assert(!run().ok, 'failure reported');
+    assert(input !== file && !existsSync(input) && !existsSync(dirname(input)), `cleaned after ${failure}`);
+    assert(existsSync(file), 'source never deleted');
+  }
+});
+
+test('renderer validates all and passthrough ranges before discovery or export', () => {
+  const file = join(TMP, 'invalid-ranges.drawio'); writeFileSync(file, '<mxfile><diagram/><diagram/></mxfile>');
+  for (const flags of [[], ['--all'], ['--page-index-passthrough'], ['--all', '--page-index-passthrough']]) {
+    const options = renderer.parseArgs([file, '--page-index', '2', ...flags]);
+    let probes = 0; let calls = 0;
+    rejects(() => renderer.render(options, { isExecutable: () => { probes++; return true; }, runner: () => { calls++; }, log: () => {} }), /out of range/);
+    eq(probes, 0, 'no discovery before validation'); eq(calls, 0, 'no export before validation');
+  }
 });
 
 test('renderer wraps only headless Linux with available xvfb-run and logs the wrapper', () => {
@@ -246,6 +315,25 @@ test('renderer accepts prototype-key filenames and rejects extra positionals', (
     eq(renderer.parseArgs([name]).file, name, `filename "${name}"`);
   }
   rejects(() => renderer.parseArgs(['a.drawio', 'toString']), /Expected one file/i);
+});
+
+test('renderer preserves standalone graph models after declarations and leading comments', () => {
+  const model = '<mxGraphModel><root><mxCell id="0"/></root></mxGraphModel>';
+  const file = join(TMP, 'standalone-prolog.drawio');
+  for (const prefix of ['<?xml version="1.0" encoding="UTF-8"?>\r\n', '<!-- <mxfile><diagram/> -->\n', '<?xml version="1.0"?>\n<!-- first -->\n<!-- second -->\n']) {
+    writeFileSync(file, prefix + model);
+    let input;
+    const result = renderer.render(renderer.parseArgs([file, '--out-dir', join(TMP, 'standalone-prolog')]), {
+      platform: 'linux', env: {}, isExecutable: () => true, log: () => {},
+      runner: (exe, args) => {
+        input = args.at(-1);
+        eq(readFileSync(input, 'utf8'), `<mxfile><diagram>${model}</diagram></mxfile>`, 'only graph XML inside diagram');
+        writeFileSync(args[args.indexOf('-o') + 1], 'png'); return { status: 0 };
+      },
+    });
+    assert(result.ok, 'standalone XML prolog is supported');
+    assert(!existsSync(input), 'temporary standalone file cleaned');
+  }
 });
 
 // Opt-in local integration: ARKITECT_DRAWIO_SMOKE=1 node tests/drawio.mjs.
