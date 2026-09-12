@@ -127,20 +127,54 @@ drawio docs/architecture.drawio                  # Linux
 
 ## Rendering to PNG
 
-Draw.io Desktop does the rendering; the helper script exists because of an
-off-by-one:
+Draw.io Desktop does the rendering locally; no hosted editor or MCP open tool
+is involved. The Node helper runs on Linux, macOS and Windows:
+
+```bash
+node bin/arkitect.mjs drawio render docs/architecture.drawio --all --out-dir .analysis/renders --width 2200
+# Direct script, same options:
+node skills/arkitect-drawio/scripts/render-drawio.mjs docs/architecture.drawio --page-index 0
+```
+
+`--all` counts pages in the file. `--drawio-exe` or `DRAWIO_EXE` overrides
+executable discovery. Outputs are `<base>.p<0-based index>.<format>`; PNG is
+the default. On Linux without `DISPLAY`, `xvfb-run -a` is used when available.
+See [CLI rendering](cli.md#rendering) for all options and troubleshooting.
+
+### Page indexing across Draw.io builds
+
+The observed Desktop CLI conventions disagree:
+
+- **29.0.3, Windows x64:** 1-based; both 0 and 1 export the first page.
+- **24.7.17, Linux arm64:** 0-based; 0 and 1 export different pages, while 2
+  clamps to the last page in a two-page file.
+
+These are observations about two builds, not rules for all Windows or Linux
+versions. A platform switch or version table could silently select the wrong
+page. Arkitect instead reads pages with `readMxfile()`, validates N against the
+page count, and copies that page's raw `<diagram>` element verbatim into a
+temporary file wrapped in the original `<mxfile ...>` attributes. Compressed
+pages stay compressed, with no decoding/re-encoding of the copied bytes.
+Desktop exports this single-page file **without `--page-index`**; Arkitect
+then removes the temporary file. No probing or extra Electron launch is needed.
+
+**Page numbers everywhere in Arkitect are 0-based**, including the analyzer,
+MCP `list_pages`, renderer selection and `.pN` filenames. Out-of-range selection
+fails before export rather than allowing Desktop to clamp.
+
+For debugging Desktop itself, `--page-index-passthrough` opts out of splitting
+and passes N unchanged with `--page-index` on the original source. It is off by
+default, still checks N against the page count, and intentionally does not
+correct differing Desktop conventions. Do not use it for normal verification.
+
+The existing Windows PowerShell helper is unchanged, including its translation:
 
 ```powershell
 ./skills/arkitect-drawio/scripts/render-drawio.ps1 `
-  -Path docs/architecture.drawio -OutDir .analysis/renders -Width 2200
+  -Path docs/architecture.drawio -All -OutDir .analysis/renders -Width 2200
 ```
 
-Draw.io Desktop 29.0.3 on Windows treats `--page-index` as **1-based**, so `0`
-and `1` both export the first page. The script takes a 0-based index and
-translates. Always go through the script rather than calling the executable
-directly.
-
-`-All` renders every page. `-DrawioExe` points at a non-default install.
+Its `-DrawioExe` option still points at a non-default install.
 
 ## Troubleshooting
 

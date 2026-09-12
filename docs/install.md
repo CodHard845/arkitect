@@ -11,8 +11,9 @@ are the same files — you are only choosing how your tool finds them.
 | **Node.js 20+** | everything | the only hard requirement. No npm install: there are no dependencies |
 | Claude Code | the plugin route | not needed for any other agent |
 | Docker | the local Excalidraw app | optional. Generation, validation and preview all work without it |
-| [Draw.io Desktop](https://github.com/jgraph/drawio-desktop/releases) | rendering `.drawio` to PNG | optional. Expected at `C:\Program Files\draw.io\draw.io.exe`; override with `-DrawioExe` |
-| PowerShell | two `.ps1` helpers | the Node scripts run anywhere |
+| [Draw.io Desktop](https://github.com/jgraph/drawio-desktop/releases) | rendering `.drawio` to PNG | optional, local only. `arkitect drawio render` discovers Linux/macOS/Windows installs; override with `--drawio-exe` or `DRAWIO_EXE` |
+| Xvfb | headless Linux Draw.io rendering | `sudo apt install -y xvfb` when `xvfb-run` is missing; automatically used without `DISPLAY` |
+| PowerShell | legacy `.ps1` helpers | optional; Draw.io rendering also has a cross-platform Node helper |
 | Edge or Chrome | rasterising the Excalidraw SVG preview to PNG | already present on Windows and macOS |
 
 Check what you have:
@@ -104,7 +105,7 @@ node tests/run-tests.mjs
 ```
 
 Offline, deterministic, a couple of seconds. On a fresh clone expect roughly
-`111 passed, 0 failed, 7 skipped` — the skips are the tests that need reference
+`112 passed, 0 failed, 7 skipped` — the skips are the tests that need reference
 diagrams of your own, which a clone does not have. That is the correct result,
 not a problem.
 
