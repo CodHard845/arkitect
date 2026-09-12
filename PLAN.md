@@ -1,6 +1,6 @@
 # PLAN — Draw.io icon packs
 
-**Branch:** `icon-packs` · **Status:** awaiting review at Gate 1 (pack contents) · **Last updated:** 2026-09-12
+**Branch:** `icon-packs` · **Status:** built, verified, documented · **Last updated:** 2026-09-12
 
 This file is the durable record of the icon-pack work: what was decided, why, what is
 verified, and what is left. It exists so this can be picked up cold later.
@@ -219,28 +219,43 @@ vendor icons + 3,459 catch-all ≈ **5,000 entries**, of which **77 are on-deman
 ## 6. Phases
 
 - [x] **0. Interview + decisions** — 17 decisions recorded above
-- [ ] **1. Gate 1 — pack contents reviewed** ← *you are here*
-- [ ] **2. `sources.json` + `build-packs.mjs`**, vendor extraction, hashes pinned
-- [ ] **3. Vendor packs** — aws canonicalised, azure, gcp built and counted
-- [ ] **4. Brand packs** — 12 curated + catch-all, on-demand entries recorded
-- [ ] **5. Generated packs** — agents, primitives, github concepts, file-type sheets
-- [ ] **6. Registry + resolver refactor** — catalog schema, find-icon, build-diagram, extract-library
-- [ ] **7. Verification** — invariants, contact sheets, tiered visual review (Gate 2)
-- [ ] **8. Docs + NOTICE + ATTRIBUTION + CHANGELOG + v1.1.0**
-- [ ] **9. Tests green, push branch, open PR**
+- [x] **1. Gate 1 — pack contents reviewed** — approved as drafted
+- [x] **2. `sources.json` + `build-packs.mjs`**, vendor extraction, hashes pinned
+- [x] **3. Vendor packs** — aws 243, azure 638, gcp 249
+- [x] **4. Brand packs** — 12 curated + catch-all, on-demand entries recorded
+- [x] **5. Generated packs** — agents 33, primitives 43, github Octicons 31, file-types 35
+- [x] **6. Registry + resolver refactor** — catalog v2, find-icon, build-diagram, tests
+- [x] **7. Verification** — 58 build checks, 117 tests, 17 contact sheets (Gate 2)
+- [x] **8. Docs + NOTICE + ATTRIBUTION + CHANGELOG + v1.1.0**
+- [ ] **9. Push branch, open PR**
 
----
+### What the build found that the plan did not predict
+
+Recorded because each one changed the result, and a future reader will otherwise
+wonder why the numbers moved.
+
+| Finding | Consequence |
+|---|---|
+| Google retired its per-service icon set. The two zips on cloud.google.com/icons hold 19 current "core product" marks and 26 category marks — 45, not the ~226 expected. The per-service marks now live in `google-cloud-legacy-icons.zip`. | Added the legacy archive as a third source, ranked below the current one. GCP came out at 249 after collapsing nine products that appear in both, plus GKE and Apigee which Google renamed rather than repeated. |
+| The Microsoft 365 zip (`linkid=869455`) holds generic UI glyphs in brand colours, **not** the Word/Excel/PowerPoint app marks. Simple Icons has never carried them either. | `.docx`, `.xlsx` and `.pptx` are house sheets in the familiar colours, not counterfeit Office logos. The M365 source was dropped from the manifest entirely. |
+| Azure V24 ships 714 SVGs but only 636 distinct services: 62 names appear in more than one category folder, and only two of those are genuinely different artwork. | Deduplicated by name with the named category winning over `other`/`general`. 638 entries. |
+| devicon (MIT, already an approved source) carries eight marks Simple Icons lacks: Oracle, SQL Server, Memcached, YugabyteDB, Kubeflow, SonarQube, C#, gRPC. | Moved from on-demand to committed. On-demand fell from 77 to 69. |
+| Only 7 of the on-demand entries are recoverable from simple-icons 15.x. The other 62 were never in Simple Icons at all. | The plan assumed every on-demand entry could carry a pinned URL and hash. The 62 carry a vendor brand page and a `fetch-logo` command instead — claiming a hash we cannot verify would be worse than admitting there is none. |
+| Rebuilding `aws.drawio` from itself stripped "53" off "Amazon Route 53": the beautifier removed any trailing two digits, and the rebuild reads its own output, so the damage compounded. | The suffix rule now matches only the palette's own sizes (16/32/48/64). The rebuild is verified idempotent before the source palettes were deleted. |
+| Simple Icons lists "Terraform" as an alias of OpenTofu, putting the fork one point behind the real product. | The catch-all no longer carries any name a curated pack already owns. |
 
 ## 7. Accepted risks
 
-1. **Repo weight** — 44 MB to ~54 MB working tree; npm tarball grows correspondingly.
-   Accepted for offline determinism (decision 1). Partly offset by deleting 8.8 MB of
-   duplicate AWS bytes (decision 12).
+1. **Repo weight** — came in far under estimate. The libraries total 17 MB against
+   16.1 MB before, because deleting the two duplicate AWS palettes reclaimed 8.8 MB
+   and very nearly paid for the 4,500 icons added. Contact sheets add 3.4 MB.
 2. **AWS stays partial** — 243 icons with bloated ~23 KB SVGs, and the only pack not
    built by `build-packs.mjs`. Deliberate (decision 12); rebuilding from upstream is a
    recorded follow-up.
-3. **Catch-all noise** — 3,459 brands make junk reachable ("delta" matching the airline).
-   Mitigated by rank-last plus visible labelling, not eliminated.
+3. **Catch-all noise** — 3,158 brands make junk reachable ("delta" matching the airline).
+   Mitigated by rank-last, by stripping names a curated pack owns, by requiring half a
+   query's tokens to land before anything is offered, and by the confidence gate. Reduced,
+   not eliminated.
 4. **On-demand hash drift** — vendors rewrite logo URLs; a pinned sha256 will eventually
    mismatch. Policy: warn loudly with both hashes and require explicit confirmation;
    never silently accept.

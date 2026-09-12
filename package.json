@@ -1,7 +1,7 @@
 {
   "name": "arkitect",
-  "version": "1.0.0",
-  "description": "Your agent draws the architecture. Editable Draw.io and Excalidraw diagrams, generated and edited by coding agents - offline, with 1,400+ bundled icons.",
+  "version": "1.1.0",
+  "description": "Your agent draws the architecture. Editable Draw.io and Excalidraw diagrams, generated and edited by coding agents - offline, with 5,900+ bundled icons.",
   "type": "module",
   "license": "MIT",
   "author": "mouadja02",

@@ -88,9 +88,14 @@ node bin/arkitect.mjs excalidraw icon "postgres"
 node bin/arkitect.mjs drawio icon "bedrock"
 ```
 
-1,405 marks ship with Arkitect: 243 AWS Architecture Icons for Draw.io, and
-1,162 items across 36 Excalidraw libraries covering AWS, Azure, GCP, Snowflake,
-the data-platform stack, DevOps tooling and general IT logos.
+5,900 marks ship with Arkitect: 4,725 across 18 Draw.io packs — AWS, Azure,
+Google Cloud, data platforms, databases, AI frameworks, ML, streaming,
+observability, DevOps, security, GitHub, SaaS, languages, file types and agent
+concepts — and 1,162 items across 36 Excalidraw libraries.
+
+```bash
+node bin/arkitect.mjs drawio icon --list-packs
+```
 
 When something is missing, there are three honest answers and one dishonest one.
 

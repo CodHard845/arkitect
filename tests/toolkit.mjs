@@ -282,12 +282,28 @@ test('the README shows images that are actually committed', () => {
 test('the licence and attribution files are present and name their sources', () => {
   assert(readFileSync(join(ROOT, 'LICENSE'), 'utf8').includes('MIT License'), 'LICENSE');
   const notice = readFileSync(join(ROOT, 'NOTICE'), 'utf8');
-  for (const source of ['AWS Architecture Icons', 'libraries.excalidraw.com', 'Trademark']) {
+  for (const source of ['AWS Architecture Icons', 'Azure architecture icons', 'Google Cloud icons',
+    'simple-icons', 'devicon', 'lucide-static', 'octicons',
+    'libraries.excalidraw.com', 'Trademark']) {
     assert(notice.includes(source), `NOTICE does not cover ${source}`);
   }
+  // A vendor permission is not a licence, and the distinction has to survive edits.
+  assert(notice.includes('PERMISSIONS, not licences'),
+    'NOTICE must distinguish vendor permissions from licences');
+  assert(notice.includes('NOT A LICENCE ON A TRADEMARK'),
+    'NOTICE must say a CC0 icon is not a trademark licence');
   const attribution = readFileSync(
     join(ROOT, 'skills', 'arkitect-excalidraw', 'assets', 'libraries', 'bundled', 'ATTRIBUTION.md'), 'utf8');
   assert(attribution.split('\n').filter((l) => l.startsWith('| `')).length >= 30, 'library authors are not credited');
+
+  // The Draw.io packs carry their own generated attribution, one row per source.
+  const packs = readFileSync(
+    join(ROOT, 'skills', 'arkitect-drawio', 'assets', 'libraries', 'ATTRIBUTION.md'), 'utf8');
+  for (const source of ['simple-icons@16.30.0', 'devicon@2.17.0', 'lucide-static@1.45.0',
+    '@primer/octicons@19.36.0', 'azure-v24', 'gcp-legacy']) {
+    assert(packs.includes(source), `pack attribution does not name ${source}`);
+  }
+  assert(packs.includes('nominative use'), 'pack attribution must state the trademark position');
 });
 
 test('gitignore keeps derived and third-party material out of the repository', () => {

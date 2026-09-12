@@ -33,9 +33,11 @@ the generator's defaults; do not undo them by hand:
 
 ## Workflow
 
-1. **Understand the system.** Ask only for facts you cannot infer: the
-   components, what flows between them, and the trust or ownership boundaries.
-   Do not interrogate the user about styling — that is what this skill is for.
+1. **Interview until you both mean the same thing.** One question at a time,
+   each carrying your recommended answer, walking the design tree in dependency
+   order. See [Interview first](#interview-first). Never ask about styling —
+   that is this skill's job. Do not start drawing while a branch that would
+   change the drawing is unresolved.
 
 2. **Pick a pattern and state assumptions.** Choose the nearest entry in
    `references/pattern-catalog.md`. Write every architectural assumption down;
@@ -152,6 +154,63 @@ the generator's defaults; do not undo them by hand:
 9. **Report.** File path, assumptions made, validation and render results, which
    icons came from where, anything that could not be resolved, and any
    deliberate deviation from the style guide.
+
+## Interview first
+
+A diagram is a claim about someone's system. Drawing the wrong claim beautifully is
+worse than drawing nothing, and every wrong assumption survives into a slide deck and
+gets believed. So before laying anything out, **interview the user until you both mean
+the same thing** — then draw once.
+
+**How to ask.**
+
+- **One question at a time.** A wall of six questions gets one answer and five shrugs.
+- **Always carry a recommendation.** Give your recommended answer with each question so
+  "yes" is a complete reply. Say why in one line — a recommendation without a reason is
+  just a guess with confidence.
+- **Walk the tree in dependency order.** Answers that constrain later questions come
+  first. Do not ask about failure paths before you know whether this is a context
+  diagram or a component diagram.
+- **Never interview about style.** Colours, fonts, spacing, connector shapes, icon
+  choice, legend — those are this skill's job. Asking is an admission it is not doing it.
+- **Feed answers forward.** Do not re-ask what an earlier answer already settled, and say
+  when an answer changes something you had already agreed.
+
+**The branches, in dependency order.** Skip a branch when the answer is already in the
+request or genuinely cannot change the drawing.
+
+1. **Purpose and audience.** Who reads this, and what decision does it support? An RFC
+   reviewer, a client steering group and an on-call engineer need three different
+   pictures of the same system. *Everything below depends on this answer.*
+2. **Scope boundary.** What is inside the picture, and what is deliberately outside?
+   Naming what is out is as useful as naming what is in.
+3. **Level of abstraction.** One box per service, per container, or per team? Mixing
+   levels in one diagram is the single most common way these go wrong.
+4. **State.** As-is, to-be, or both side by side? If both, are they two pages or one
+   comparison?
+5. **The components — by their real product names.** "The warehouse" is not drawable;
+   "Snowflake" is. This answer decides which bundled library items you can reach for, so
+   get the actual products: `node scripts/find-icon.mjs "<product>"`.
+6. **The flows.** What moves between the components, in which direction, and which are
+   synchronous versus scheduled or event-driven? Ask which flows matter enough to draw —
+   every arrow costs legibility.
+7. **Boundaries.** Trust, network, ownership, account/subscription/project. These become
+   the containers, so they change the layout more than anything except the level.
+8. **What must be visible.** Failure paths, multi-region, HA/DR, a specific control the
+   audience is there to scrutinise. Ask rather than guess which of these earns space.
+9. **Pages.** One page, or a set? Split by lifecycle stage or by audience, not by how
+   much fits.
+10. **Unknowns.** Where the user does not know, agree the treatment up front: draw it
+    with a stated assumption, or leave a labelled placeholder. Never quietly invent.
+
+**Stop when** the remaining unknowns could not change what gets drawn. Relentless means
+resolving every branch that matters, not filling a quota. A one-box-to-three-boxes
+flowchart needs two questions; a solution architecture for a review board needs the
+ladder. Calibrate to what is actually being asked, and say when you are stopping and why.
+
+**Then write the answers down.** They become the assumptions in your report, and the
+ones that matter go into a note box on the canvas. An assumption nobody can see is an
+assumption nobody can correct.
 
 ## The bundled libraries
 
