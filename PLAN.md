@@ -227,7 +227,7 @@ vendor icons + 3,459 catch-all ≈ **5,000 entries**, of which **77 are on-deman
 - [x] **6. Registry + resolver refactor** — catalog v2, find-icon, build-diagram, tests
 - [x] **7. Verification** — 58 build checks, 117 tests, 17 contact sheets (Gate 2)
 - [x] **8. Docs + NOTICE + ATTRIBUTION + CHANGELOG + v1.1.0**
-- [ ] **9. Push branch, open PR**
+- [x] **9. Push branch, open PR** — https://github.com/mouadja02/arkitect/pull/6
 
 ### What the build found that the plan did not predict
 
