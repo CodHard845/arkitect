@@ -710,22 +710,75 @@ test('the upstream workflow can open issues and nothing else', () => {
   assert((yml.match(/"\$code" -ge 2/g) ?? []).length === 2, 'a failed check must not open an issue');
 });
 
-test('the AWS artwork is unchanged by the move to aws.drawio', () => {
-  const aws = core.readLibrary(join(LIB_DIR, 'aws.drawio'));
-  eq(aws.length, 243, 'AWS entry count');
-  eq(aws.filter((e) => e.mime === 'image/svg+xml').length, 237, 'SVG count');
-  eq(aws.filter((e) => e.mime === 'image/png').length, 6, 'PNG count');
+test('the AWS pack is built from Amazon\'s pinned icon package and keeps every palette id (#8)', () => {
+  const manifest = packs.loadManifest();
+  const pack = manifest.packs.find((p) => p.id === 'aws');
+  const ids = new Set(finder.loadCatalog().icons.filter((i) => i.pack === 'aws').map((i) => i.id));
+  // legacyTitles holds one caption per id the original 243-entry palette shipped;
+  // a spec may name any of them.
+  const palette = Object.keys(pack.legacyTitles);
+  eq(palette.length, 243, 'palette ids recorded');
+  const missing = palette.filter((slug) => !ids.has(`aws/${slug}`));
+  assert(!missing.length, `ids a spec may name are gone: ${missing.join(', ')}`);
+  assert(ids.size >= 300, `only ${ids.size} AWS icons`);
+  const archive = pack.sources.map((s) => manifest.sources[s.source]).find((src) => src.type === 'zip');
+  assert(archive && /^[0-9a-f]{64}$/.test(archive.sha256), 'built from an archive pinned by sha256');
+  eq(core.readLibrary(join(LIB_DIR, 'aws.drawio')).length, ids.size, 'library and catalog agree');
 });
 
-test('the six AgentCore PNG additions survived the rename', () => {
+test('AgentCore ships small: the official SVG for the service, 156px PNGs for its five features (#7)', () => {
   const cat = finder.loadCatalog();
   for (const suffix of ['', ' Gateway', ' Identity', ' Memory', ' Observability', ' Runtime']) {
-    const title = `Amazon Bedrock AgentCore${suffix}`;
-    const hits = cat.icons.filter((i) => i.pack === 'aws' && i.title === title);
-    assert(hits.length >= 1, `missing ${title}`);
+    assert(cat.icons.some((i) => i.pack === 'aws' && i.title === `Amazon Bedrock AgentCore${suffix}`),
+      `missing Amazon Bedrock AgentCore${suffix}`);
   }
   const aws = core.readLibrary(join(LIB_DIR, 'aws.drawio'));
-  eq(aws.filter((e) => /AgentCore/.test(e.title) && e.mime === 'image/png').length, 6, 'AgentCore PNGs');
+  const pngs = aws.filter((e) => e.mime === 'image/png');
+  eq(pngs.length, 5, 'PNG entries');
+  for (const e of pngs) {
+    assert(/^Amazon Bedrock AgentCore \w+$/.test(e.title), `${e.title} is not an AgentCore feature mark`);
+    eq(Math.max(e.intrinsic.width, e.intrinsic.height), 156, `${e.title} longest side`);
+    assert(e.byteLength < 32 * 1024, `${e.title} is ${e.byteLength} bytes`);
+    eq(e.aspect, 'fixed', `${e.title} keeps its aspect in the palette`);
+  }
+  const service = cat.icons.filter((i) => i.pack === 'aws' && i.title === 'Amazon Bedrock AgentCore');
+  eq(service.map((i) => i.id).sort().join(), 'aws/amazon-bedrock-agentcore,aws/amazon-bedrock-agentcore-2', 'the service and the id that duplicated it');
+  assert(service.every((i) => i.mime === 'image/svg+xml'), 'both carry the official SVG');
+  eq(service[0].sha256, service[1].sha256, 'one artwork under both ids');
+  const decoded = aws.reduce((n, e) => n + e.byteLength, 0);
+  assert(decoded < 2 * 1048576, `the AWS pack decodes to ${(decoded / 1048576).toFixed(2)} MB`);
+});
+
+test('the committed AgentCore rasters match the digest the manifest pins', () => {
+  const src = packs.loadManifest().sources['aws-agentcore-extras'];
+  const dir = join(LIB_DIR, src.dir);
+  const files = new Map(readdirSync(dir).sort().map((name) => [name, readFileSync(join(dir, name))]));
+  eq(files.size, 5, 'feature marks committed');
+  eq(packs.localFilesDigest(files), src.sha256, 'a changed raster must be re-pinned deliberately');
+});
+
+test('the PNG codec round-trips, shrinks by area average, keeps aspect and never enlarges', () => {
+  const pixels = Buffer.alloc(40 * 20 * 3);
+  for (let y = 0; y < 20; y++) {
+    for (let x = 0; x < 40; x++) pixels.fill((x + y) % 2 ? 0 : 255, (y * 40 + x) * 3, (y * 40 + x + 1) * 3);
+  }
+  const png = iconBuild.encodePng({ width: 40, height: 20, channels: 3, pixels });
+  assert(iconBuild.decodePng(png).pixels.equals(pixels), 'decode(encode(x)) is x');
+  const small = iconBuild.decodePng(iconBuild.downscalePng(png, 10));
+  eq(`${small.width}x${small.height}`, '10x5', 'longest side fitted, aspect kept');
+  assert([...small.pixels].every((v) => Math.abs(v - 128) <= 1), 'a one-pixel checker averages to grey, not aliased stripes');
+  eq(iconBuild.downscalePng(png, 64), png, 'a raster already small enough comes back untouched');
+  const rgba = Buffer.from([255, 0, 0, 255, 0, 0, 0, 0]);
+  const edge = iconBuild.decodePng(iconBuild.downscalePng(iconBuild.encodePng({ width: 2, height: 1, channels: 4, pixels: rgba }), 1));
+  eq([...edge.pixels].join(), '255,0,0,128', 'colour is averaged by alpha, so a transparent neighbour cannot darken it');
+  rejects(() => iconBuild.decodePng(Buffer.from('not a png')), /not a PNG/);
+});
+
+test('an icon cell is fitted to its image, never stretched square', () => {
+  const size = (w, h, requested) => JSON.stringify(finder.recommendedSize({ width: w, height: h }, requested));
+  eq(size(156, 147, 78), JSON.stringify({ width: 78, height: 74 }), 'a requested size is the longest side');
+  eq(size(78, 78), JSON.stringify({ width: 78, height: 78 }), 'a square mark stays square');
+  eq(size(1024, 512), JSON.stringify({ width: 78, height: 39 }), 'the default footprint is fitted too');
 });
 
 test('both SVG and PNG entries decode with real dimensions', () => {

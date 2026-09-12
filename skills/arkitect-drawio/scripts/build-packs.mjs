@@ -7,22 +7,25 @@
 //   node build-packs.mjs --refresh azure-v24    re-download one source, report hash drift
 //   node build-packs.mjs --check-upstream       has Simple Icons removed a mark we ship?
 //   node build-packs.mjs --check-drift          have the pinned sources moved on?
+//   node build-packs.mjs --downscale-png in.png out.png [--max 156]
 //   node build-packs.mjs --list                 what the manifest declares
 //
 // Upstream archives land in a gitignored .cache/ - they are inputs, not
 // shipped artwork. Vendor icons (AWS, Azure, Google) are embedded verbatim
 // because those terms permit redistribution for architecture diagrams but
 // forbid altering the icon shape. Only permissively licensed marks are
-// recoloured, and only ever into their own brand colour.
+// recoloured, and only ever into their own brand colour. The one exception is
+// size: five AWS rasters published at ~1024px ship proportionally shrunk to
+// twice their drawn size, from committed files under assets/libraries/local/.
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, basename } from 'node:path';
 import { readLibrary, titleAliases } from './lib/drawio-core.mjs';
 import {
   sha256, download, readZip, readTgz, splitSvg, viewBoxOf, paintMark, conceptTile,
   fileSheet, dataUri, writeLibrary, prettyTitle, slugify, aliasSet, withPlurals, withShortName,
-  normalise,
+  normalise, pngSize, downscalePng,
 } from './lib/icon-build.mjs';
 import { checkSimpleIcons, checkDrift, removalReport, driftReport } from './lib/upstream.mjs';
 
@@ -35,15 +38,6 @@ export const MANIFEST_FILE = join(LIB_DIR, 'sources.json');
 export const CATALOG_FILE = join(REF_DIR, 'icon-catalog.json');
 
 const ICON_SIZE = 78; // the AWS palette's service-icon footprint; keeps packs interchangeable
-
-// AWS is the one pack not rebuilt from an upstream archive: its artwork is the
-// palette that shipped with the skill. Once canonicalised, aws.drawio is its
-// own source, so the rebuild is idempotent and the original palette files can
-// go. The fallback only matters for the very first build.
-function awsSourceFile() {
-  const canonical = join(LIB_DIR, 'aws.drawio');
-  return existsSync(canonical) ? canonical : join(LIB_DIR, 'AWS-icons.merged.drawio');
-}
 
 export const loadManifest = () => JSON.parse(readFileSync(MANIFEST_FILE, 'utf8'));
 
@@ -78,8 +72,18 @@ async function openSource(key, manifest, cache, { refresh = false } = {}) {
       );
     }
     for (const e of readZip(got.buf)) files.set(e.name, e.read());
-  } else if (src.type === 'local') {
-    hash = 'local';
+  } else if (src.type === 'local-files') {
+    // Artwork with no upstream archive to rebuild from, committed as files and
+    // pinned by a digest over every name and byte, exactly like an archive.
+    const dir = join(LIB_DIR, src.dir);
+    for (const name of readdirSync(dir).sort()) files.set(name, readFileSync(join(dir, name)));
+    hash = localFilesDigest(files);
+    if (src.sha256 && src.sha256 !== hash) {
+      throw new Error(
+        `${key}: committed files changed.\n  manifest sha256 ${src.sha256}\n  files sha256    ${hash}\n`
+        + '  Re-pin deliberately once you have reviewed them.',
+      );
+    }
   } else {
     throw new Error(`${key}: unknown source type "${src.type}"`);
   }
@@ -87,6 +91,21 @@ async function openSource(key, manifest, cache, { refresh = false } = {}) {
   const opened = { key, src, files, sha256: hash };
   cache.set(key, opened);
   return opened;
+}
+
+export const localFilesDigest = (files) => sha256(Buffer.concat(
+  [...files].flatMap(([name, buf]) => [Buffer.from(`${name}\0${buf.length}\0`), buf]),
+));
+
+// A raster keeps its own aspect: the library and cell sizes fit the 78px
+// footprint on the longest side, and draw.io is told the aspect is fixed.
+function pngArt(buf) {
+  const { width, height } = pngSize(buf);
+  const scale = ICON_SIZE / Math.max(width, height);
+  return {
+    data: `data:image/png;base64,${buf.toString('base64')}`, mime: 'image/png', width, height,
+    w: Math.round(width * scale), h: Math.round(height * scale), aspect: 'fixed',
+  };
 }
 
 const readText = (opened, path) => {
@@ -122,15 +141,20 @@ async function buildVendorZipPack(pack, manifest, cache) {
       const m = re.exec(path.replace(/\\/g, '/'));
       if (!m) continue;
       const group = m.groups?.group ?? '';
-      const file = m.groups?.file ?? basename(path, '.svg');
-      const raw = spec.titleFrom === 'gcp-dirname'
-        ? group
-        : file.replace(/^\d+\s*-icon-service-/, '');
-      const title = prettyTitle(raw);
+      const file = m.groups?.file ?? basename(path).replace(/\.(svg|png)$/i, '');
+      const raw = spec.titleFrom === 'gcp-dirname' ? group
+        : spec.titleFrom === 'aws-filename' ? file
+          : file.replace(/^\d+\s*-icon-service-/, '');
+      // Amazon's file names already carry the casing people write ("AWS IoT
+      // Greengrass"), which prettyTitle would flatten, and they are the captions
+      // the old palette used - so every current title and id stays as it was.
+      const title = spec.titleFrom === 'aws-filename'
+        ? raw.replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim()
+        : prettyTitle(raw);
       const slug = slugify(raw);
-      const svg = buf.toString('utf8');
+      const art = /\.png$/i.test(path) ? pngArt(buf) : { svg: buf.toString('utf8') };
       const candidate = {
-        slug, title, svg, group, tier: spec.tier ?? null,
+        slug, title, ...art, group, tier: spec.tier ?? null,
         source: spec.source, upstreamPath: path, rank: groupRank(group),
         payload: sha256(buf),
       };
@@ -162,61 +186,48 @@ async function buildVendorZipPack(pack, manifest, cache) {
 
   // Vendors name services formally; architects do not. aliasExtras carries the
   // household names ("blob storage", "gke") that the formal title never yields.
+  // An id a spec may already name survives upstream filing its artwork
+  // differently: `renames` moves a built slug, and its title, back onto that id.
+  for (const [from, to] of Object.entries(pack.renames ?? {})) {
+    const c = bySlug.get(dedupeKey(from));
+    if (!c) throw new Error(`${pack.id}: renames names "${from}", which the build did not produce`);
+    bySlug.delete(dedupeKey(from));
+    bySlug.set(dedupeKey(to.slug), { ...c, slug: to.slug, title: to.title ?? c.title });
+  }
+
   const aliasExtras = pack.aliasExtras ?? {};
+  const legacyTitles = pack.legacyTitles ?? {};
+  const abbreviations = pack.abbreviations ?? {};
+  const legacyAliases = (slug) => (legacyTitles[slug] ? [legacyTitles[slug], ...titleAliases(legacyTitles[slug])] : []);
   for (const c of [...bySlug.values()].sort((a, b) => a.slug.localeCompare(b.slug))) {
     const extra = [...(aliasExtras[c.slug] ?? []), ...(inherited.get(dedupeKey(c.slug)) ?? [])];
     if (/^Azure /.test(c.title)) extra.push(c.title.replace(/^Azure /, ''));
     if (/^Google /.test(c.title)) extra.push(c.title.replace(/^Google /, ''));
     if (/^Cloud /.test(c.title)) extra.push(c.title.replace(/^Cloud /, ''));
+    if (/^(Amazon|AWS) /.test(c.title)) extra.push(c.title.replace(/^(Amazon|AWS) /, ''));
+    // A caption from an older palette keeps resolving, so a spec written against it still draws.
+    extra.push(...legacyAliases(c.slug), ...(abbreviations[c.slug] ?? []));
     const given = aliasSet(c.title, c.slug, ...extra);
     const aliases = withPlurals(given);
     entries.push({
       slug: c.slug, title: c.title, svg: c.svg,
+      data: c.data, mime: c.mime, width: c.width, height: c.height, w: c.w, h: c.h, aspect: c.aspect,
       aliases, generatedAliases: aliases.filter((a) => !given.includes(a)),
       source: `${c.source}`, upstreamId: c.upstreamPath, render: 'verbatim',
       group: c.group, tier: c.tier,
     });
   }
-  return entries;
+
+  // `duplicates` keeps an id that once named a second copy of a service. It now
+  // carries the same artwork and title as the id it duplicated.
+  for (const [id, of] of Object.entries(pack.duplicates ?? {})) {
+    const original = entries.find((e) => e.slug === of);
+    if (!original) throw new Error(`${pack.id}: duplicates points "${id}" at "${of}", which the build did not produce`);
+    entries.push({ ...original, slug: id, aliases: [...new Set([...original.aliases, ...aliasSet(...legacyAliases(id))])] });
+  }
+  return entries.sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
-// The committed AWS palette, retitled but with every payload byte untouched:
-// this pack is kept as it shipped rather than rebuilt from Amazon's asset
-// package. The original palette titles survive as aliases so a spec written
-// against the old catalog still resolves.
-function buildAwsPack(pack) {
-  const raw = readLibrary(awsSourceFile());
-  const legacy = pack.legacyTitles ?? {};
-  const abbrev = pack.abbreviations ?? {};
-  // The palette ships two "Compute Optimizer" variants, and the AgentCore PNG
-  // drop repeats a service the SVG set already has. Both are real duplicates
-  // with different artwork, so both survive - under distinct ids.
-  const used = new Map();
-  return raw.map((e) => {
-    // Only the palette's own size suffixes are stripped. A blanket two-digit
-    // rule would quietly turn "Amazon Route 53" into "Amazon Route", and the
-    // rebuild reads its own output, so that damage would compound.
-    const title = /^AgentCore/.test(e.title)
-      ? `Amazon Bedrock AgentCore ${e.title.slice('AgentCore'.length)}`.trim()
-      : e.title.replace(/^Arch[_\s-]+/i, '').replace(/[_\s-]+(?:16|32|48|64)$/, '')
-        .replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
-    const short = title.replace(/^(Amazon|AWS)\s+/i, '');
-    const base = slugify(title);
-    const nth = (used.get(base) ?? 0) + 1;
-    used.set(base, nth);
-    const slug = nth === 1 ? base : `${base}-${nth}`;
-    const original = legacy[slug] ?? e.title;
-    const given = aliasSet(title, short, original, ...titleAliases(original), ...(abbrev[slug] ?? []));
-    const aliases = withPlurals(given);
-    return {
-      slug, title,
-      data: e.dataUri, w: e.w, h: e.h, aspect: e.aspect,
-      aliases, generatedAliases: aliases.filter((a) => !given.includes(a)),
-      source: 'aws-palette', upstreamId: original, render: 'verbatim',
-      mime: e.mime, width: e.w, height: e.h, sha256: e.hash,
-    };
-  });
-}
 
 async function buildBrandEntries(icons, manifest, cache) {
   const out = [];
@@ -339,9 +350,6 @@ async function buildCatchAll(manifest, cache, claimed) {
 async function buildPack(pack, manifest, cache, claimed) {
   let entries;
   switch (pack.builder) {
-    case 'local-aws':
-      entries = buildAwsPack(pack);
-      break;
     case 'zip-tree':
       entries = await buildVendorZipPack(pack, manifest, cache);
       break;
@@ -409,7 +417,6 @@ async function buildPack(pack, manifest, cache, claimed) {
 }
 
 function licenceOf(source, manifest) {
-  if (source === 'aws-palette') return manifest.sources['aws-palette'].licence;
   for (const [key, src] of Object.entries(manifest.sources)) {
     if (key === source) return src.licence;
     if (src.package && source === `${src.package}@${src.version}`) return src.licence;
@@ -617,6 +624,25 @@ async function main(argv) {
     return;
   }
 
+  // One-off: shrink a vendor raster to twice the size it is drawn at, keeping its
+  // aspect. How the AgentCore feature marks in local/aws-agentcore were made from
+  // the ~1024px PNGs Amazon published (#7).
+  if (mode === '--downscale-png') {
+    const [input, output] = argv.slice(1).filter((a, i, all) => !a.startsWith('--') && all[i - 1] !== '--max');
+    const max = Number(argv.includes('--max') ? argv[argv.indexOf('--max') + 1] : ICON_SIZE * 2);
+    if (!input || !output || !(max > 0)) {
+      console.error('usage: build-packs.mjs --downscale-png <in.png> <out.png> [--max 156]');
+      process.exit(2);
+    }
+    const before = readFileSync(input);
+    const after = downscalePng(before, max);
+    mkdirSync(dirname(output), { recursive: true });
+    writeFileSync(output, after);
+    const { width, height } = pngSize(after);
+    console.log(`${basename(output)}  ${(before.length / 1024).toFixed(0)} KB -> ${(after.length / 1024).toFixed(1)} KB  (${width}x${height})`);
+    return;
+  }
+
   // Exit 0: checked, nothing found. 1: findings, written to --report if given.
   // 2: the check itself failed - distinct, so a network error never opens an issue.
   if (mode === '--check-upstream' || mode === '--check-drift') {
@@ -669,7 +695,7 @@ async function main(argv) {
   }
 
   console.error('usage: build-packs.mjs [--list|--all|--pack <id>|--verify|--refresh <source>|'
-    + '--check-upstream [--report <file>]|--check-drift [--report <file>]]');
+    + '--check-upstream [--report <file>]|--check-drift [--report <file>]|--downscale-png <in> <out> [--max N]]');
   process.exit(2);
 }
 

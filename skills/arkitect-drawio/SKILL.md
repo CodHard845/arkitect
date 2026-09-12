@@ -8,7 +8,7 @@ description: Create or edit editable Draw.io (.drawio) solution-architecture dia
 Produces native, editable `.drawio` XML — never a flattened image, never Mermaid as the
 final artifact. Style rules are learned from an analysed corpus of real architecture
 pages, each rule carrying its evidence count; the icons are eighteen packs -
-about 4,700 marks - bundled with this skill and resolved by one search.
+about 4,800 marks - bundled with this skill and resolved by one search.
 
 Scripts live in `${CLAUDE_PLUGIN_ROOT}/skills/arkitect-drawio/scripts`.
 Read `references/style-guide.md` before laying anything out, and
@@ -174,7 +174,7 @@ several. Lower rank wins a tie, so a curated pack always beats the catch-all.
 
 | Pack | Icons | What is in it |
 |---|---|---|
-| `aws` | 243 | AWS Architecture Icons |
+| `aws` | 311 | AWS Architecture Icons, Amazon's July 2026 package |
 | `azure` | 638 | Azure service icons, V24 |
 | `gcp` | 249 | Google Cloud products and categories |
 | `data-platforms` | 22 | Warehouses, lakehouses, query engines, BI |

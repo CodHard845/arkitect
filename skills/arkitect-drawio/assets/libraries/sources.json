@@ -2,12 +2,22 @@
   "version": 2,
   "note": "Pinned build manifest for the Draw.io icon packs. Every source carries an exact version or a recorded sha256, so `build-packs.mjs --verify` can prove the committed libraries match it.",
   "sources": {
-    "aws-palette": {
-      "type": "local",
-      "file": "aws.drawio",
+    "aws-icons-2026-07": {
+      "type": "zip",
+      "url": "https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip",
+      "sha256": "d2d166c453526471749d520e0db022c459abef759d2946cf2dd1d1c992dc6526",
       "terms": "permission",
       "licence": "AWS Architecture Icons terms",
       "licenceUrl": "https://aws.amazon.com/architecture/icons/"
+    },
+    "aws-agentcore-extras": {
+      "type": "local-files",
+      "dir": "local/aws-agentcore",
+      "sha256": "10afdf53ab5223ea80f1527b181f022ba2bc4dceccd23d8a7a6d23fea933f105",
+      "terms": "permission",
+      "licence": "AWS Architecture Icons terms",
+      "licenceUrl": "https://aws.amazon.com/architecture/icons/",
+      "note": "The five Amazon Bedrock AgentCore feature marks Amazon published only as ~1024px PNGs and not in the icon package. Proportionally downscaled to 156px on the longest side - twice the size they are drawn at - by build-packs.mjs --downscale-png: area-averaged, nothing cropped, recoloured or reshaped."
     },
     "simple-icons": {
       "type": "npm",
@@ -100,9 +110,29 @@
       "description": "Amazon Web Services architecture icons",
       "rank": 10,
       "kind": "vendor",
-      "builder": "local-aws",
-      "source": "aws-palette",
-      "note": "Canonicalised from the committed AWS-v1 palette, artwork unchanged: this pack is kept as it shipped rather than rebuilt from the upstream asset package, so aws.drawio is its own source and the rebuild is idempotent. legacyTitles keeps the original palette captions searchable now that the palette files are gone.",
+      "builder": "zip-tree",
+      "sources": [
+        {
+          "source": "aws-icons-2026-07",
+          "include": "^Architecture-Service-Icons_07312026/Arch_(?<group>[^/]+)/64/Arch_(?<file>.+)_64\\.svg$",
+          "titleFrom": "aws-filename"
+        },
+        {
+          "source": "aws-agentcore-extras",
+          "include": "^(?<file>Amazon-Bedrock-AgentCore-[A-Za-z]+)\\.png$",
+          "titleFrom": "aws-filename"
+        }
+      ],
+      "renames": {
+        "aws-compute-optimizer-management-tools": {
+          "slug": "aws-compute-optimizer-2",
+          "title": "AWS Compute Optimizer"
+        }
+      },
+      "duplicates": {
+        "amazon-bedrock-agentcore-2": "amazon-bedrock-agentcore"
+      },
+      "note": "Built from Amazon's AWS Architecture Icons package (July 2026): every service icon at 64px, embedded verbatim. The five AgentCore feature marks the package does not carry come from aws-agentcore-extras. renames and duplicates keep every id the original 243-entry palette used, and legacyTitles keeps its captions searchable.",
       "legacyTitles": {
         "amazon-augmented-ai-a2i": "Arch Amazon-Augmented-AI-A2I 64",
         "amazon-bedrock": "Arch Amazon-Bedrock 64",

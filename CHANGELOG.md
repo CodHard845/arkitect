@@ -27,6 +27,22 @@ All notable changes to Arkitect are recorded here. Format loosely follows
   that export. They render correctly, so #13 is closed with evidence and guarded
   from now on.
 
+### Changed
+
+- **The AWS pack is built from Amazon's official icon package** (#8). Every
+  service icon from the AWS Architecture Icons package of July 2026, at 64px,
+  embedded verbatim and pinned by sha256: 311 icons where the palette had 243,
+  68 of them new (Braket, Chime, Connect, the Elemental media services, IoT Core
+  and Greengrass, Thinkbox, Transfer Family and more). Every id the palette used
+  still resolves, and its captions stay searchable. The `local-aws` special case
+  in the builder is gone; AWS is an ordinary `zip-tree` pack.
+- **The AgentCore rasters are 73 KB, not 4.65 MB** (#7). The service now uses
+  Amazon's official SVG under both of its ids. The five feature marks Amazon has
+  only published as ~1024px PNGs ship proportionally shrunk to 156px - twice their
+  drawn size - by a dependency-free area-average resampler
+  (`build-packs.mjs --downscale-png`), committed under `assets/libraries/local/` as
+  a pinned `local-files` source. `aws.drawio` went from 7.3 MB to 1.5 MB.
+
 ### Fixed
 
 - **A fragment of a different product's name no longer resolves confidently.**
@@ -37,6 +53,9 @@ All notable changes to Arkitect are recorded here. Format loosely follows
   one-word vendor title is never used unattended. Scores and ranking are
   unchanged; only the confidence verdict moved. The catalog records
   `generatedAliases` so the resolver can tell them apart.
+- **An icon cell fits its image instead of stretching square.** A requested
+  icon size became both width and height, and cell styles set `imageAspect=0`,
+  so any non-square raster was squashed. The size is now the longest side.
 
 ## [1.1.0] — 2026-09-12
 
