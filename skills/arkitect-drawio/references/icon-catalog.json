@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-12T00:05:34.127Z",
+  "generated": "2026-09-12T00:28:18.774Z",
   "version": 2,
   "note": "Metadata only. Image payloads live in assets/libraries/<pack>.drawio and are read by libraryIndex, so a search never pulls base64 into the caller context.",
   "manifest": {
     "file": "assets/libraries/sources.json",
-    "sha256": "764b416d19f90876ef9bfbd3b655b2dafea1981af5105c02f2126512333b0282"
+    "sha256": "c92c532ef8acebc09d5b6ce5dee42d35bcb6028dd87ea3f2fa7bc526cdc84b41"
   },
   "sources": {
     "aws-palette": {
@@ -86,7 +86,7 @@
       "count": 243,
       "onDemand": 0,
       "sha256": "6d1fe750c6ad6fcf31f2dcfb8ec197a674a8ee525505a4c651e16d9d6648523e",
-      "note": "Canonicalised from the committed AWS-v1 palette; artwork unchanged (PLAN decision 12). legacyTitles keeps the original palette captions searchable now that the palette files are gone."
+      "note": "Canonicalised from the committed AWS-v1 palette, artwork unchanged: this pack is kept as it shipped rather than rebuilt from the upstream asset package, so aws.drawio is its own source and the rebuild is idempotent. legacyTitles keeps the original palette captions searchable now that the palette files are gone."
     },
     {
       "id": "azure",

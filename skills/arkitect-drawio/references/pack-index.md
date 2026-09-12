@@ -34,7 +34,7 @@ being drawn.
 
 `aws` &middot; 243 icons &middot; `aws.drawio`
 
-> Canonicalised from the committed AWS-v1 palette; artwork unchanged (PLAN decision 12). legacyTitles keeps the original palette captions searchable now that the palette files are gone.
+> Canonicalised from the committed AWS-v1 palette, artwork unchanged: this pack is kept as it shipped rather than rebuilt from the upstream asset package, so aws.drawio is its own source and the rebuild is idempotent. legacyTitles keeps the original palette captions searchable now that the palette files are gone.
 
 Too many to list; see the contact sheet at `assets/libraries/contact-sheets/aws.png`.
 

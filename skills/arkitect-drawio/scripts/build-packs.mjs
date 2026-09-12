@@ -175,9 +175,10 @@ async function buildVendorZipPack(pack, manifest, cache) {
   return entries;
 }
 
-// The committed AWS palette, retitled but with every payload byte untouched
-// (PLAN decision 12). The original palette titles survive as aliases so a spec
-// written against the old catalog still resolves.
+// The committed AWS palette, retitled but with every payload byte untouched:
+// this pack is kept as it shipped rather than rebuilt from Amazon's asset
+// package. The original palette titles survive as aliases so a spec written
+// against the old catalog still resolves.
 function buildAwsPack(pack) {
   const raw = readLibrary(awsSourceFile());
   const legacy = pack.legacyTitles ?? {};
