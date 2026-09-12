@@ -77,6 +77,16 @@ All notable changes to Arkitect are recorded here. Format loosely follows
   tail, clearly ahead of any differently named rival. Anything else becomes a
   placeholder named in the report, and `excalidraw icon` says which, and why.
   `tests/excalidraw-icon-queries.json` measures it: 0 wrong draws, 123 right.
+- **The gRPC and Memcached icons draw again.** The devicon builder rebuilt each
+  mark's root `<svg>` to normalise its canvas and dropped every namespace
+  declaration with it. Both marks paint gradients through `xlink:href`, so their
+  embedded SVG was not valid XML and showed as a broken image - on the contact
+  sheet and in every diagram that used them. The rebuilt root now keeps the
+  original `xmlns:*` declarations, and the strict library loader rejects any SVG
+  payload that uses a namespace prefix it never declares. The other 4,786 marks
+  were unaffected. Once gRPC could render, it showed what devicon's `original`
+  variant really is: two small chevrons in one corner of the canvas, no wordmark.
+  It now uses devicon's `plain` variant, the actual gRPC logo.
 
 ## [1.1.0] — 2026-09-12
 

@@ -237,9 +237,13 @@ async function buildBrandEntries(icons, manifest, cache) {
       const path = `icons/${icon.deviconName}/${icon.deviconName}-${icon.deviconVariant}.svg`;
       const svgText = readText(opened, path);
       // devicon ships full-colour artwork; only the canvas size is normalised.
-      const { inner } = splitSvg(svgText);
+      // The root is rebuilt for that, but every namespace it declares must come
+      // along: gRPC and Memcached paint gradients through xlink:href, and an
+      // undeclared prefix makes the whole SVG unparseable - it never renders.
+      const { attrs, inner } = splitSvg(svgText);
       const [x, y, w, h] = viewBoxOf(svgText);
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" `
+      const namespaces = [...attrs.matchAll(/\sxmlns:[\w.-]+\s*=\s*"[^"]*"/g)].map((m) => m[0]).join('');
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg"${namespaces} width="64" height="64" `
         + `viewBox="${x} ${y} ${w} ${h}">${inner}</svg>`;
       out.push({
         slug: icon.slug, title: icon.title, svg,

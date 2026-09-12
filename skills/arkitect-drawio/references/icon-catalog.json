@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-12T20:48:53.904Z",
+  "generated": "2026-09-12T21:01:21.232Z",
   "version": 2,
   "note": "Metadata only. Image payloads live in assets/libraries/<pack>.drawio and are read by libraryIndex, so a search never pulls base64 into the caller context.",
   "manifest": {
     "file": "assets/libraries/sources.json",
-    "sha256": "14e9c5136b328a3d46bd863f8cf3662aac8039093eabd2853701ddb2665df0b2"
+    "sha256": "3dacd850eb9f8c1b1d4ea841a4b5d941b3fea0be01f4e158a60bfcff1f3beb29"
   },
   "sources": {
     "aws-icons-2026-07": {
@@ -135,7 +135,7 @@
       "file": "databases.drawio",
       "count": 37,
       "onDemand": 1,
-      "sha256": "9542cc3eb94abac2f58b4219c41a491ef30db42e2f2d1e37e5ba53ff85bbbb6e"
+      "sha256": "27abbae3e67f1518d877653779cf2b80c95bacb18b214be2626a52ba6223c4cf"
     },
     {
       "id": "ai-frameworks",
@@ -225,7 +225,7 @@
       "file": "languages-runtimes.drawio",
       "count": 80,
       "onDemand": 1,
-      "sha256": "86c0c6984d74116aa2623416180e970afe21840eb510e26e34b18f44f9bd9208"
+      "sha256": "f33cb9ddc1d53595f3c3cec33bb177c40a550ef14a9573e5180e46f1f43ba49f"
     },
     {
       "id": "agents",
@@ -34365,7 +34365,7 @@
       "mime": "image/svg+xml",
       "width": 78,
       "height": 78,
-      "sha256": "6557548f5c0b62a73ecfba8137da7a1225a4602f7acbc948833daffcf8665986",
+      "sha256": "83073fc28501ea75994af428cc1faedfd359ce98321ccfaaa60bc88b0c88d2d8",
       "bytes": "committed",
       "libraryIndex": 30
     },
@@ -40800,13 +40800,13 @@
         "g rpc"
       ],
       "source": "devicon@2.17.0",
-      "upstreamId": "icons/grpc/grpc-original.svg",
+      "upstreamId": "icons/grpc/grpc-plain.svg",
       "licence": "MIT",
       "render": "verbatim-colour",
       "mime": "image/svg+xml",
       "width": 78,
       "height": 78,
-      "sha256": "79d3c03e6ddfb7d28e791f8e05cd5ed4264168f5b30c7c21b213a14cca7828b9",
+      "sha256": "db5e3ecd1ce8442bfbfe96f275745db3adcfd3d1d5259b4197c5c8f3c6dc0a39",
       "bytes": "committed",
       "libraryIndex": 48
     },
