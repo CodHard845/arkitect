@@ -37,6 +37,8 @@ process, so they cannot tread on each other.
 | area | checks |
 |---|---|
 | Library parsing | 237/243 entry counts, file digests, 236 shared titles, byte-identical shared payloads, the six AgentCore PNGs, SVG and PNG dimension decoding |
+| Library loading | every committed `.drawio` library loads the way Draw.io's `EditorUi.loadLibrary` reads one — a strict XML parse with an `<mxlibrary>` root, then `JSON.parse` of its text — using a loader that shares no code with `readLibrary`; a mis-escaped library is proven to fail it |
+| Desktop export (opt-in) | one icon from every pack, and the five GCP marks with masks and filters, exported by Draw.io Desktop; every page must carry ink. Runs with `ARKITECT_DRAWIO_SMOKE=1` |
 | Duplicate titles | both Compute Optimizer variants retained, disambiguated by index, size and payload hash |
 | Merged library | 243 entries, round-trips against the palette |
 | Catalog | no base64 payloads, required fields present |
@@ -141,3 +143,16 @@ LLM graders. See [../evals/README.md](../evals/README.md).
 `.github/workflows/ci.yml` runs the suite on Ubuntu, Windows and macOS against
 Node 20 and 22, on every push and pull request. It is the same command you run
 locally, with no sources present — so CI always sees the fresh-clone result.
+
+`.github/workflows/drawio-desktop.yml` is the one place a real Draw.io runs. When
+a change touches `skills/arkitect-drawio/`, `tests/drawio.mjs` or the workflow
+itself, it installs Draw.io Desktop on Ubuntu — a pinned `.deb`, checked against
+its published sha256 and cached — and runs the Draw.io suite with
+`ARKITECT_DRAWIO_SMOKE=required`. `required` turns a missing or unlaunchable
+Desktop into a failure rather than a skip, so a broken install cannot pass.
+
+To run the same export tests locally, with Draw.io Desktop installed:
+
+```bash
+ARKITECT_DRAWIO_SMOKE=1 node tests/drawio.mjs     # about a minute
+```

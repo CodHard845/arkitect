@@ -136,6 +136,14 @@ Fifty-eight checks: every committed library matches the sha256 the catalog recor
 every pack has the entry count the catalog claims, every catalog index still points at
 the title it names, every id is unique, and nothing marked on-demand carries bytes.
 
+None of that proves Draw.io can open the file, so the suite checks that too. Every
+library is loaded the way Draw.io's own `EditorUi.loadLibrary` reads one — a strict XML
+parse, an `<mxlibrary>` root, `JSON.parse` of its text — by a loader that shares no code
+with `readLibrary`, so an escaping bug in `writeLibrary` cannot hide behind a reader just
+as lenient. And `.github/workflows/drawio-desktop.yml` has Draw.io Desktop export one
+icon from every pack, plus the GCP marks drawn with luminance masks and filters, and
+fails if any page comes out blank.
+
 `.gitattributes` marks every `.drawio`/`.xml` as binary so line-ending normalisation
 cannot rewrite them — without that, a checkout on Windows would break every hash.
 

@@ -18,6 +18,14 @@ All notable changes to Arkitect are recorded here. Format loosely follows
   what upstream publishes now (#9). `.github/workflows/upstream-watch.yml` runs
   the first weekly and the second quarterly. Each opens an issue, or comments on
   the open one, and never changes the repository.
+- **Proof that a built library opens in Draw.io** (#12). Every committed
+  library is loaded the way `EditorUi.loadLibrary` reads one, by a strict loader
+  that shares no code with `readLibrary`. `drawio-desktop.yml` installs a pinned,
+  checksum-verified Draw.io Desktop and exports one icon from every pack. The job
+  fails on any blank page. It runs when Draw.io files change.
+- The five GCP legacy marks drawn with luminance masks and filters ride along in
+  that export. They render correctly, so #13 is closed with evidence and guarded
+  from now on.
 
 ### Fixed
 
