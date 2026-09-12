@@ -168,9 +168,11 @@ async function buildVendorZipPack(pack, manifest, cache) {
     if (/^Azure /.test(c.title)) extra.push(c.title.replace(/^Azure /, ''));
     if (/^Google /.test(c.title)) extra.push(c.title.replace(/^Google /, ''));
     if (/^Cloud /.test(c.title)) extra.push(c.title.replace(/^Cloud /, ''));
+    const given = aliasSet(c.title, c.slug, ...extra);
+    const aliases = withPlurals(given);
     entries.push({
       slug: c.slug, title: c.title, svg: c.svg,
-      aliases: withPlurals(aliasSet(c.title, c.slug, ...extra)),
+      aliases, generatedAliases: aliases.filter((a) => !given.includes(a)),
       source: `${c.source}`, upstreamId: c.upstreamPath, render: 'verbatim',
       group: c.group, tier: c.tier,
     });
@@ -204,10 +206,12 @@ function buildAwsPack(pack) {
     used.set(base, nth);
     const slug = nth === 1 ? base : `${base}-${nth}`;
     const original = legacy[slug] ?? e.title;
+    const given = aliasSet(title, short, original, ...titleAliases(original), ...(abbrev[slug] ?? []));
+    const aliases = withPlurals(given);
     return {
       slug, title,
       data: e.dataUri, w: e.w, h: e.h, aspect: e.aspect,
-      aliases: withPlurals(aliasSet(title, short, original, ...titleAliases(original), ...(abbrev[slug] ?? []))),
+      aliases, generatedAliases: aliases.filter((a) => !given.includes(a)),
       source: 'aws-palette', upstreamId: original, render: 'verbatim',
       mime: e.mime, width: e.w, height: e.h, sha256: e.hash,
     };
@@ -385,6 +389,9 @@ async function buildPack(pack, manifest, cache, claimed) {
       pack: pack.id,
       title: e.title,
       aliases: e.aliases,
+      // Which aliases withPlurals invented. find-icon will not act unattended on
+      // one of these when the title is a single word.
+      ...(e.generatedAliases?.length ? { generatedAliases: e.generatedAliases } : {}),
       source: e.source,
       upstreamId: e.upstreamId,
       licence: licenceOf(e.source, manifest),

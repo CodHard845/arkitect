@@ -45,17 +45,37 @@ const CONTEXT_BONUS = 12;
 const CONFIDENT_AT = 85;
 const CLEAR_MARGIN = 15;
 
-export function score(icon, query, { packs = null, catalog = null } = {}) {
+// A prefix match is only as good as what it leaves unsaid. "postgres" names
+// PostgreSQL because "ql" changes nothing; "tempo" does not name Temporal,
+// because "ral" makes it a different word. These remainders never change which
+// product is meant.
+const GENERIC_TAILS = new Set(['db', 'ql', 'sql', 'mq', 'ai', 'labs', 'proxy', 'services', 'service',
+  'file', 'js', 'dotjs', 'io', 'dotio', 'hq', 'app', 'apps', 'server', 'platform', 'cloud', 'lang', 'hub']);
+
+// How strongly a query matches one icon, and whether that match may be used
+// unattended. The two are kept apart on purpose: lowering a doubtful match's
+// strength would also widen the margin over it, and make some *other* wrong
+// answer look confident ("delta" would become the airline).
+export function match(icon, query, { packs = null, catalog = null } = {}) {
   const q = normalizeTitle(query);
-  if (!q) return 0;
+  if (!q) return { strength: 0, doubt: null };
   const qTokens = q.split(' ').filter(Boolean);
+  // Generated plurals are fine aliases, but on a one-word title they are a bare
+  // common noun: Azure's "Cubes" must not answer to "cube" unattended.
+  const generated = new Set(icon.generatedAliases ?? []);
+  const oneWordTitle = !normalizeTitle(icon.title).includes(' ');
   let best = 0;
+  let doubt = null;
+  const consider = (strength, why = null) => {
+    if (strength > best) { best = strength; doubt = why; } else if (strength === best && !why) doubt = null;
+  };
   for (const alias of icon.aliases ?? []) {
-    if (alias === q) best = Math.max(best, 100);
-    else if (alias.startsWith(q)) best = Math.max(best, 85);
-    else if (alias.includes(q)) best = Math.max(best, 70);
+    if (alias === q) consider(100, oneWordTitle && generated.has(alias) ? 'a generic word, not a product name' : null);
+    else if (alias.startsWith(q)) {
+      consider(85, GENERIC_TAILS.has(alias.slice(q.length).replace(/ /g, '')) ? null : 'only the start of a longer name matches');
+    } else if (alias.includes(q)) consider(70);
   }
-  if (String(icon.title).toLowerCase() === String(query).toLowerCase()) best = Math.max(best, 105);
+  if (String(icon.title).toLowerCase() === String(query).toLowerCase()) consider(105);
   if (best === 0) {
     // Fuzzy: how many query tokens appear anywhere in the aliases. Across ~4,800
     // icons a single token hit out of three is noise, not a candidate, so half
@@ -63,22 +83,29 @@ export function score(icon, query, { packs = null, catalog = null } = {}) {
     const hay = (icon.aliases ?? []).join(' ');
     const hits = qTokens.filter((t) => hay.includes(t)).length;
     const share = hits / qTokens.length;
-    if (share >= 0.5) best = Math.round(share * 60);
+    if (share >= 0.5) consider(Math.round(share * 60));
   }
-  if (!best) return 0;
+  if (!best) return { strength: 0, doubt: null };
 
   const rank = catalog?.packs.find((p) => p.id === icon.pack)?.rank ?? 20;
   if (rank >= 90) best -= CATCH_ALL_PENALTY;
   if (packs?.length && packs.includes(icon.pack)) best += CONTEXT_BONUS;
   // Something the agent can actually draw outranks something it must fetch.
   if (icon.bytes === 'on-demand') best -= 2;
-  return best;
+  return { strength: best, doubt };
+}
+
+export function score(icon, query, opts = {}) {
+  return match(icon, query, opts).strength;
 }
 
 export function search(query, { limit = 8, catalog = loadCatalog(), packs = null, pack = null } = {}) {
   const pool = pack ? catalog.icons.filter((i) => i.pack === pack) : catalog.icons;
   const ranked = pool
-    .map((icon) => ({ icon, s: score(icon, query, { packs, catalog }) }))
+    .map((icon) => {
+      const m = match(icon, query, { packs, catalog });
+      return { icon, s: m.strength, doubt: m.doubt };
+    })
     .filter((r) => r.s > 0)
     .sort((a, b) => b.s - a.s || String(a.icon.id).localeCompare(String(b.icon.id)));
 
@@ -87,26 +114,29 @@ export function search(query, { limit = 8, catalog = loadCatalog(), packs = null
   const seen = new Map();
   for (const r of ranked) {
     const key = `${r.icon.pack}::${r.icon.title}`;
-    if (!seen.has(key)) seen.set(key, { title: r.icon.title, pack: r.icon.pack, best: r.s, variants: [] });
+    if (!seen.has(key)) seen.set(key, { title: r.icon.title, pack: r.icon.pack, best: r.s, doubt: r.doubt, variants: [] });
     seen.get(key).variants.push(r.icon);
   }
   return [...seen.values()].sort((a, b) => b.best - a.best).slice(0, limit);
 }
 
-// A resolution is only safe to use unattended when the leader is both strong
-// and clearly ahead. Anything else comes back flagged, with the alternatives.
+// A resolution is only safe to use unattended when the leader is strong, clearly
+// ahead, and matched by its name rather than by a fragment or a common noun.
+// Anything else comes back flagged, with the alternatives.
 export function resolve(query, opts = {}) {
   const groups = search(query, opts);
   if (!groups.length) return { query, confident: false, reason: 'no match', groups: [] };
   const [top, next] = groups;
   const margin = next ? top.best - next.best : Infinity;
   const confident = top.best >= CONFIDENT_AT
+    && !top.doubt
     && (margin >= CLEAR_MARGIN || groups.length === 1)
     && top.variants.length === 1;
   const reason = confident ? null
     : top.best < CONFIDENT_AT ? 'weak match'
-      : top.variants.length > 1 ? 'several icons share this title'
-        : 'runner-up is too close';
+      : top.doubt ? top.doubt
+        : top.variants.length > 1 ? 'several icons share this title'
+          : 'runner-up is too close';
   return { query, confident, reason, icon: top.variants[0], groups };
 }
 
