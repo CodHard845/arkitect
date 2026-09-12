@@ -36,11 +36,11 @@ process, so they cannot tread on each other.
 
 | area | checks |
 |---|---|
-| Library parsing | 237/243 entry counts, file digests, 236 shared titles, byte-identical shared payloads, the six AgentCore PNGs, SVG and PNG dimension decoding |
+| Library parsing | entry counts and file digests for every pack, SVG and PNG dimension decoding |
 | Library loading | every committed `.drawio` library loads the way Draw.io's `EditorUi.loadLibrary` reads one — a strict XML parse with an `<mxlibrary>` root, then `JSON.parse` of its text — using a loader that shares no code with `readLibrary`; a mis-escaped library is proven to fail it |
 | Desktop export (opt-in) | one icon from every pack, and the five GCP marks with masks and filters, exported by Draw.io Desktop; every page must carry ink. Runs with `ARKITECT_DRAWIO_SMOKE=1` |
 | Duplicate titles | both Compute Optimizer variants retained, disambiguated by index, size and payload hash |
-| Merged library | 243 entries, round-trips against the palette |
+| AWS pack | built from Amazon's pinned package; every one of the 243 palette ids still present; AgentCore as one official SVG plus five 156px feature rasters matching their pinned digest; the PNG codec round-trips, area-averages and never enlarges; icon cells fit their image instead of stretching square |
 | Catalog | no base64 payloads, required fields present |
 | Icon lookup | exact and fuzzy matches; an ambiguous query returns every variant; an unknown service returns no match; a fragment of a different product's name (`tempo`, `cube`) is flagged, not resolved |
 | Resolution accuracy | the 362-query answer key in `tests/icon-queries.json`: zero confident wrong answers, precision at rank 1 above its floor, and the numbers printed on every run |

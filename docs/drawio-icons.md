@@ -2,7 +2,7 @@
 
 Where a `.drawio` diagram's marks come from, in resolution order:
 
-1. **The bundled icon packs** — eighteen libraries, ~4,700 marks, searched together
+1. **The bundled icon packs** — eighteen libraries, ~4,800 marks, searched together
    by product name.
 2. **Draw.io's own `mxgraph.aws4.*` shapes** — every AWS service the built-in
    set covers, no embedding needed.
@@ -88,10 +88,12 @@ See `assets/libraries/ATTRIBUTION.md` for per-source terms and
 
 ## Duplicate titles are kept, not deduplicated
 
-Two AWS entries share the title `AWS Compute Optimizer` — one 81×81, one 80×80, with
-different payloads — and the AgentCore PNG drop repeats a service the SVG set already
-has. All four survive, under distinct ids, flagged `ambiguousTitle`. Lookups disambiguate
-by id, dimensions and decoded-image hash, never by title alone:
+Amazon files `AWS Compute Optimizer` under two categories with different artwork; both
+survive, as `aws/aws-compute-optimizer` and `aws/aws-compute-optimizer-2`.
+`aws/amazon-bedrock-agentcore-2` was once a PNG copy of the AgentCore service; it now
+carries the same official SVG as `aws/amazon-bedrock-agentcore`, so a spec pinned to
+either id still draws. All four are flagged `ambiguousTitle`. Lookups disambiguate by id
+and decoded-image hash, never by title alone:
 
 ```bash
 node skills/arkitect-drawio/scripts/find-icon.mjs "compute optimizer"
@@ -119,6 +121,7 @@ node $S/build-packs.mjs --pack azure        # just one
 node $S/build-packs.mjs --refresh azure-v24 # re-download, report hash drift
 node $S/build-packs.mjs --check-upstream    # has Simple Icons removed a mark we ship?
 node $S/build-packs.mjs --check-drift       # have the pinned sources moved on?
+node $S/build-packs.mjs --downscale-png in.png out.png --max 156   # shrink a raster, aspect kept
 node $S/write-pack-docs.mjs                 # regenerate pack-index.md + ATTRIBUTION.md
 node $S/contact-sheet.mjs --all --png       # regenerate the review sheets
 ```
@@ -161,9 +164,13 @@ icons — came from the original AWS library. Most AWS services are drawn with b
 exactly the gap these packs close: the products those diagrams reached for by hand —
 Snowflake, Grafana, Databricks, Datadog, GitHub — now resolve from bundled bytes.
 
-The AWS pack is still a *partial* extraction of Amazon's published set, kept as-is
-deliberately rather than rebuilt. Rebuilding it from the official Asset Package is a
-recorded follow-up.
+The AWS pack is built from Amazon's own AWS Architecture Icons package (July 2026): every
+service icon at 64px, embedded verbatim and pinned by sha256. Every id the original
+243-entry palette used still resolves, and its captions stay searchable. Five Amazon
+Bedrock AgentCore feature marks exist only as ~1024px rasters Amazon published outside
+the package; they ship proportionally shrunk to 156px, twice the size they are drawn
+at, from committed files under `assets/libraries/local/` — which took the pack from
+7.3 MB to 1.5 MB.
 
 ## Third-party product logos
 

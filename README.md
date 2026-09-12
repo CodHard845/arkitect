@@ -38,7 +38,7 @@ agent actually looked at before saying it was done.
 - **Two engines, one contract.** Draw.io when it has to look formal; Excalidraw when it
   should look thought-through rather than filed. Same workflow, same spec idea, same
   honesty rules.
-- **5,900 icons bundled.** 4,725 marks in 18 Draw.io packs — AWS, Azure, Google Cloud,
+- **5,950 icons bundled.** 4,793 marks in 18 Draw.io packs — AWS, Azure, Google Cloud,
   data platforms, databases, AI frameworks, ML, streaming, observability, DevOps,
   security, GitHub, SaaS, languages, file types, and agent concepts — plus 1,162 items
   across 36 Excalidraw libraries. All searchable by product name, ranked so a curated
@@ -115,7 +115,7 @@ Then ask for a diagram in plain language:
 |---|---|---|
 | looks like | crisp, formal, vendor icons | hand-drawn, sketchy |
 | reach for it when | a client, a review board or an RFC will see it; the design is AWS-heavy; you need multiple pages or an as-is/to-be comparison | it is system design, a component or block diagram, a flow, or art for a README |
-| icons | 18 packs, 4,725 marks + built-in `mxgraph.aws4.*` + fetched product logos | 1,162 items across 36 libraries + icons traced from real logos |
+| icons | 18 packs, 4,793 marks + built-in `mxgraph.aws4.*` + fetched product logos | 1,162 items across 36 libraries + icons traced from real logos |
 | edit it in | Draw.io Desktop, the VS Code extension, app.diagrams.net | the Excalidraw container this repo ships, or excalidraw.com |
 | local viewer | Draw.io Desktop (optional) | `docker compose up -d` (optional) |
 

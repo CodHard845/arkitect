@@ -178,17 +178,15 @@ export function styleFor(icon) {
   return `${ICON_STYLE_BASE}image=${styleSafeDataUri(icon)};`;
 }
 
-// PNG palette entries declare huge nominal sizes (1024px); normalise every
-// icon to the observed 78px service-icon footprint unless told otherwise.
+// An icon is fitted, never stretched: the requested size - by default the
+// observed 78px service-icon footprint - becomes its longest side, and the other
+// side follows the image. Cell styles set imageAspect=0, so a square cell would
+// squash a raster like the 156x147 AgentCore Identity mark.
 export function recommendedSize(icon, requested) {
-  if (requested) return { width: requested, height: requested };
   const w = icon.width ?? 78;
   const h = icon.height ?? 78;
-  if (w > 200 || h > 200) {
-    const scale = 78 / Math.max(w, h);
-    return { width: Math.round(w * scale), height: Math.round(h * scale) };
-  }
-  return { width: 78, height: 78 };
+  const scale = (requested ?? 78) / Math.max(w, h);
+  return { width: Math.round(w * scale), height: Math.round(h * scale) };
 }
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')

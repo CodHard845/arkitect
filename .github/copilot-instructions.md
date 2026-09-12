@@ -11,7 +11,7 @@ short version:
 
 - **Draw.io** for formal solution architecture, AWS-heavy designs, client-facing
   decks. **Excalidraw** for system design, block diagrams, flows, README art.
-- Resolve icons *before* laying out: 243 AWS Architecture Icons for Draw.io,
+- Resolve icons *before* laying out: 4,793 marks in 18 packs for Draw.io,
   1,162 bundled library items for Excalidraw. Never substitute one product's
   mark for another — an honest, named placeholder beats a wrong logo.
 - Generate from a JSON spec, validate, render, and **look at the PNG** before

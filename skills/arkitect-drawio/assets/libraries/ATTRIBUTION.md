@@ -21,7 +21,8 @@ Two kinds of terms appear below, and the difference matters:
 
 | Source | Terms | Licence | Icons shipped |
 |---|---|---|---|
-| aws-palette | permission | [AWS Architecture Icons terms](https://aws.amazon.com/architecture/icons/) | 243 |
+| [aws-icons-2026-07](https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip) | permission | [AWS Architecture Icons terms](https://aws.amazon.com/architecture/icons/) | 306 |
+| aws-agentcore-extras | permission | [AWS Architecture Icons terms](https://aws.amazon.com/architecture/icons/) | 5 |
 | simple-icons@16.30.0 | licence | [CC0-1.0](https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md) | 3467 |
 | simple-icons@15.22.0 | licence | CC0-1.0 | - |
 | devicon@2.17.0 | licence | [MIT](https://github.com/devicons/devicon/blob/master/LICENSE) | 8 |
@@ -32,9 +33,17 @@ Two kinds of terms appear below, and the difference matters:
 | [gcp-category](https://services.google.com/fh/files/misc/category-icons.zip) | permission | [Google Cloud icon terms](https://cloud.google.com/icons) | 26 |
 | [gcp-legacy](https://services.google.com/fh/files/misc/google-cloud-legacy-icons.zip) | permission | [Google Cloud icon terms](https://cloud.google.com/icons) | 204 |
 
-### aws-palette
+### aws-icons-2026-07
+
+Downloaded from `https://d1.awsstatic.com/onedam/marketing-channels/website/public/shared/architecture-icon-release/Icon-package_07312026.5846e92413caa21490223536cc97f1269e44fa92.zip`, sha256 `d2d166c453526471749d520e0db022c459abef759d2946cf2dd1d1c992dc6526`.
 
 **Permission:** AWS Architecture Icons terms - <https://aws.amazon.com/architecture/icons/>
+
+### aws-agentcore-extras
+
+**Permission:** AWS Architecture Icons terms - <https://aws.amazon.com/architecture/icons/>
+
+The five Amazon Bedrock AgentCore feature marks Amazon published only as ~1024px PNGs and not in the icon package. Proportionally downscaled to 156px on the longest side - twice the size they are drawn at - by build-packs.mjs --downscale-png: area-averaged, nothing cropped, recoloured or reshaped.
 
 ### simple-icons@16.30.0
 
