@@ -5,6 +5,8 @@
 //   node build-packs.mjs --pack azure           build one pack
 //   node build-packs.mjs --verify               committed libraries match the manifest?
 //   node build-packs.mjs --refresh azure-v24    re-download one source, report hash drift
+//   node build-packs.mjs --check-upstream       has Simple Icons removed a mark we ship?
+//   node build-packs.mjs --check-drift          have the pinned sources moved on?
 //   node build-packs.mjs --list                 what the manifest declares
 //
 // Upstream archives land in a gitignored .cache/ - they are inputs, not
@@ -22,6 +24,7 @@ import {
   fileSheet, dataUri, writeLibrary, prettyTitle, slugify, aliasSet, withPlurals, withShortName,
   normalise,
 } from './lib/icon-build.mjs';
+import { checkSimpleIcons, checkDrift, removalReport, driftReport } from './lib/upstream.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SKILL_ROOT = join(HERE, '..');
@@ -607,6 +610,39 @@ async function main(argv) {
     return;
   }
 
+  // Exit 0: checked, nothing found. 1: findings, written to --report if given.
+  // 2: the check itself failed - distinct, so a network error never opens an issue.
+  if (mode === '--check-upstream' || mode === '--check-drift') {
+    const reportFile = argv.includes('--report') ? argv[argv.indexOf('--report') + 1] : null;
+    let findings;
+    let report;
+    try {
+      const manifest = loadManifest();
+      const catalog = JSON.parse(readFileSync(CATALOG_FILE, 'utf8'));
+      if (mode === '--check-upstream') {
+        const r = await checkSimpleIcons({ catalog, manifest });
+        console.log(`simple-icons  pinned ${r.pinned}, latest ${r.latest}, ${r.shipped} slugs shipped`);
+        console.log(`  removed upstream  ${r.removed.length}${r.removed.length ? `  ${r.removed.map((m) => m.slug).join(', ')}` : ''}`);
+        console.log(`  renamed upstream  ${r.renamed.length}${r.renamed.length ? `  ${r.renamed.map((m) => `${m.slug}->${m.to}`).join(', ')}` : ''}`);
+        findings = r.removed.length > 0;
+        report = removalReport(r);
+      } else {
+        const rows = await checkDrift({ catalog, manifest });
+        for (const row of rows) {
+          const state = row.note ? 'skip ' : row.drifted ? 'DRIFT' : 'ok   ';
+          console.log(`  ${state}  ${row.key.padEnd(16)} ${row.note ?? `pinned ${String(row.pinned).slice(0, 12)}  upstream ${String(row.current).slice(0, 12)}`}`);
+        }
+        findings = rows.some((row) => row.drifted);
+        report = driftReport(rows);
+      }
+    } catch (err) {
+      console.error(`upstream check failed: ${err.message}`);
+      process.exit(2);
+    }
+    if (findings && reportFile) writeFileSync(reportFile, report);
+    process.exit(findings ? 1 : 0);
+  }
+
   if (mode === '--all' || mode === '--pack') {
     const only = mode === '--pack' ? argv[1] : null;
     if (mode === '--pack' && !only) { console.error('usage: build-packs.mjs --pack <id>'); process.exit(2); }
@@ -625,7 +661,8 @@ async function main(argv) {
     return;
   }
 
-  console.error('usage: build-packs.mjs [--list|--all|--pack <id>|--verify|--refresh <source>]');
+  console.error('usage: build-packs.mjs [--list|--all|--pack <id>|--verify|--refresh <source>|'
+    + '--check-upstream [--report <file>]|--check-drift [--report <file>]]');
   process.exit(2);
 }
 

@@ -4,6 +4,17 @@ All notable changes to Arkitect are recorded here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **The pins are watched.** `build-packs.mjs --check-upstream` compares every
+  Simple Icons slug we ship with the latest release and reports removals,
+  telling a rename apart (#10). `--check-drift` compares every pinned source with
+  what upstream publishes now (#9). `.github/workflows/upstream-watch.yml` runs
+  the first weekly and the second quarterly. Each opens an issue, or comments on
+  the open one, and never changes the repository.
+
 ## [1.1.0] — 2026-09-12
 
 Eighteen Draw.io icon packs instead of one AWS palette, and a resolver that says
