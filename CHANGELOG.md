@@ -42,6 +42,18 @@ All notable changes to Arkitect are recorded here. Format loosely follows
   drawn size - by a dependency-free area-average resampler
   (`build-packs.mjs --downscale-png`), committed under `assets/libraries/local/` as
   a pinned `local-files` source. `aws.drawio` went from 7.3 MB to 1.5 MB.
+- **66 products leave the catch-all for the packs they belong in** (#19). Their
+  marks already shipped in `brands`, ranked below every curated pack and labelled
+  "confirm this is the right product" even on an exact match. They are now
+  curated: Mixpanel, PostHog and Elementary in `data-platforms`; Vespa, PocketBase,
+  Appwrite, Turso and Nebula in `databases`; Modal, Braintrust, Langflow and OpenAI
+  Gym in `ai-frameworks`; Deepnote and Lightning in `ml-training`; Checkmk, Icinga,
+  Netdata and Thanos in `observability`; Devbox, Talos, Coolify, CapRover,
+  Portainer, Watchtower and Kong in `devops`; Ory and Clerk in `security-identity`;
+  Coda, Obsidian, Logseq, Shortcut, Pivotal Tracker, Retool, Appsmith and Budibase in
+  `saas-collab`; and 31 languages, frameworks, build tools, linters and test runners
+  in `languages-runtimes`, which grows from 49 to 80. The same CC0 bytes, no
+  licensing change; `brands` goes from 3,158 to 3,092.
 
 ### Fixed
 

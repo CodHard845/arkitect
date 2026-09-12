@@ -1019,6 +1019,33 @@
             "apachekylin"
           ],
           "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "mixpanel",
+          "title": "Mixpanel",
+          "hex": "7856FF",
+          "aliases": [
+            "mixpanel"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "posthog",
+          "title": "PostHog",
+          "hex": "000000",
+          "aliases": [
+            "posthog"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "elementary",
+          "title": "elementary",
+          "hex": "64BAFF",
+          "aliases": [
+            "elementary"
+          ],
+          "source": "simple-icons@16.30.0"
         }
       ],
       "onDemand": [
@@ -1481,6 +1508,51 @@
           "deviconName": "yugabytedb",
           "deviconVariant": "original",
           "hex": "ff5f3b"
+        },
+        {
+          "slug": "vespa",
+          "title": "Vespa",
+          "hex": "85B09A",
+          "aliases": [
+            "vespa"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "pocketbase",
+          "title": "PocketBase",
+          "hex": "B8DBE4",
+          "aliases": [
+            "pocketbase"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "appwrite",
+          "title": "Appwrite",
+          "hex": "FD366E",
+          "aliases": [
+            "appwrite"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "turso",
+          "title": "Turso",
+          "hex": "4FF8D2",
+          "aliases": [
+            "turso"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "nebula",
+          "title": "Nebula",
+          "hex": "2CADFE",
+          "aliases": [
+            "nebula"
+          ],
+          "source": "simple-icons@16.30.0"
         }
       ],
       "onDemand": [
@@ -1784,6 +1856,43 @@
           "hex": "DC244C",
           "aliases": [
             "qdrant"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "modal",
+          "title": "Modal",
+          "hex": "7FEE64",
+          "aliases": [
+            "modal"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "braintrust",
+          "title": "Braintrust",
+          "hex": "000000",
+          "aliases": [
+            "braintrust"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "langflow",
+          "title": "Langflow",
+          "hex": "000000",
+          "aliases": [
+            "langflow"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "openaigym",
+          "title": "OpenAI Gym",
+          "hex": "0081A5",
+          "aliases": [
+            "openai gym",
+            "openaigym"
           ],
           "source": "simple-icons@16.30.0"
         }
@@ -2178,6 +2287,24 @@
           "deviconName": "kubeflow",
           "deviconVariant": "original",
           "hex": "72a1e5"
+        },
+        {
+          "slug": "deepnote",
+          "title": "Deepnote",
+          "hex": "3793EF",
+          "aliases": [
+            "deepnote"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "lightning",
+          "title": "Lightning",
+          "hex": "792EE5",
+          "aliases": [
+            "lightning"
+          ],
+          "source": "simple-icons@16.30.0"
         }
       ],
       "onDemand": [
@@ -2809,6 +2936,42 @@
             "statuspage"
           ],
           "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "checkmk",
+          "title": "Checkmk",
+          "hex": "15D1A0",
+          "aliases": [
+            "checkmk"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "icinga",
+          "title": "Icinga",
+          "hex": "06062C",
+          "aliases": [
+            "icinga"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "netdata",
+          "title": "Netdata",
+          "hex": "00AB44",
+          "aliases": [
+            "netdata"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "thanos",
+          "title": "Thanos",
+          "hex": "6D41FF",
+          "aliases": [
+            "thanos"
+          ],
+          "source": "simple-icons@16.30.0"
         }
       ],
       "onDemand": [
@@ -3299,6 +3462,69 @@
           "deviconName": "sonarqube",
           "deviconVariant": "original",
           "hex": "549dd0"
+        },
+        {
+          "slug": "devbox",
+          "title": "Devbox",
+          "hex": "280459",
+          "aliases": [
+            "devbox"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "talos",
+          "title": "Talos",
+          "hex": "FF7300",
+          "aliases": [
+            "talos"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "coolify",
+          "title": "Coolify",
+          "hex": "6B16ED",
+          "aliases": [
+            "coolify"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "caprover",
+          "title": "CapRover",
+          "hex": "ED5B26",
+          "aliases": [
+            "caprover"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "portainer",
+          "title": "Portainer",
+          "hex": "13BEF9",
+          "aliases": [
+            "portainer"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "watchtower",
+          "title": "Watchtower",
+          "hex": "416271",
+          "aliases": [
+            "watchtower"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "kong",
+          "title": "Kong",
+          "hex": "003459",
+          "aliases": [
+            "kong"
+          ],
+          "source": "simple-icons@16.30.0"
         }
       ],
       "onDemand": [
@@ -3586,6 +3812,24 @@
           "hex": "FD4B2D",
           "aliases": [
             "authentik"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "ory",
+          "title": "Ory",
+          "hex": "4F46E5",
+          "aliases": [
+            "ory"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "clerk",
+          "title": "Clerk",
+          "hex": "6C47FF",
+          "aliases": [
+            "clerk"
           ],
           "source": "simple-icons@16.30.0"
         }
@@ -3951,6 +4195,79 @@
             "calendly"
           ],
           "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "coda",
+          "title": "Coda",
+          "hex": "F46A54",
+          "aliases": [
+            "coda"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "obsidian",
+          "title": "Obsidian",
+          "hex": "7C3AED",
+          "aliases": [
+            "obsidian"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "logseq",
+          "title": "Logseq",
+          "hex": "85C8C8",
+          "aliases": [
+            "logseq"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "shortcut",
+          "title": "Shortcut",
+          "hex": "494BCB",
+          "aliases": [
+            "shortcut"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "pivotaltracker",
+          "title": "Pivotal Tracker",
+          "hex": "517A9E",
+          "aliases": [
+            "pivotal tracker",
+            "pivotaltracker"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "retool",
+          "title": "Retool",
+          "hex": "3D3D3D",
+          "aliases": [
+            "retool"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "appsmith",
+          "title": "Appsmith",
+          "hex": "2A2F3D",
+          "aliases": [
+            "appsmith"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "budibase",
+          "title": "Budibase",
+          "hex": "000000",
+          "aliases": [
+            "budibase"
+          ],
+          "source": "simple-icons@16.30.0"
         }
       ],
       "onDemand": [
@@ -4043,7 +4360,7 @@
     {
       "id": "languages-runtimes",
       "title": "Languages and runtimes",
-      "description": "Programming languages, frameworks and package managers",
+      "description": "Programming languages, frameworks, package managers and developer tooling",
       "rank": 20,
       "kind": "brands",
       "builder": "brand-marks",
@@ -4508,6 +4825,290 @@
           "deviconName": "grpc",
           "deviconVariant": "original",
           "hex": "00b0ad"
+        },
+        {
+          "slug": "zig",
+          "title": "Zig",
+          "hex": "F7A41D",
+          "aliases": [
+            "zig"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "nim",
+          "title": "Nim",
+          "hex": "FFE953",
+          "aliases": [
+            "nim"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "crystal",
+          "title": "Crystal",
+          "hex": "000000",
+          "aliases": [
+            "crystal"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "ocaml",
+          "title": "OCaml",
+          "hex": "EC6813",
+          "aliases": [
+            "ocaml"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "fsharp",
+          "title": "F#",
+          "hex": "378BBA",
+          "aliases": [
+            "fsharp",
+            "f sharp"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "clojure",
+          "title": "Clojure",
+          "hex": "5881D8",
+          "aliases": [
+            "clojure"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "erlang",
+          "title": "Erlang",
+          "hex": "A90533",
+          "aliases": [
+            "erlang"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "solidity",
+          "title": "Solidity",
+          "hex": "363636",
+          "aliases": [
+            "solidity"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "astro",
+          "title": "Astro",
+          "hex": "BC52EE",
+          "aliases": [
+            "astro"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "solid",
+          "title": "Solid",
+          "hex": "2C4F7C",
+          "aliases": [
+            "solid"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "qwik",
+          "title": "Qwik",
+          "hex": "AC7EF4",
+          "aliases": [
+            "qwik"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "remix",
+          "title": "Remix",
+          "hex": "000000",
+          "aliases": [
+            "remix"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "nuxt",
+          "title": "Nuxt",
+          "hex": "00DC82",
+          "aliases": [
+            "nuxt",
+            "nuxt js",
+            "nuxtjs"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "vite",
+          "title": "Vite",
+          "hex": "9135FF",
+          "aliases": [
+            "vite"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "esbuild",
+          "title": "esbuild",
+          "hex": "FFCF00",
+          "aliases": [
+            "esbuild"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "rollupdotjs",
+          "title": "rollup.js",
+          "hex": "EC4A3F",
+          "aliases": [
+            "rollup js",
+            "rollupjs",
+            "rollupdotjs"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "webpack",
+          "title": "Webpack",
+          "hex": "8DD6F9",
+          "aliases": [
+            "webpack"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "turborepo",
+          "title": "Turborepo",
+          "hex": "FF1E56",
+          "aliases": [
+            "turborepo"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "nx",
+          "title": "Nx",
+          "hex": "143055",
+          "aliases": [
+            "nx"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "biome",
+          "title": "Biome",
+          "hex": "60A5FA",
+          "aliases": [
+            "biome"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "eslint",
+          "title": "ESLint",
+          "hex": "4B32C3",
+          "aliases": [
+            "eslint"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "prettier",
+          "title": "Prettier",
+          "hex": "F7B93E",
+          "aliases": [
+            "prettier"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "ruff",
+          "title": "Ruff",
+          "hex": "D7FF64",
+          "aliases": [
+            "ruff"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "uv",
+          "title": "uv",
+          "hex": "DE5FE9",
+          "aliases": [
+            "uv"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "poetry",
+          "title": "Poetry",
+          "hex": "60A5FA",
+          "aliases": [
+            "poetry"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "pdm",
+          "title": "PDM",
+          "hex": "AC75D7",
+          "aliases": [
+            "pdm"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "rye",
+          "title": "Rye",
+          "hex": "000000",
+          "aliases": [
+            "rye"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "pytest",
+          "title": "Pytest",
+          "hex": "0A9EDC",
+          "aliases": [
+            "pytest"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "vitest",
+          "title": "Vitest",
+          "hex": "00FF74",
+          "aliases": [
+            "vitest"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "jest",
+          "title": "Jest",
+          "hex": "C21325",
+          "aliases": [
+            "jest"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "cypress",
+          "title": "Cypress",
+          "hex": "69D3A7",
+          "aliases": [
+            "cypress"
+          ],
+          "source": "simple-icons@16.30.0"
         }
       ],
       "onDemand": [

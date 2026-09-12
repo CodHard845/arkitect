@@ -867,6 +867,41 @@ test('a curated pack outranks the catch-all', () => {
   }
 });
 
+test('the 66 products promoted out of the catch-all now live in curated packs (#19)', () => {
+  const cat = finder.loadCatalog();
+  const promoted = {
+    'data-platforms': 'mixpanel posthog elementary',
+    databases: 'vespa pocketbase appwrite turso nebula',
+    'ai-frameworks': 'modal braintrust langflow openaigym',
+    'ml-training': 'deepnote lightning',
+    observability: 'checkmk icinga netdata thanos',
+    devops: 'devbox talos coolify caprover portainer watchtower kong',
+    'security-identity': 'ory clerk',
+    'saas-collab': 'coda obsidian logseq shortcut pivotaltracker retool appsmith budibase',
+    'languages-runtimes': 'zig nim crystal ocaml fsharp clojure erlang solidity astro solid qwik remix nuxt vite esbuild '
+      + 'rollupdotjs webpack turborepo nx biome eslint prettier ruff uv poetry pdm rye pytest vitest jest cypress',
+  };
+  const ids = new Set(cat.icons.filter((i) => i.bytes === 'committed').map((i) => i.id));
+  let count = 0;
+  for (const [pack, slugs] of Object.entries(promoted)) {
+    for (const slug of slugs.split(' ')) {
+      count++;
+      assert(ids.has(`${pack}/${slug}`), `${pack}/${slug} is not curated`);
+      assert(!ids.has(`brands/${slug}`), `brands/${slug} still ships a second copy`);
+    }
+  }
+  eq(count, 66, 'promoted products');
+  // Named exactly, each now answers from its curated pack without the catch-all caveat.
+  for (const [q, id] of [['kong', 'devops/kong'], ['posthog', 'data-platforms/posthog'], ['thanos', 'observability/thanos'],
+    ['vite', 'languages-runtimes/vite'], ['pytest', 'languages-runtimes/pytest'], ['f#', 'languages-runtimes/fsharp']]) {
+    const r = finder.resolve(q);
+    assert(r.confident, `"${q}" is not confident: ${r.reason}`);
+    eq(r.icon.id, id, `"${q}"`);
+  }
+  // "F#" normalises to "f"; an alias that short would answer to any one-letter query.
+  assert(!cat.icons.find((i) => i.id === 'languages-runtimes/fsharp').aliases.includes('f'), 'F# carries a one-letter alias');
+});
+
 test('pack context breaks a tie toward the stack being drawn', () => {
   const plain = finder.resolve('opensearch');
   const aws = finder.resolve('opensearch', { packs: ['aws'] });

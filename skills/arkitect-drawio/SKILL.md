@@ -177,21 +177,21 @@ several. Lower rank wins a tie, so a curated pack always beats the catch-all.
 | `aws` | 311 | AWS Architecture Icons, Amazon's July 2026 package |
 | `azure` | 638 | Azure service icons, V24 |
 | `gcp` | 249 | Google Cloud products and categories |
-| `data-platforms` | 22 | Warehouses, lakehouses, query engines, BI |
-| `databases` | 32 | Relational, document, key-value, graph, vector |
-| `ai-frameworks` | 30 | LLM orchestration, agent frameworks, providers |
-| `ml-training` | 25 | Training, experiment tracking, the numeric stack |
+| `data-platforms` | 25 | Warehouses, lakehouses, query engines, BI, product analytics |
+| `databases` | 37 | Relational, document, key-value, graph, vector |
+| `ai-frameworks` | 34 | LLM orchestration, agent frameworks, providers |
+| `ml-training` | 27 | Training, experiment tracking, the numeric stack |
 | `streaming-orchestration` | 16 | Brokers, stream processors, schedulers |
-| `observability` | 22 | Metrics, logs, traces, alerting, on-call |
-| `devops` | 47 | IaC, CI/CD, containers, mesh, proxies, distros |
-| `security-identity` | 23 | Secrets, SSO, scanning, runtime security, VPN |
+| `observability` | 26 | Metrics, logs, traces, alerting, on-call |
+| `devops` | 54 | IaC, CI/CD, containers, mesh, proxies, distros |
+| `security-identity` | 25 | Secrets, SSO, scanning, runtime security, VPN |
 | `github` | 38 | GitHub marks plus Octicon workflow concepts |
-| `saas-collab` | 22 | Trackers, docs, design, comms, business SaaS |
-| `languages-runtimes` | 49 | Languages, frameworks, package managers |
+| `saas-collab` | 30 | Trackers, docs, design, comms, low-code, business SaaS |
+| `languages-runtimes` | 80 | Languages, frameworks, package managers, build and test tooling |
 | `file-types` | 35 | Document sheets badged with an extension |
 | `agents` | 33 | Agent concepts — memory, tracing, RAG, guardrail |
 | `primitives` | 43 | Generic concepts — queue, cache, load balancer |
-| `brands` | 3,158 | Every other Simple Icons mark; ranked last |
+| `brands` | 3,092 | Every other Simple Icons mark; ranked last |
 
 `node scripts/find-icon.mjs --list-packs` prints this live.
 `references/pack-index.md` lists what each curated pack contains, and which products

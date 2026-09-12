@@ -16,7 +16,7 @@ node bin/arkitect.mjs excalidraw icon "postgres"   # 1,162 items, 36 libraries
 | | Draw.io | Excalidraw |
 |---|---|---|
 | bundled | 4,793 marks across 18 packs | 1,162 items across 36 libraries |
-| coverage | AWS (311), Azure (638), Google Cloud (249), plus curated packs for data platforms, databases, AI frameworks, ML, streaming, observability, DevOps, security, GitHub, SaaS, languages and file types; agent and architecture concepts as tiles; 3,158 more brands as a catch-all | AWS (249), Azure (86), GCP (83), Google products (139), Snowflake (54), data platform (33), DevOps (29), IT logos (38), plus system-design components, forms, network topology, sticky notes |
+| coverage | AWS (311), Azure (638), Google Cloud (249), plus curated packs for data platforms, databases, AI frameworks, ML, streaming, observability, DevOps, security, GitHub, SaaS, languages and file types; agent and architecture concepts as tiles; 3,092 more brands as a catch-all | AWS (249), Azure (86), GCP (83), Google products (139), Snowflake (54), data platform (33), DevOps (29), IT logos (38), plus system-design components, forms, network topology, sticky notes |
 | also available | Draw.io's built-in `mxgraph.aws4.*` shapes, and MCP `search_shapes` | the public catalogue at libraries.excalidraw.com |
 | for anything else | fetch the real logo and embed it — including the 69 marks catalogued without bytes | trace the real logo into native geometry, or use a placeholder |
 | detail | [drawio-icons.md](drawio-icons.md) · [pack index](../skills/arkitect-drawio/references/pack-index.md) | [excalidraw-libraries.md](excalidraw-libraries.md) · [excalidraw-icons.md](excalidraw-icons.md) |
