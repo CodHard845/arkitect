@@ -19,7 +19,8 @@ import { dirname, join, basename } from 'node:path';
 import { readLibrary, titleAliases } from './lib/drawio-core.mjs';
 import {
   sha256, download, readZip, readTgz, splitSvg, viewBoxOf, paintMark, conceptTile,
-  fileSheet, dataUri, writeLibrary, prettyTitle, slugify, aliasSet, withPlurals,
+  fileSheet, dataUri, writeLibrary, prettyTitle, slugify, aliasSet, withPlurals, withShortName,
+  normalise,
 } from './lib/icon-build.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -105,6 +106,11 @@ async function buildVendorZipPack(pack, manifest, cache) {
   // duplicate check ignores word breaks entirely.
   const dedupeKey = (slug) => slug.replace(/-/g, '');
   const firstTierWins = pack.dedupe === 'first-tier-wins';
+  // Google's legacy archive sometimes uses a different name for a product the
+  // current set already ships ("google_kubernetes_engine" is today's "GKE").
+  // The old name survives as an alias on the current icon, not as a second one.
+  const supersedes = pack.supersedes ?? {};
+  const inherited = new Map();
 
   for (const spec of pack.sources) {
     const opened = await openSource(spec.source, manifest, cache);
@@ -125,6 +131,12 @@ async function buildVendorZipPack(pack, manifest, cache) {
         source: spec.source, upstreamPath: path, rank: groupRank(group),
         payload: sha256(buf),
       };
+      if (supersedes[slug]) {
+        const target = dedupeKey(supersedes[slug]);
+        if (!inherited.has(target)) inherited.set(target, []);
+        inherited.get(target).push(title, slug);
+        continue;
+      }
       const key = dedupeKey(slug);
       const seen = bySlug.get(key);
       if (!seen) { bySlug.set(key, candidate); continue; }
@@ -145,8 +157,11 @@ async function buildVendorZipPack(pack, manifest, cache) {
     }
   }
 
+  // Vendors name services formally; architects do not. aliasExtras carries the
+  // household names ("blob storage", "gke") that the formal title never yields.
+  const aliasExtras = pack.aliasExtras ?? {};
   for (const c of [...bySlug.values()].sort((a, b) => a.slug.localeCompare(b.slug))) {
-    const extra = [];
+    const extra = [...(aliasExtras[c.slug] ?? []), ...(inherited.get(dedupeKey(c.slug)) ?? [])];
     if (/^Azure /.test(c.title)) extra.push(c.title.replace(/^Azure /, ''));
     if (/^Google /.test(c.title)) extra.push(c.title.replace(/^Google /, ''));
     if (/^Cloud /.test(c.title)) extra.push(c.title.replace(/^Cloud /, ''));
@@ -208,7 +223,8 @@ async function buildBrandEntries(icons, manifest, cache) {
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" `
         + `viewBox="${x} ${y} ${w} ${h}">${inner}</svg>`;
       out.push({
-        slug: icon.slug, title: icon.title, svg, aliases: icon.aliases,
+        slug: icon.slug, title: icon.title, svg,
+        aliases: withShortName(icon.aliases, icon.title),
         source: icon.source, upstreamId: path, render: 'verbatim-colour',
       });
       continue;
@@ -217,7 +233,8 @@ async function buildBrandEntries(icons, manifest, cache) {
     const svgText = readText(opened, `icons/${icon.slug}.svg`);
     const { svg, render } = paintMark(svgText, icon.hex);
     out.push({
-      slug: icon.slug, title: icon.title, svg, aliases: icon.aliases,
+      slug: icon.slug, title: icon.title, svg,
+      aliases: withShortName(icon.aliases, icon.title),
       source: icon.source, upstreamId: icon.slug, render, hex: icon.hex,
     });
   }
@@ -254,7 +271,9 @@ async function buildSheetEntries(icons, manifest, cache) {
     });
     out.push({
       slug: icon.ext, title: icon.title, svg,
-      aliases: aliasSet(icon.ext, `${icon.ext} file`, `dot ${icon.ext}`, icon.title, icon.glyph),
+      // Deliberately not the bare glyph name: "terraform" must reach the
+      // product mark in devops, not a .tf document sheet.
+      aliases: aliasSet(icon.ext, `${icon.ext} file`, `dot ${icon.ext}`, `${icon.ext} document`, icon.title),
       source: icon.source, upstreamId: path, render: 'sheet',
     });
   }
@@ -263,7 +282,24 @@ async function buildSheetEntries(icons, manifest, cache) {
 
 // Every remaining Simple Icons mark, so a product no curated pack names is
 // still reachable. Ranked last, and labelled, so a weak hit looks weak.
+// Upstream alias metadata is generous: Simple Icons lists "Terraform" as an
+// alias of OpenTofu, which would put a fork's mark one point behind the real
+// thing. Names a curated pack already owns are stripped from the catch-all.
+function claimedAliases(manifest) {
+  const out = new Set();
+  for (const p of manifest.packs) {
+    if (p.id === 'brands') continue;
+    for (const i of (p.icons ?? [])) {
+      if (i.title) { out.add(normalise(i.title)); out.add(normalise(i.title).replace(/ /g, '')); }
+      if (i.slug) out.add(i.slug);
+      if (i.glyph) out.add(i.glyph);
+    }
+  }
+  return out;
+}
+
 async function buildCatchAll(manifest, cache, claimed) {
+  const owned = claimedAliases(manifest);
   const opened = await openSource('simple-icons', manifest, cache);
   const data = JSON.parse(readText(opened, 'data/simple-icons.json'));
   const REPL = { '+': 'plus', '.': 'dot', '&': 'and', đ: 'd', ħ: 'h', ı: 'i', ĸ: 'k', ŀ: 'l', ł: 'l', ß: 'ss', ŧ: 't', ø: 'o' };
@@ -279,8 +315,11 @@ async function buildCatchAll(manifest, cache, claimed) {
     const svgText = readText(opened, `icons/${slug}.svg`);
     const { svg, render } = paintMark(svgText, d.hex);
     const extra = [...(d.aliases?.aka ?? []), ...(d.aliases?.old ?? [])];
+    const aliases = withShortName(aliasSet(d.title, slug, ...extra), d.title)
+      .filter((a) => !owned.has(a));
+    if (!aliases.length) continue; // nothing left that a curated pack does not already own
     out.push({
-      slug, title: d.title, svg, aliases: aliasSet(d.title, slug, ...extra),
+      slug, title: d.title, svg, aliases,
       source: `simple-icons@${opened.src.version}`, upstreamId: slug, render, hex: d.hex,
     });
   }
@@ -398,7 +437,12 @@ export async function buildAll(only = null, { quiet = false } = {}) {
   // appears twice and `brands/docker` cannot shadow `devops/docker`.
   const claimed = new Set();
   for (const p of manifest.packs) {
-    for (const i of (p.icons ?? [])) if (i.slug) claimed.add(i.slug);
+    for (const i of (p.icons ?? [])) {
+      if (i.slug) claimed.add(i.slug);
+      // A file-type sheet is the home for .json and .yaml; the bare mark in the
+      // catch-all would only ever tie with it.
+      if (i.glyph && i.kind === 'brand-glyph') claimed.add(i.glyph);
+    }
   }
 
   const targets = only ? manifest.packs.filter((p) => p.id === only) : manifest.packs;

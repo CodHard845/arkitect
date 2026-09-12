@@ -548,7 +548,124 @@
           "include": "^Azure_Public_Service_Icons/Icons/(?<group>[^/]+)/(?<file>.+)\\.svg$",
           "titleFrom": "azure-filename"
         }
-      ]
+      ],
+      "aliasExtras": {
+        "storage-accounts": [
+          "blob storage",
+          "azure blob",
+          "blob",
+          "azure storage"
+        ],
+        "azure-cosmos-db": [
+          "cosmos",
+          "cosmosdb"
+        ],
+        "function-apps": [
+          "azure functions",
+          "function app",
+          "serverless function"
+        ],
+        "kubernetes-services": [
+          "aks",
+          "azure kubernetes service"
+        ],
+        "app-services": [
+          "app service",
+          "web app",
+          "azure web app"
+        ],
+        "entra-id-protection": [
+          "entra id protection"
+        ],
+        "entra-connect": [
+          "aad connect",
+          "azure ad connect"
+        ],
+        "entra-domain-services": [
+          "azure ad domain services"
+        ],
+        "event-hubs": [
+          "event hub",
+          "azure event hub"
+        ],
+        "azure-service-bus": [
+          "service bus"
+        ],
+        "data-factories": [
+          "adf",
+          "azure data factory"
+        ],
+        "azure-synapse-analytics": [
+          "synapse"
+        ],
+        "azure-databricks": [
+          "databricks on azure"
+        ],
+        "sql-database": [
+          "azure sql",
+          "azure sql database"
+        ],
+        "sql-managed-instance": [
+          "azure sql managed instance"
+        ],
+        "key-vaults": [
+          "key vault",
+          "akv"
+        ],
+        "application-insights": [
+          "app insights"
+        ],
+        "log-analytics-workspaces": [
+          "log analytics"
+        ],
+        "container-registries": [
+          "acr",
+          "azure container registry"
+        ],
+        "container-instances": [
+          "aci",
+          "azure container instances"
+        ],
+        "virtual-machine": [
+          "azure vm"
+        ],
+        "load-balancers": [
+          "azure load balancer"
+        ],
+        "application-gateways": [
+          "app gateway",
+          "azure application gateway"
+        ],
+        "api-management-services": [
+          "apim",
+          "azure api management"
+        ],
+        "ai-foundry": [
+          "azure ai foundry",
+          "ai studio"
+        ],
+        "azure-openai": [
+          "azure openai service",
+          "aoai"
+        ],
+        "azure-machine-learning": [
+          "azure ml"
+        ],
+        "virtual-networks": [
+          "vnet",
+          "azure vnet"
+        ],
+        "azure-data-explorer-clusters": [
+          "adx",
+          "kusto"
+        ],
+        "azure-devops": [
+          "ado"
+        ],
+        "monitor": [
+          "azure monitor"
+        ]
+      }
     },
     {
       "id": "gcp",
@@ -577,7 +694,87 @@
           "tier": "legacy"
         }
       ],
-      "dedupe": "first-tier-wins"
+      "dedupe": "first-tier-wins",
+      "aliasExtras": {
+        "cloud-storage": [
+          "gcs",
+          "google cloud storage",
+          "bucket"
+        ],
+        "bigquery": [
+          "bq"
+        ],
+        "cloud-functions": [
+          "gcf",
+          "google cloud functions"
+        ],
+        "cloud-run": [
+          "gcr run"
+        ],
+        "google-kubernetes-engine": [
+          "gke",
+          "kubernetes engine"
+        ],
+        "compute-engine": [
+          "gce",
+          "google compute engine"
+        ],
+        "cloud-sql": [
+          "google cloud sql"
+        ],
+        "pubsub": [
+          "pub sub",
+          "google pubsub"
+        ],
+        "cloud-composer": [
+          "composer",
+          "managed airflow"
+        ],
+        "vertex-ai": [
+          "vertex"
+        ],
+        "identity-and-access-management": [
+          "iam",
+          "google iam"
+        ],
+        "cloud-load-balancing": [
+          "glb",
+          "google load balancer"
+        ],
+        "artifact-registry": [
+          "gar"
+        ],
+        "cloud-spanner": [
+          "spanner"
+        ],
+        "firestore": [
+          "cloud firestore"
+        ],
+        "bigtable": [
+          "cloud bigtable"
+        ],
+        "memorystore": [
+          "google redis"
+        ],
+        "dataproc": [
+          "google spark"
+        ],
+        "dataflow": [
+          "google beam"
+        ],
+        "secret-manager": [
+          "google secret manager"
+        ],
+        "virtual-private-cloud": [
+          "vpc",
+          "google vpc"
+        ]
+      },
+      "supersedes": {
+        "google-kubernetes-engine": "gke",
+        "apigee-api-platform": "apigee"
+      },
+      "note": "Google publishes 19 current \"core product\" icons, 26 category icons and a legacy archive of per-service marks. Current artwork wins on a name clash; supersedes covers the pairs Google renamed rather than repeated."
     },
     {
       "id": "data-platforms",

@@ -5,6 +5,9 @@
   "title": "Reference architecture",
   "layout": { "originX": 200, "originY": 180, "colPitch": 320, "rowPitch": 190 },
 
+  "_context_comment": "Naming the packs this diagram draws from biases icon resolution toward them, so `opensearch` lands on Amazon OpenSearch Service rather than the OpenSearch project. A single node can override it with its own \"pack\".",
+  "context": { "packs": ["aws"] },
+
   "boundaries": [
     { "id": "cloud", "kind": "aws-cloud", "label": "AWS Cloud", "col": 1, "row": 0, "cols": 4, "rows": 2, "padLeft": 55, "padTop": 60, "padRight": 55, "padBottom": 30 },
     { "id": "pipeline", "kind": "scope", "label": "Ingestion pipeline", "color": "#E7157B", "dashed": false, "parent": "cloud", "col": 1, "row": 0, "cols": 2, "rows": 1, "padLeft": 30, "padTop": 42, "padRight": 30, "padBottom": 12 }

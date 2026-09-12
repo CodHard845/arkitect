@@ -93,7 +93,7 @@ test('an unknown engine or verb fails loudly rather than doing something', () =>
 
 test('doctor reports the bundled assets as present', () => {
   const out = cli(['doctor']);
-  for (const line of ['draw.io icon palette', 'excalidraw libraries', 'plugin manifest', 'agent contract']) {
+  for (const line of ['draw.io icon packs', 'draw.io AWS pack', 'excalidraw libraries', 'plugin manifest', 'agent contract']) {
     const row = out.split('\n').find((l) => l.includes(line));
     assert(row, `doctor does not check ${line}`);
     assert(row.startsWith('ok'), `doctor says: ${row.trim()}`);
