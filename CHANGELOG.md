@@ -68,6 +68,15 @@ All notable changes to Arkitect are recorded here. Format loosely follows
 - **An icon cell fits its image instead of stretching square.** A requested
   icon size became both width and height, and cell styles set `imageAspect=0`,
   so any non-square raster was squashed. The size is now the longest side.
+- **Excalidraw no longer draws a different product for a name it was only
+  handed** (#22). A spec node naming a component rather than a ref fell back to
+  any search hit scoring 70, so `postgres` drew Azure Database for PostgreSQL,
+  `grafana` AWS Managed Grafana, `nifi` Oracle Unified Directory - silently.
+  The fallback now draws only the product by name: an exact match (a leading
+  Azure/AWS/Google/Apache word aside), or a prefix whose remainder is a generic
+  tail, clearly ahead of any differently named rival. Anything else becomes a
+  placeholder named in the report, and `excalidraw icon` says which, and why.
+  `tests/excalidraw-icon-queries.json` measures it: 0 wrong draws, 123 right.
 
 ## [1.1.0] — 2026-09-12
 

@@ -60,6 +60,7 @@ process, so they cannot tread on each other.
 | SVG tracing | every path command including arcs; nested transforms; nonzero winding; even-odd parity; overlapping siblings not mistaken for holes; gradients and text reported rather than dropped |
 | Hand-drawn stroke | deterministic per seed; roughness 0 draws straight |
 | Icons | tracing preserves holes; `--outline` drops fills; raster embedding; tracing a raster refused; overwrite needs `--force`; the house library stays in sync; removal is complete |
+| Icon resolution | a name that only appears inside a different product (`postgres`, `grafana`, `queue`) becomes a placeholder with a reason; the 359-query answer key in `tests/excalidraw-icon-queries.json` draws no different product unattended, and draws at least 80% of its drawable answers |
 | Rendering | the SVG covers the whole scene and is stable across runs |
 | Shipped knowledge | the record claims no evidence it lacks; the style guide says out loud which rules are defaults |
 | Docker | the compose file pins the official image and publishes container port 80 |
