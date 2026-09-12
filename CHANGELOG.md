@@ -4,6 +4,26 @@ All notable changes to Arkitect are recorded here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **A fragment of a different product's name no longer resolves confidently.**
+  `tempo` resolved to Temporal, `cube` to Azure's generic "Cubes" and
+  `active directory` to its Connect Health sub-product, all without comment
+  (#21). A prefix now counts only when what it leaves off is a generic tail
+  (`postgres` → PostgreSQL still does), and a plural the builder generated for a
+  one-word vendor title is never used unattended. Scores and ranking are
+  unchanged; only the confidence verdict moved. The catalog records
+  `generatedAliases` so the resolver can tell them apart.
+
+### Added
+
+- **An accuracy measure for icon resolution** (#15). `tests/icon-queries.json`
+  is a 362-query answer key; the suite fails on any confident wrong answer or if
+  precision at rank 1 drops below 92%, and prints the numbers on every run.
+  Today: 94.5% at rank 1, zero confident wrong answers, 36 of 36 refusals held.
+
 ## [1.1.0] — 2026-09-12
 
 Eighteen Draw.io icon packs instead of one AWS palette, and a resolver that says
