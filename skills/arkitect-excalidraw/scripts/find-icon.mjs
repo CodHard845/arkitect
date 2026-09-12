@@ -99,6 +99,63 @@ export function score(entry, query) {
   return best;
 }
 
+// ------------------------------------------------------------ unattended draws
+
+// A spec node that names a component instead of a ref falls back to search, and
+// that hit is drawn with nothing in the report to say so. So it may be drawn only
+// when it is the product: the Draw.io resolver's rule, measured against
+// tests/excalidraw-icon-queries.json. A leading vendor word is not part of the
+// name ("data factory" is "Azure Data Factory"); a prefix counts only when the
+// rest is a generic tail ("dynamo" is DynamoDB); and a query that is merely part
+// of a longer name never does - "postgres" is not "Azure Database for Postgres".
+const VENDOR_WORD = /^(azure|amazon|aws|google|gcp|cloud|apache|microsoft|oracle|ibm) /;
+const GENERIC_TAILS = new Set(['db', 'ql', 'sql', 'mq', 'ai', 'labs', 'proxy', 'services', 'service', 'file',
+  'js', 'dotjs', 'io', 'dotio', 'hq', 'app', 'apps', 'server', 'platform', 'cloud', 'lang', 'hub']);
+const CLEAR_MARGIN = 15;
+
+const nameKey = (name) => normalizeName(name).replace(/-/g, ' ').replace(VENDOR_WORD, '');
+
+// How strongly a query names one entry, and the doubt that stops an unattended draw.
+export function match(entry, query) {
+  const q = normalizeName(query).replace(/-/g, ' ');
+  if (!q) return { strength: 0, doubt: null };
+  const names = new Set(entry.aliases);
+  for (const a of entry.aliases) if (VENDOR_WORD.test(a)) names.add(a.replace(VENDOR_WORD, ''));
+  let strength = 0;
+  let doubt = null;
+  for (const a of names) {
+    if (a === q) {
+      strength = 100; doubt = null;
+    } else if (a.startsWith(q) && strength <= 85) {
+      const generic = GENERIC_TAILS.has(a.slice(q.length).replace(/ /g, ''));
+      if (strength < 85) { strength = 85; doubt = generic ? null : 'only the start of a longer name matches'; } else if (generic) doubt = null;
+    } else if (a.includes(q) && strength < 70) {
+      strength = 70; doubt = 'the query is only part of a longer name';
+    }
+  }
+  return { strength, doubt };
+}
+
+// What a spec node naming `query` draws unattended - or null, and why it gets a placeholder.
+export function unattended(query, { entries = catalog() } = {}) {
+  const judged = [];
+  for (const entry of entries) {
+    const m = match(entry, query);
+    if (m.strength) judged.push({ entry, ...m });
+  }
+  if (!judged.length) return { entry: null, reason: 'nothing matches' };
+  // A stable sort: at equal strength the bundled set wins, then house icons, then the cache.
+  judged.sort((a, b) => b.strength - a.strength);
+  const [top] = judged;
+  if (top.doubt) return { entry: null, candidate: top.entry, reason: top.doubt };
+  // The same product often sits in several libraries; a runner-up of the same name is not a rival.
+  const rival = judged.find((r) => nameKey(r.entry.name) !== nameKey(top.entry.name));
+  if (rival && top.strength - rival.strength < CLEAR_MARGIN) {
+    return { entry: null, candidate: top.entry, reason: `"${rival.entry.name}" matches about as well` };
+  }
+  return { entry: top.entry, reason: null };
+}
+
 export function search(query, { limit = 8, entries = catalog() } = {}) {
   return entries
     .map((entry) => ({ entry, s: score(entry, query) }))
@@ -142,11 +199,11 @@ export function resolveIcon(ref) {
     return { source: house.name, name: house.label, kind: 'traced', elements: house.elements ?? [] };
   }
 
-  // Not an exact reference: fall back to the best search hit, but only when it
-  // is a strong match. A weak match here would silently draw the wrong product.
-  const [best] = search(direct, { limit: 1 });
-  if (best && best.score >= 70) return resolveIcon(best.ref);
-  return null;
+  // Not an exact reference: fall back to search, but draw the hit only when it is
+  // the product by name. Anything less becomes a placeholder the report names -
+  // a substring match used to be enough, and drew the wrong product silently (#22).
+  const { entry } = unattended(direct);
+  return entry ? resolveIcon(entry.ref) : null;
 }
 
 function main(argv) {
@@ -198,8 +255,11 @@ function main(argv) {
     return;
   }
 
+  const verdict = unattended(query, { entries });
   console.log(JSON.stringify({
     query,
+    // What a spec node naming this component would get without a ref.
+    ...(verdict.entry ? { draws: verdict.entry.ref } : { placeholder: verdict.reason }),
     matches: hits.map((h) => ({
       ref: h.ref, name: h.name, kind: h.kind, provider: h.provider, score: h.score, ...h.detail,
     })),

@@ -34,6 +34,16 @@ node $S/find-icon.mjs "snowflake"
 node $S/find-icon.mjs --resolve data-platform:9
 ```
 
+A spec node that names a component without a ref is resolved by the same
+search, but drawn only when the hit **is** that product: an exact name (a
+leading Azure, Amazon, AWS, Google, Cloud, Apache, Microsoft or Oracle aside),
+or a prefix whose remainder is a generic tail such as `db` or `service`, clearly
+ahead of any differently named rival. Anything less is a placeholder named in
+the build report. A substring used to be enough, and `postgres` drew Azure
+Database for PostgreSQL without a word. Every search result says up front what
+a node would get: `"draws": "<ref>"` or `"placeholder": "<reason>"`.
+`tests/excalidraw-icon-queries.json` holds the rule to account.
+
 Nothing is parsed at query time — the set is 21MB across three dozen files, so
 `index.json` holds a flat list of names and sizes and that is all a search
 reads.
