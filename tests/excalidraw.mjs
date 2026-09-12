@@ -343,6 +343,41 @@ test('find-icon resolves an exact name and refuses a weak match', () => {
   eq(finder.resolveIcon('a-product-that-does-not-exist-anywhere'), null, 'no weak substitution');
 });
 
+test('a name that only appears inside a different product falls to a placeholder (#22)', () => {
+  // Each of these drew the wrong product, silently: a managed service for the
+  // open-source project, or an unrelated item that merely contains the word.
+  for (const q of ['postgres', 'redis', 'grafana', 'prometheus', 'vault', 'queue', 'nifi', 'ray', '.net', 'llm',
+    'memory', 'api management']) {
+    const drawn = finder.resolveIcon(q);
+    assert(!drawn, `"${q}" drew ${drawn?.name}`);
+    assert(finder.unattended(q).reason, `"${q}" gives no reason for its placeholder`);
+  }
+  // The product by name still draws, with or without its vendor word.
+  for (const [q, name] of [['kafka', 'Kafka'], ['lambda', 'Lambda'], ['data factory', 'Azure Data Factory'],
+    ['cosmos', 'Azure Cosmos DB'], ['bedrock', 'Amazon Bedrock']]) {
+    eq(finder.resolveIcon(q)?.name, name, `"${q}"`);
+  }
+});
+
+test('icon resolution answer key: never draws a different product unattended (#22)', () => {
+  const key = JSON.parse(readFileSync(join(HERE, 'excalidraw-icon-queries.json'), 'utf8'));
+  const entries = finder.catalog();
+  let right = 0; let placeholders = 0; let drawable = 0;
+  const wrong = [];
+  for (const [q, accept] of key.queries) {
+    if (accept) drawable++;
+    const { entry } = finder.unattended(q, { entries });
+    if (!entry) { placeholders++; continue; }
+    // A placeholder is honest and only counted; a different product is a failure.
+    if (accept && accept.some((n) => core.normalizeName(n) === core.normalizeName(entry.name))) right++;
+    else wrong.push(`${q} -> ${entry.name}`);
+  }
+  console.log(`        answer key: ${right} drawn right, ${wrong.length} wrong, ${placeholders} placeholders `
+    + `(${key.queries.length} queries, ${drawable} with a drawable answer)`);
+  assert(!wrong.length, `drew a different product: ${wrong.join('; ')}`);
+  assert(right / drawable >= key.drawFloor, `drew ${right} of ${drawable} drawable answers, below the ${key.drawFloor * 100}% floor`);
+});
+
 test('removing an icon takes its item and index entry with it', () => {
   icons.storeIcon(`${TEST_PREFIX}gone`, Buffer.from(DONUT_SVG, 'utf8'), { trace: true });
   icons.removeIcon(`${TEST_PREFIX}gone`);
