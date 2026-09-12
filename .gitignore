@@ -14,6 +14,10 @@ tests/sensitive-tokens.*.sha256
 *.backup-*.excalidraw
 
 node_modules/
+
+# Upstream archives pulled by build-packs.mjs. They are build inputs - the
+# artwork that ships is the .drawio libraries built from them.
+skills/arkitect-drawio/.cache/
 *.log
 Thumbs.db
 desktop.ini
@@ -44,3 +48,8 @@ skills/arkitect-excalidraw/assets/libraries/*
 # scenes behind them are regenerable and add megabytes.
 skills/arkitect-excalidraw/assets/libraries/bundled/sheets/*.excalidraw
 skills/arkitect-excalidraw/assets/libraries/bundled/sheets/*.svg
+
+# Draw.io contact sheets: the PNG is what anyone reviews. The HTML behind it
+# re-embeds every icon as a data URI and is regenerable in seconds.
+skills/arkitect-drawio/assets/libraries/contact-sheets/*.html
+skills/arkitect-drawio/assets/libraries/contact-sheets/.shot/
