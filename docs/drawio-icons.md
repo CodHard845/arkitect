@@ -117,6 +117,8 @@ node $S/build-packs.mjs --list              # what the manifest declares
 node $S/build-packs.mjs --all               # rebuild every pack and the catalog
 node $S/build-packs.mjs --pack azure        # just one
 node $S/build-packs.mjs --refresh azure-v24 # re-download, report hash drift
+node $S/build-packs.mjs --check-upstream    # has Simple Icons removed a mark we ship?
+node $S/build-packs.mjs --check-drift       # have the pinned sources moved on?
 node $S/write-pack-docs.mjs                 # regenerate pack-index.md + ATTRIBUTION.md
 node $S/contact-sheet.mjs --all --png       # regenerate the review sheets
 ```

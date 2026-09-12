@@ -1,0 +1,95 @@
+name: upstream watch
+
+# Two things a pinned manifest cannot notice by itself. Each opens an issue, or
+# comments on the one already open; neither changes the repository. Moving a mark
+# to the on-demand tier or re-pinning a source is a reviewed pull request.
+#
+#   removals  weekly     Simple Icons removed a mark we still ship (#10) - licensing
+#   drift     quarterly  a pinned source has moved on upstream (#9) - staleness
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+    - cron: '41 6 1 1,4,7,10 *'
+  workflow_dispatch:
+    inputs:
+      check:
+        description: Which check to run
+        type: choice
+        options: [both, removals, drift]
+        default: both
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  removals:
+    name: Simple Icons removals
+    if: github.event.schedule == '17 6 * * 1' || (github.event_name == 'workflow_dispatch' && inputs.check != 'drift')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Exit 1 means findings; 2 means the check itself failed and the run goes red
+      # without opening anything.
+      - name: Compare every shipped slug with the latest release
+        id: check
+        run: |
+          set +e
+          node skills/arkitect-drawio/scripts/build-packs.mjs --check-upstream --report report.md
+          code=$?
+          set -e
+          if [ "$code" -ge 2 ]; then exit "$code"; fi
+          if [ "$code" -eq 1 ]; then echo "found=true" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Open or update the licensing issue
+        if: steps.check.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: A mark we ship has been removed from Simple Icons
+        run: |
+          n=$(gh issue list --state open --label licensing --search "\"$TITLE\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$n" ]; then
+            gh issue comment "$n" --body-file report.md
+          else
+            gh issue create --title "$TITLE" --label licensing --label upstream --body-file report.md
+          fi
+
+  drift:
+    name: Pinned source drift
+    if: github.event.schedule == '41 6 1 1,4,7,10 *' || (github.event_name == 'workflow_dispatch' && inputs.check != 'removals')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Compare every pin with what upstream publishes now
+        id: check
+        run: |
+          set +e
+          node skills/arkitect-drawio/scripts/build-packs.mjs --check-drift --report report.md
+          code=$?
+          set -e
+          if [ "$code" -ge 2 ]; then exit "$code"; fi
+          if [ "$code" -eq 1 ]; then echo "found=true" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Open or update the drift issue
+        if: steps.check.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: Pinned icon sources have moved on upstream
+        run: |
+          n=$(gh issue list --state open --label upstream --search "\"$TITLE\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$n" ]; then
+            gh issue comment "$n" --body-file report.md
+          else
+            gh issue create --title "$TITLE" --label upstream --label maintenance --body-file report.md
+          fi

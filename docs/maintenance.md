@@ -143,6 +143,33 @@ reformat, re-indent or "clean up" those files.
 
 Never edit a bundled library's bytes by hand.
 
+## Watching the upstreams
+
+The Draw.io packs build from pins in `skills/arkitect-drawio/assets/libraries/sources.json`.
+A pin stays honest only while someone checks it, so
+`.github/workflows/upstream-watch.yml` does the checking:
+
+| check | when | opens | why it matters |
+|---|---|---|---|
+| `build-packs.mjs --check-upstream` | weekly | `A mark we ship has been removed from Simple Icons` (`licensing`) | Simple Icons removes a brand when its owner asks; shipping it anyway redistributes a mark we were asked not to |
+| `build-packs.mjs --check-drift` | quarterly | `Pinned icon sources have moved on upstream` (`upstream`) | vendors rev their sets without notice, and the packs fall behind |
+
+A rename upstream is reported but opens nothing. A slug that moved is not a
+licensing problem. If an issue is already open, the workflow comments on it
+instead of opening a second one. A network failure turns the run red and opens nothing.
+
+Both checks run locally too, and exit `0` clean, `1` with findings, `2` on error:
+
+```bash
+node skills/arkitect-drawio/scripts/build-packs.mjs --check-upstream
+node skills/arkitect-drawio/scripts/build-packs.mjs --check-drift
+```
+
+The workflow only ever opens or comments on an issue. A removal is fixed by moving the mark
+to its pack's `onDemand` list, the way the seven 15.x removals were. A drift is
+fixed by re-pinning, rebuilding and looking at the contact sheets. Both are pull
+requests a person reviews.
+
 ## Adding an agent adapter
 
 1. Confirm which file that tool actually reads — do not guess a path.
