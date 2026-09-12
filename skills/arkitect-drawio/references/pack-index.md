@@ -14,21 +14,21 @@ being drawn.
 | `aws` | 10 | 311 | - | Amazon Web Services architecture icons |
 | `azure` | 10 | 638 | - | Microsoft Azure service icons |
 | `gcp` | 10 | 249 | - | Google Cloud product and category icons |
-| `data-platforms` | 20 | 22 | 12 | Warehouses, lakehouses, query engines and BI |
-| `databases` | 20 | 32 | 1 | Relational, document, key-value, graph and vector stores |
-| `ai-frameworks` | 20 | 30 | 13 | LLM orchestration, agent frameworks, model providers and tooling |
-| `ml-training` | 20 | 25 | 6 | Training frameworks, experiment tracking and the numeric stack |
+| `data-platforms` | 20 | 25 | 12 | Warehouses, lakehouses, query engines and BI |
+| `databases` | 20 | 37 | 1 | Relational, document, key-value, graph and vector stores |
+| `ai-frameworks` | 20 | 34 | 13 | LLM orchestration, agent frameworks, model providers and tooling |
+| `ml-training` | 20 | 27 | 6 | Training frameworks, experiment tracking and the numeric stack |
 | `streaming-orchestration` | 20 | 16 | 16 | Brokers, stream processors, schedulers and ingestion |
-| `observability` | 20 | 22 | 4 | Metrics, logs, traces, alerting and incident response |
-| `devops` | 20 | 47 | 6 | IaC, CI/CD, containers, service mesh, proxies and distributions |
-| `security-identity` | 20 | 23 | 3 | Secrets, SSO, scanning, runtime security and VPN |
+| `observability` | 20 | 26 | 4 | Metrics, logs, traces, alerting and incident response |
+| `devops` | 20 | 54 | 6 | IaC, CI/CD, containers, service mesh, proxies and distributions |
+| `security-identity` | 20 | 25 | 3 | Secrets, SSO, scanning, runtime security and VPN |
 | `github` | 20 | 38 | - | GitHub brand marks plus Octicon workflow concepts |
-| `saas-collab` | 20 | 22 | 7 | Issue trackers, docs, design, comms and business SaaS |
-| `languages-runtimes` | 20 | 49 | 1 | Programming languages, frameworks and package managers |
+| `saas-collab` | 20 | 30 | 7 | Issue trackers, docs, design, comms and business SaaS |
+| `languages-runtimes` | 20 | 80 | 1 | Programming languages, frameworks, package managers and developer tooling |
 | `agents` | 20 | 33 | - | Agent-architecture concepts as violet tiles |
 | `primitives` | 20 | 43 | - | Generic architecture concepts as slate tiles |
 | `file-types` | 20 | 35 | - | Document sheets badged with an extension |
-| `brands` | 90 | 3158 | - | Every Simple Icons mark; ranked below all curated packs |
+| `brands` | 90 | 3092 | - | Every Simple Icons mark; ranked below all curated packs |
 
 ## AWS
 
@@ -60,9 +60,9 @@ Sample: Access Context Manager, Administration, Advanced Agent Modeling, Advance
 
 ## Data platforms
 
-`data-platforms` &middot; 22 icons &middot; `data-platforms.drawio`
+`data-platforms` &middot; 25 icons &middot; `data-platforms.drawio`
 
-Snowflake &middot; Databricks &middot; ClickHouse &middot; DuckDB &middot; Apache Spark &middot; Apache Hadoop &middot; Apache Hive &middot; Trino &middot; Presto &middot; Teradata &middot; Cloudera &middot; Apache Druid &middot; Apache Doris &middot; SingleStore &middot; MinIO &middot; Apache Parquet &middot; Looker &middot; Metabase &middot; Apache Superset &middot; Qlik &middot; MicroStrategy &middot; Apache Kylin
+Snowflake &middot; Databricks &middot; ClickHouse &middot; DuckDB &middot; Apache Spark &middot; Apache Hadoop &middot; Apache Hive &middot; Trino &middot; Presto &middot; Teradata &middot; Cloudera &middot; Apache Druid &middot; Apache Doris &middot; SingleStore &middot; MinIO &middot; Apache Parquet &middot; Looker &middot; Metabase &middot; Apache Superset &middot; Qlik &middot; MicroStrategy &middot; Apache Kylin &middot; Mixpanel &middot; PostHog &middot; elementary
 
 **Catalogued without artwork (12).** No bytes ship for these. `find-icon` returns the command; `build-diagram` refuses to draw them rather than
 substituting another product's mark.
@@ -84,9 +84,9 @@ substituting another product's mark.
 
 ## Databases
 
-`databases` &middot; 32 icons &middot; `databases.drawio`
+`databases` &middot; 37 icons &middot; `databases.drawio`
 
-PostgreSQL &middot; MySQL &middot; MariaDB &middot; SQLite &middot; MongoDB &middot; Redis &middot; Apache Cassandra &middot; Couchbase &middot; Apache CouchDB &middot; Neo4j &middot; Elasticsearch &middot; OpenSearch &middot; InfluxDB &middot; Timescale &middot; Cockroach Labs &middot; PlanetScale &middot; Supabase &middot; Firebase &middot; ArangoDB &middot; Dgraph &middot; etcd &middot; ScyllaDB &middot; SurrealDB &middot; TiDB &middot; Vitess &middot; Prisma &middot; SQLAlchemy &middot; DBeaver &middot; Oracle Database &middot; Microsoft SQL Server &middot; Memcached &middot; YugabyteDB
+PostgreSQL &middot; MySQL &middot; MariaDB &middot; SQLite &middot; MongoDB &middot; Redis &middot; Apache Cassandra &middot; Couchbase &middot; Apache CouchDB &middot; Neo4j &middot; Elasticsearch &middot; OpenSearch &middot; InfluxDB &middot; Timescale &middot; Cockroach Labs &middot; PlanetScale &middot; Supabase &middot; Firebase &middot; ArangoDB &middot; Dgraph &middot; etcd &middot; ScyllaDB &middot; SurrealDB &middot; TiDB &middot; Vitess &middot; Prisma &middot; SQLAlchemy &middot; DBeaver &middot; Oracle Database &middot; Microsoft SQL Server &middot; Memcached &middot; YugabyteDB &middot; Vespa &middot; PocketBase &middot; Appwrite &middot; Turso &middot; Nebula
 
 **Catalogued without artwork (1).** No bytes ship for these. `find-icon` returns the command; `build-diagram` refuses to draw them rather than
 substituting another product's mark.
@@ -97,9 +97,9 @@ substituting another product's mark.
 
 ## AI frameworks
 
-`ai-frameworks` &middot; 30 icons &middot; `ai-frameworks.drawio`
+`ai-frameworks` &middot; 34 icons &middot; `ai-frameworks.drawio`
 
-LangChain &middot; LangGraph &middot; CrewAI &middot; n8n &middot; Anthropic &middot; Hugging Face &middot; Ollama &middot; Mistral AI &middot; Google Gemini &middot; Perplexity &middot; Replicate &middot; OpenRouter &middot; Dify &middot; Gradio &middot; Streamlit &middot; Milvus &middot; Pydantic &middot; Zapier &middot; Make &middot; Haystack &middot; DeepSeek &middot; Meta &middot; Claude &middot; v0 &middot; Cursor &middot; Windsurf &middot; LM Studio &middot; Model Context Protocol &middot; vLLM &middot; Qdrant
+LangChain &middot; LangGraph &middot; CrewAI &middot; n8n &middot; Anthropic &middot; Hugging Face &middot; Ollama &middot; Mistral AI &middot; Google Gemini &middot; Perplexity &middot; Replicate &middot; OpenRouter &middot; Dify &middot; Gradio &middot; Streamlit &middot; Milvus &middot; Pydantic &middot; Zapier &middot; Make &middot; Haystack &middot; DeepSeek &middot; Meta &middot; Claude &middot; v0 &middot; Cursor &middot; Windsurf &middot; LM Studio &middot; Model Context Protocol &middot; vLLM &middot; Qdrant &middot; Modal &middot; Braintrust &middot; Langflow &middot; OpenAI Gym
 
 **Catalogued without artwork (13).** No bytes ship for these. `find-icon` returns the command; `build-diagram` refuses to draw them rather than
 substituting another product's mark.
@@ -122,9 +122,9 @@ substituting another product's mark.
 
 ## ML and training
 
-`ml-training` &middot; 25 icons &middot; `ml-training.drawio`
+`ml-training` &middot; 27 icons &middot; `ml-training.drawio`
 
-PyTorch &middot; TensorFlow &middot; Keras &middot; scikit-learn &middot; NumPy &middot; pandas &middot; SciPy &middot; MLflow &middot; Weights & Biases &middot; Ray &middot; DVC &middot; ONNX &middot; NVIDIA &middot; Jupyter &middot; Google Colab &middot; Kaggle &middot; Optuna &middot; Polars &middot; Dask &middot; Roboflow &middot; Ultralytics &middot; OpenCV &middot; spaCy &middot; BentoML &middot; Kubeflow
+PyTorch &middot; TensorFlow &middot; Keras &middot; scikit-learn &middot; NumPy &middot; pandas &middot; SciPy &middot; MLflow &middot; Weights & Biases &middot; Ray &middot; DVC &middot; ONNX &middot; NVIDIA &middot; Jupyter &middot; Google Colab &middot; Kaggle &middot; Optuna &middot; Polars &middot; Dask &middot; Roboflow &middot; Ultralytics &middot; OpenCV &middot; spaCy &middot; BentoML &middot; Kubeflow &middot; Deepnote &middot; Lightning
 
 **Catalogued without artwork (6).** No bytes ship for these. `find-icon` returns the command; `build-diagram` refuses to draw them rather than
 substituting another product's mark.
@@ -168,9 +168,9 @@ substituting another product's mark.
 
 ## Observability
 
-`observability` &middot; 22 icons &middot; `observability.drawio`
+`observability` &middot; 26 icons &middot; `observability.drawio`
 
-Grafana &middot; Prometheus &middot; OpenTelemetry &middot; Datadog &middot; Elastic &middot; Elastic Stack &middot; Kibana &middot; Logstash &middot; Splunk &middot; Sentry &middot; New Relic &middot; Dynatrace &middot; Jaeger &middot; PagerDuty &middot; Opsgenie &middot; Uptime Kuma &middot; VictoriaMetrics &middot; Better Stack &middot; Graylog &middot; Fluent Bit &middot; Fluentd &middot; Statuspage
+Grafana &middot; Prometheus &middot; OpenTelemetry &middot; Datadog &middot; Elastic &middot; Elastic Stack &middot; Kibana &middot; Logstash &middot; Splunk &middot; Sentry &middot; New Relic &middot; Dynatrace &middot; Jaeger &middot; PagerDuty &middot; Opsgenie &middot; Uptime Kuma &middot; VictoriaMetrics &middot; Better Stack &middot; Graylog &middot; Fluent Bit &middot; Fluentd &middot; Statuspage &middot; Checkmk &middot; Icinga &middot; Netdata &middot; Thanos
 
 **Catalogued without artwork (4).** No bytes ship for these. `find-icon` returns the command; `build-diagram` refuses to draw them rather than
 substituting another product's mark.
@@ -184,9 +184,9 @@ substituting another product's mark.
 
 ## DevOps
 
-`devops` &middot; 47 icons &middot; `devops.drawio`
+`devops` &middot; 54 icons &middot; `devops.drawio`
 
-Terraform &middot; Ansible &middot; Jenkins &middot; Kubernetes &middot; Docker &middot; Helm &middot; GitLab &middot; CircleCI &middot; Travis CI &middot; TeamCity &middot; Puppet &middot; Chef &middot; Vagrant &middot; Packer &middot; Consul &middot; Nomad &middot; Podman &middot; containerd &middot; Rancher &middot; Red Hat Open Shift &middot; Istio &middot; Linkerd &middot; Envoy Proxy &middot; NGINX &middot; Traefik Proxy &middot; Apache &middot; Caddy &middot; Cloudflare &middot; Pulumi &middot; Tekton &middot; Spinnaker &middot; JFrog &middot; K3s &middot; Skaffold &middot; Buildkite &middot; Gitea &middot; Bitbucket &middot; Kubespray &middot; OpenStack &middot; VMware &middot; Proxmox &middot; Ubuntu &middot; Debian &middot; Alpine Linux &middot; Red Hat &middot; NixOS &middot; SonarQube
+Terraform &middot; Ansible &middot; Jenkins &middot; Kubernetes &middot; Docker &middot; Helm &middot; GitLab &middot; CircleCI &middot; Travis CI &middot; TeamCity &middot; Puppet &middot; Chef &middot; Vagrant &middot; Packer &middot; Consul &middot; Nomad &middot; Podman &middot; containerd &middot; Rancher &middot; Red Hat Open Shift &middot; Istio &middot; Linkerd &middot; Envoy Proxy &middot; NGINX &middot; Traefik Proxy &middot; Apache &middot; Caddy &middot; Cloudflare &middot; Pulumi &middot; Tekton &middot; Spinnaker &middot; JFrog &middot; K3s &middot; Skaffold &middot; Buildkite &middot; Gitea &middot; Bitbucket &middot; Kubespray &middot; OpenStack &middot; VMware &middot; Proxmox &middot; Ubuntu &middot; Debian &middot; Alpine Linux &middot; Red Hat &middot; NixOS &middot; SonarQube &middot; Devbox &middot; Talos &middot; Coolify &middot; CapRover &middot; Portainer &middot; Watchtower &middot; Kong
 
 **Catalogued without artwork (6).** No bytes ship for these. `find-icon` returns the command; `build-diagram` refuses to draw them rather than
 substituting another product's mark.
@@ -202,9 +202,9 @@ substituting another product's mark.
 
 ## Security and identity
 
-`security-identity` &middot; 23 icons &middot; `security-identity.drawio`
+`security-identity` &middot; 25 icons &middot; `security-identity.drawio`
 
-Vault &middot; Keycloak &middot; Auth0 &middot; Okta &middot; OWASP &middot; Snyk &middot; Trivy &middot; Falco &middot; Cilium &middot; Let's Encrypt &middot; OpenSSL &middot; JSON Web Tokens &middot; OpenID &middot; 1Password &middot; Bitwarden &middot; HashiCorp &middot; Fortinet &middot; Palo Alto Networks &middot; WireGuard &middot; OpenVPN &middot; Tailscale &middot; Authelia &middot; Authentik
+Vault &middot; Keycloak &middot; Auth0 &middot; Okta &middot; OWASP &middot; Snyk &middot; Trivy &middot; Falco &middot; Cilium &middot; Let's Encrypt &middot; OpenSSL &middot; JSON Web Tokens &middot; OpenID &middot; 1Password &middot; Bitwarden &middot; HashiCorp &middot; Fortinet &middot; Palo Alto Networks &middot; WireGuard &middot; OpenVPN &middot; Tailscale &middot; Authelia &middot; Authentik &middot; Ory &middot; Clerk
 
 **Catalogued without artwork (3).** No bytes ship for these. `find-icon` returns the command; `build-diagram` refuses to draw them rather than
 substituting another product's mark.
@@ -223,9 +223,9 @@ GitHub &middot; GitHub Actions &middot; GitHub Copilot &middot; GitHub Pages &mi
 
 ## SaaS and collaboration
 
-`saas-collab` &middot; 22 icons &middot; `saas-collab.drawio`
+`saas-collab` &middot; 30 icons &middot; `saas-collab.drawio`
 
-Jira &middot; Atlassian &middot; Confluence &middot; Notion &middot; Linear &middot; Asana &middot; Trello &middot; Discord &middot; Zoom &middot; Miro &middot; Figma &middot; Google Drive &middot; Zendesk &middot; Intercom &middot; HubSpot &middot; Stripe &middot; MailChimp &middot; Airtable &middot; ClickUp &middot; Basecamp &middot; Loom &middot; Calendly
+Jira &middot; Atlassian &middot; Confluence &middot; Notion &middot; Linear &middot; Asana &middot; Trello &middot; Discord &middot; Zoom &middot; Miro &middot; Figma &middot; Google Drive &middot; Zendesk &middot; Intercom &middot; HubSpot &middot; Stripe &middot; MailChimp &middot; Airtable &middot; ClickUp &middot; Basecamp &middot; Loom &middot; Calendly &middot; Coda &middot; Obsidian &middot; Logseq &middot; Shortcut &middot; Pivotal Tracker &middot; Retool &middot; Appsmith &middot; Budibase
 
 **Catalogued without artwork (7).** No bytes ship for these. `find-icon` returns the command; `build-diagram` refuses to draw them rather than
 substituting another product's mark.
@@ -242,9 +242,9 @@ substituting another product's mark.
 
 ## Languages and runtimes
 
-`languages-runtimes` &middot; 49 icons &middot; `languages-runtimes.drawio`
+`languages-runtimes` &middot; 80 icons &middot; `languages-runtimes.drawio`
 
-Python &middot; OpenJDK &middot; Go &middot; Rust &middot; JavaScript &middot; TypeScript &middot; Node.js &middot; Deno &middot; Bun &middot; Scala &middot; Kotlin &middot; Swift &middot; Ruby &middot; PHP &middot; C++ &middot; C &middot; R &middot; Julia &middot; Perl &middot; Elixir &middot; Haskell &middot; Lua &middot; Dart &middot; Flutter &middot; React &middot; Vue.js &middot; Angular &middot; Svelte &middot; Next.js &middot; Django &middot; Flask &middot; FastAPI &middot; Spring &middot; .NET &middot; Express &middot; Ruby on Rails &middot; Laravel &middot; GraphQL &middot; OpenAPI Initiative &middot; Apache Maven &middot; Gradle &middot; npm &middot; pnpm &middot; Yarn &middot; Anaconda &middot; PyPI &middot; Quarkus &middot; C# &middot; gRPC
+Python &middot; OpenJDK &middot; Go &middot; Rust &middot; JavaScript &middot; TypeScript &middot; Node.js &middot; Deno &middot; Bun &middot; Scala &middot; Kotlin &middot; Swift &middot; Ruby &middot; PHP &middot; C++ &middot; C &middot; R &middot; Julia &middot; Perl &middot; Elixir &middot; Haskell &middot; Lua &middot; Dart &middot; Flutter &middot; React &middot; Vue.js &middot; Angular &middot; Svelte &middot; Next.js &middot; Django &middot; Flask &middot; FastAPI &middot; Spring &middot; .NET &middot; Express &middot; Ruby on Rails &middot; Laravel &middot; GraphQL &middot; OpenAPI Initiative &middot; Apache Maven &middot; Gradle &middot; npm &middot; pnpm &middot; Yarn &middot; Anaconda &middot; PyPI &middot; Quarkus &middot; C# &middot; gRPC &middot; Zig &middot; Nim &middot; Crystal &middot; OCaml &middot; F# &middot; Clojure &middot; Erlang &middot; Solidity &middot; Astro &middot; Solid &middot; Qwik &middot; Remix &middot; Nuxt &middot; Vite &middot; esbuild &middot; rollup.js &middot; Webpack &middot; Turborepo &middot; Nx &middot; Biome &middot; ESLint &middot; Prettier &middot; Ruff &middot; uv &middot; Poetry &middot; PDM &middot; Rye &middot; Pytest &middot; Vitest &middot; Jest &middot; Cypress
 
 **Catalogued without artwork (1).** No bytes ship for these. `find-icon` returns the command; `build-diagram` refuses to draw them rather than
 substituting another product's mark.
@@ -275,7 +275,7 @@ Markdown file (.md) &middot; Python file (.py) &middot; JSON file (.json) &middo
 
 ## Brands (catch-all)
 
-`brands` &middot; 3158 icons &middot; `brands.drawio`
+`brands` &middot; 3092 icons &middot; `brands.drawio`
 
 > Every mark in simple-icons@16.30.0, minus any slug a curated pack already owns.
 
