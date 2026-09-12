@@ -52,6 +52,14 @@ the generator's defaults; do not undo them by hand:
    node scripts/find-icon.mjs --stats
    ```
 
+   Put the ref from a match (`"icon": "data-platform:9"`) in the spec. A node
+   that only names the component is resolved for you, but only to the product
+   by name — an exact match, a leading Azure/AWS/Google word aside, or a prefix
+   like `dynamo` for DynamoDB. A name that merely appears inside a different
+   product's (`postgres` inside "Azure Database for Postgres") becomes a
+   placeholder instead. The search says which up front: `"draws": "<ref>"`, or
+   `"placeholder": "<why>"`.
+
    239 of those items carry no name and cannot be found by searching. When a
    search comes up short, check whether the product is sitting in one of those
    libraries unnamed — the numbered contact sheets are committed, so read the
