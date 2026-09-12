@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "arkitect",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Your agent draws the architecture. Creates and edits native, editable Draw.io (.drawio) and Excalidraw (.excalidraw) diagrams - cloud and system architectures, data pipelines, agentic systems, network views and flow diagrams - with 1,400+ bundled icons, a learned house style, and everything running locally.",
   "author": {
     "name": "mouadja02",

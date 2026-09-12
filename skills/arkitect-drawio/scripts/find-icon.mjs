@@ -1,14 +1,20 @@
 #!/usr/bin/env node
-// Search the bundled AWS icon catalog and emit ready-to-paste draw.io cell styles.
+// Search the bundled icon packs and emit ready-to-paste draw.io cell styles.
 // Ranking runs against references/icon-catalog.json only - image payloads are
-// read from assets/libraries/ solely when --style or --data is requested, so a
-// search never pulls base64 into the caller's context.
+// read from assets/libraries/<pack>.drawio solely when --style or --data is
+// requested, so a search never pulls base64 into the caller's context.
 //
-//   node find-icon.mjs bedrock                  rank matches (metadata only)
-//   node find-icon.mjs "compute optimizer"      ambiguous titles list every variant
-//   node find-icon.mjs --style <id> [--size 78] full mxCell style with embedded icon
-//   node find-icon.mjs --cell <id> --label "X" --x 100 --y 100   complete <mxCell> XML
+//   node find-icon.mjs bedrock                     rank matches (metadata only)
+//   node find-icon.mjs kafka --pack streaming-orchestration
+//   node find-icon.mjs "cloud run" --context gcp,devops    bias toward a stack
+//   node find-icon.mjs --list-packs
+//   node find-icon.mjs --style <id> [--size 78]    full mxCell style with the icon
+//   node find-icon.mjs --cell <id> --label "X" --x 100 --y 100
 //   node find-icon.mjs --stats
+//
+// Sixty-nine products ship as catalogue entries without bytes, because their
+// marks carry no redistribution licence. Those resolve to a fetch-logo command,
+// never to a substitute icon.
 
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -18,62 +24,114 @@ import { readLibrary, normalizeTitle } from './lib/drawio-core.mjs';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SKILL_ROOT = join(HERE, '..');
 const CATALOG_FILE = join(SKILL_ROOT, 'references', 'icon-catalog.json');
-const MERGED_FILE = join(SKILL_ROOT, 'assets', 'libraries', 'AWS-icons.merged.drawio');
+const LIB_DIR = join(SKILL_ROOT, 'assets', 'libraries');
 
+let catalogCache = null;
 export function loadCatalog() {
-  return JSON.parse(readFileSync(CATALOG_FILE, 'utf8'));
+  if (!catalogCache) catalogCache = JSON.parse(readFileSync(CATALOG_FILE, 'utf8'));
+  return catalogCache;
 }
 
 // Caption sits below the icon; matches the observed convention (184/194 icons).
 export const ICON_STYLE_BASE =
-  'shape=image;html=1;verticalLabelPosition=bottom;verticalAlign=top;' +
-  'labelBackgroundColor=none;imageAspect=0;aspect=fixed;fontSize=12;fontColor=#232F3E;';
+  'shape=image;html=1;verticalLabelPosition=bottom;verticalAlign=top;'
+  + 'labelBackgroundColor=none;imageAspect=0;aspect=fixed;fontSize=12;fontColor=#232F3E;';
 
-export function score(icon, query) {
+// A curated pack beats the catch-all at equal strength, but an exact hit in the
+// catch-all still beats a vague hit in a curated pack - otherwise "tailwindcss"
+// would lose to whatever "tail" happened to match.
+const CATCH_ALL_PENALTY = 10;
+const CONTEXT_BONUS = 12;
+const CONFIDENT_AT = 85;
+const CLEAR_MARGIN = 15;
+
+export function score(icon, query, { packs = null, catalog = null } = {}) {
   const q = normalizeTitle(query);
   if (!q) return 0;
   const qTokens = q.split(' ').filter(Boolean);
-  const title = String(icon.title).toLowerCase();
   let best = 0;
-  for (const alias of icon.aliases) {
+  for (const alias of icon.aliases ?? []) {
     if (alias === q) best = Math.max(best, 100);
     else if (alias.startsWith(q)) best = Math.max(best, 85);
     else if (alias.includes(q)) best = Math.max(best, 70);
   }
-  if (title === query.toLowerCase()) best = Math.max(best, 105);
+  if (String(icon.title).toLowerCase() === String(query).toLowerCase()) best = Math.max(best, 105);
   if (best === 0) {
-    // Fuzzy: how many query tokens appear anywhere in the aliases.
-    const hay = icon.aliases.join(' ');
+    // Fuzzy: how many query tokens appear anywhere in the aliases. Across ~4,800
+    // icons a single token hit out of three is noise, not a candidate, so half
+    // the query has to land before anything is offered at all.
+    const hay = (icon.aliases ?? []).join(' ');
     const hits = qTokens.filter((t) => hay.includes(t)).length;
-    if (hits) best = Math.round((hits / qTokens.length) * 60);
+    const share = hits / qTokens.length;
+    if (share >= 0.5) best = Math.round(share * 60);
   }
-  // Prefer the canonical 81x81 SVG artwork over odd-sized duplicates.
-  if (best && icon.width === 81 && icon.height === 81) best += 2;
+  if (!best) return 0;
+
+  const rank = catalog?.packs.find((p) => p.id === icon.pack)?.rank ?? 20;
+  if (rank >= 90) best -= CATCH_ALL_PENALTY;
+  if (packs?.length && packs.includes(icon.pack)) best += CONTEXT_BONUS;
+  // Something the agent can actually draw outranks something it must fetch.
+  if (icon.bytes === 'on-demand') best -= 2;
   return best;
 }
 
-export function search(query, { limit = 8, catalog = loadCatalog() } = {}) {
-  const ranked = catalog.icons
-    .map((icon) => ({ icon, s: score(icon, query) }))
+export function search(query, { limit = 8, catalog = loadCatalog(), packs = null, pack = null } = {}) {
+  const pool = pack ? catalog.icons.filter((i) => i.pack === pack) : catalog.icons;
+  const ranked = pool
+    .map((icon) => ({ icon, s: score(icon, query, { packs, catalog }) }))
     .filter((r) => r.s > 0)
-    .sort((a, b) => b.s - a.s || a.icon.index - b.icon.index);
+    .sort((a, b) => b.s - a.s || String(a.icon.id).localeCompare(String(b.icon.id)));
 
-  // Group duplicate titles so an ambiguous hit always shows its alternatives
-  // rather than silently picking one.
+  // Group by title so an ambiguous hit always shows its alternatives rather
+  // than silently picking one.
   const seen = new Map();
   for (const r of ranked) {
-    const key = r.icon.title;
-    if (!seen.has(key)) seen.set(key, { title: key, best: r.s, variants: [] });
+    const key = `${r.icon.pack}::${r.icon.title}`;
+    if (!seen.has(key)) seen.set(key, { title: r.icon.title, pack: r.icon.pack, best: r.s, variants: [] });
     seen.get(key).variants.push(r.icon);
   }
   return [...seen.values()].sort((a, b) => b.best - a.best).slice(0, limit);
 }
 
+// A resolution is only safe to use unattended when the leader is both strong
+// and clearly ahead. Anything else comes back flagged, with the alternatives.
+export function resolve(query, opts = {}) {
+  const groups = search(query, opts);
+  if (!groups.length) return { query, confident: false, reason: 'no match', groups: [] };
+  const [top, next] = groups;
+  const margin = next ? top.best - next.best : Infinity;
+  const confident = top.best >= CONFIDENT_AT
+    && (margin >= CLEAR_MARGIN || groups.length === 1)
+    && top.variants.length === 1;
+  const reason = confident ? null
+    : top.best < CONFIDENT_AT ? 'weak match'
+      : top.variants.length > 1 ? 'several icons share this title'
+        : 'runner-up is too close';
+  return { query, confident, reason, icon: top.variants[0], groups };
+}
+
+const libCache = new Map();
+function libraryFor(pack, catalog = loadCatalog()) {
+  if (libCache.has(pack)) return libCache.get(pack);
+  const meta = catalog.packs.find((p) => p.id === pack);
+  if (!meta) throw new Error(`no pack "${pack}" in the catalog`);
+  const entries = readLibrary(join(LIB_DIR, meta.file));
+  libCache.set(pack, entries);
+  return entries;
+}
+
 export function dataUriFor(icon) {
-  const entries = readLibrary(MERGED_FILE);
-  const entry = entries[icon.index];
+  if (icon.bytes === 'on-demand') {
+    throw new Error(
+      `${icon.id} ships no bytes: ${icon.reason}.\n`
+      + `  Fetch it first:  ${icon.fetch}\n`
+      + '  Do not substitute a different product\'s mark.',
+    );
+  }
+  const entries = libraryFor(icon.pack);
+  const entry = entries[icon.libraryIndex];
   if (!entry || entry.hash !== icon.sha256) {
-    throw new Error(`catalog/library mismatch at index ${icon.index} (${icon.title})`);
+    throw new Error(`catalog/library mismatch at ${icon.pack}[${icon.libraryIndex}] (${icon.title})`);
   }
   return entry.dataUri;
 }
@@ -94,7 +152,8 @@ export function styleFor(icon) {
 // icon to the observed 78px service-icon footprint unless told otherwise.
 export function recommendedSize(icon, requested) {
   if (requested) return { width: requested, height: requested };
-  const w = icon.width ?? 78; const h = icon.height ?? 78;
+  const w = icon.width ?? 78;
+  const h = icon.height ?? 78;
   if (w > 200 || h > 200) {
     const scale = 78 / Math.max(w, h);
     return { width: Math.round(w * scale), height: Math.round(h * scale) };
@@ -107,18 +166,49 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
 
 function byId(catalog, id) {
   return catalog.icons.find((i) => i.id === id)
-    ?? catalog.icons.find((i) => String(i.index) === String(id));
+    ?? catalog.icons.find((i) => String(i.libraryIndex) === String(id));
+}
+
+function describe(icon, catalog) {
+  const dim = recommendedSize(icon, null);
+  const base = {
+    id: icon.id,
+    pack: icon.pack,
+    source: icon.source,
+    licence: icon.licence,
+  };
+  if (icon.bytes === 'on-demand') {
+    return { ...base, bytes: 'on-demand', reason: icon.reason, fetch: icon.fetch, ...(icon.brandUrl ? { brandUrl: icon.brandUrl } : {}) };
+  }
+  return {
+    ...base,
+    libraryIndex: icon.libraryIndex,
+    mime: icon.mime,
+    recommended: `${dim.width}x${dim.height}`,
+    sha256: String(icon.sha256).slice(0, 16),
+    ...(catalog.packs.find((p) => p.id === icon.pack)?.rank >= 90 ? { note: 'catch-all pack - confirm this is the right product' } : {}),
+  };
 }
 
 function main(argv) {
   const catalog = loadCatalog();
+  const flag = (name) => { const i = argv.indexOf(name); return i === -1 ? null : argv[i + 1]; };
 
   if (argv[0] === '--stats') {
-    console.log(JSON.stringify({ ...catalog.counts, sources: catalog.sources, merged: catalog.merged }, null, 2));
+    console.log(JSON.stringify({ counts: catalog.counts, generated: catalog.generated, manifest: catalog.manifest }, null, 2));
     return;
   }
 
-  const flag = (name) => { const i = argv.indexOf(name); return i === -1 ? null : argv[i + 1]; };
+  if (argv[0] === '--list-packs') {
+    console.log(JSON.stringify({
+      packs: catalog.packs.map((p) => ({
+        id: p.id, title: p.title, icons: p.count, onDemand: p.onDemand, rank: p.rank, about: p.description,
+      })),
+      resolutionOrder: 'lower rank wins at equal match strength; rank 90 is the catch-all',
+      usage: 'node find-icon.mjs <query> [--pack <id>] [--context <id,id>]',
+    }, null, 2));
+    return;
+  }
 
   if (argv[0] === '--style' || argv[0] === '--data' || argv[0] === '--cell') {
     const icon = byId(catalog, argv[1]);
@@ -128,47 +218,51 @@ function main(argv) {
     if (argv[0] === '--data') { process.stdout.write(dataUriFor(icon)); return; }
     if (argv[0] === '--style') { process.stdout.write(styleFor(icon)); return; }
     const label = flag('--label') ?? icon.title;
-    const x = flag('--x') ?? 0; const y = flag('--y') ?? 0;
-    const id = flag('--id') ?? `icon-${icon.index}`;
+    const x = flag('--x') ?? 0;
+    const y = flag('--y') ?? 0;
+    const id = flag('--id') ?? `icon-${icon.id.replace(/\W+/g, '-')}`;
     process.stdout.write(
-      `<mxCell id="${esc(id)}" value="${esc(label)}" style="${esc(styleFor(icon))}" vertex="1" parent="1">\n` +
-      `  <mxGeometry x="${x}" y="${y}" width="${dim.width}" height="${dim.height}" as="geometry" />\n` +
-      '</mxCell>');
+      `<mxCell id="${esc(id)}" value="${esc(label)}" style="${esc(styleFor(icon))}" vertex="1" parent="1">\n`
+      + `  <mxGeometry x="${x}" y="${y}" width="${dim.width}" height="${dim.height}" as="geometry" />\n`
+      + '</mxCell>');
     return;
   }
 
-  const query = argv.filter((a) => !a.startsWith('--')).join(' ');
+  const packs = (flag('--context') ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+  const pack = flag('--pack');
+  const skip = new Set(['--context', '--pack', '--size', '--label', '--x', '--y', '--id']);
+  const query = argv.filter((a, i) => !a.startsWith('--') && !skip.has(argv[i - 1])).join(' ');
+
   if (!query) {
-    console.error('usage: find-icon.mjs <service name> | --style <id> | --cell <id> | --stats');
+    console.error('usage: find-icon.mjs <product name> [--pack <id>] [--context <id,id>]');
+    console.error('       find-icon.mjs --list-packs | --style <id> | --cell <id> | --stats');
     process.exit(2);
   }
 
-  const groups = search(query, { catalog });
-  if (!groups.length) {
+  const r = resolve(query, { catalog, packs, pack });
+  if (!r.groups.length) {
     console.log(JSON.stringify({
-      query, matches: [],
-      advice: 'No custom-library icon matches. Fall back to a built-in mxgraph.aws4 shape, or ask before substituting a different service icon.',
+      query, matches: [], confident: false,
+      advice: 'No pack has this icon. Check --list-packs, try the product\'s formal name, or draw a '
+        + 'plain labelled box and say so in the report. Never substitute a different product\'s mark.',
     }, null, 2));
     return;
   }
 
   console.log(JSON.stringify({
     query,
-    matches: groups.map((g) => ({
+    confident: r.confident,
+    ...(r.confident ? { resolved: r.icon.id } : { needsAChoice: r.reason }),
+    matches: r.groups.map((g) => ({
       title: g.title,
+      pack: g.pack,
+      strength: g.best,
       ambiguous: g.variants.length > 1,
-      variants: g.variants.map((v) => {
-        const dim = recommendedSize(v, null);
-        return {
-          id: v.id, index: v.index, mime: v.mime,
-          libraryWidth: v.width, libraryHeight: v.height,
-          recommended: `${dim.width}x${dim.height}`,
-          sha256: v.sha256.slice(0, 16),
-          provenance: v.provenance.inExplicitExport ? 'both libraries' : 'working palette only',
-        };
-      }),
+      variants: g.variants.map((v) => describe(v, catalog)),
     })),
-    next: 'node find-icon.mjs --cell <id> --label "Caption" --x 0 --y 0',
+    next: r.confident
+      ? `node find-icon.mjs --cell ${r.icon.id} --label "Caption" --x 0 --y 0`
+      : 'Pick one id deliberately, or narrow with --pack / --context.',
   }, null, 2));
 }
 

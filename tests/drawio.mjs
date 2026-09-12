@@ -51,7 +51,6 @@ if (existsSync(TMP)) rmSync(TMP, { recursive: true, force: true });
 mkdirSync(TMP, { recursive: true });
 
 const core = await import(`file://${join(SCRIPTS, 'lib', 'drawio-core.mjs').replace(/\\/g, '/')}`);
-const lib = await import(`file://${join(SCRIPTS, 'extract-library.mjs').replace(/\\/g, '/')}`);
 const finder = await import(`file://${join(SCRIPTS, 'find-icon.mjs').replace(/\\/g, '/')}`);
 const builder = await import(`file://${join(SCRIPTS, 'build-diagram.mjs').replace(/\\/g, '/')}`);
 const logos = await import(`file://${join(SCRIPTS, 'fetch-logo.mjs').replace(/\\/g, '/')}`);
@@ -377,117 +376,187 @@ if (process.env.ARKITECT_DRAWIO_SMOKE === '1') test('installed Desktop exports d
   assert(!pages[0].equals(pages[1]), 'both exports selected the same page');
 });
 
-// ------------------------------------------------------------- library
+// ------------------------------------------------------------- packs
 
-test('library parser finds 237 entries in the explicit export', () => {
-  const e = core.readLibrary(join(LIB_DIR, 'AWS-icons.drawio.xml'));
-  eq(e.length, 237, 'export entry count');
-});
+const packs = await import(`file://${join(SCRIPTS, 'build-packs.mjs').replace(/\\/g, '/')}`);
 
-test('library parser finds 243 entries in the working palette', () => {
-  const e = core.readLibrary(join(LIB_DIR, 'AWS-v1.drawio'));
-  eq(e.length, 243, 'palette entry count');
-});
-
-test('all 14 library invariants hold (hashes, shared payloads, AgentCore, duplicates)', () => {
-  const checks = lib.verify(LIB_DIR);
-  const bad = checks.filter((c) => !c.pass);
-  assert(bad.length === 0, `failing checks: ${bad.map((c) => c.name).join(', ')}`);
-  assert(checks.length >= 14, `expected at least 14 checks, got ${checks.length}`);
-});
-
-test('236 titles are shared and every shared payload is byte-identical', () => {
-  const ex = core.readLibrary(join(LIB_DIR, 'AWS-icons.drawio.xml'));
-  const pa = core.readLibrary(join(LIB_DIR, 'AWS-v1.drawio'));
-  const exT = new Set(ex.map((e) => e.title));
-  const paT = new Set(pa.map((e) => e.title));
-  eq([...exT].filter((t) => paT.has(t)).length, 236, 'shared unique titles');
-  const paByHash = new Set(pa.map((e) => e.hash));
-  eq(ex.filter((e) => paByHash.has(e.hash)).length, 237, 'shared payloads');
-});
-
-test('the six AgentCore PNG additions are preserved', () => {
-  const pa = core.readLibrary(join(LIB_DIR, 'AWS-v1.drawio'));
-  const names = ['AgentCore', 'AgentCoreGateway', 'AgentCoreIdentity', 'AgentCoreMemory', 'AgentCoreObservability', 'AgentCoreRuntime'];
-  for (const n of names) {
-    const e = pa.find((x) => x.title === n);
-    assert(e, `missing ${n}`);
-    eq(e.mime, 'image/png', `${n} mime`);
-    assert(e.byteLength > 0, `${n} has no payload`);
+test('every pack the manifest declares is committed and parses', () => {
+  const manifest = packs.loadManifest();
+  const cat = finder.loadCatalog();
+  eq(cat.packs.length, manifest.packs.length, 'pack count');
+  for (const p of cat.packs) {
+    const entries = core.readLibrary(join(LIB_DIR, p.file));
+    eq(entries.length, p.count, `${p.id} entry count`);
   }
 });
 
+test('committed libraries still match the manifest they were built from', async () => {
+  const checks = await packs.verify();
+  const bad = checks.filter((c) => !c.pass);
+  assert(bad.length === 0, `failing checks: ${bad.map((c) => c.name).join(', ')}`);
+  assert(checks.length >= 50, `expected at least 50 checks, got ${checks.length}`);
+});
+
+test('the AWS artwork is unchanged by the move to aws.drawio', () => {
+  const aws = core.readLibrary(join(LIB_DIR, 'aws.drawio'));
+  eq(aws.length, 243, 'AWS entry count');
+  eq(aws.filter((e) => e.mime === 'image/svg+xml').length, 237, 'SVG count');
+  eq(aws.filter((e) => e.mime === 'image/png').length, 6, 'PNG count');
+});
+
+test('the six AgentCore PNG additions survived the rename', () => {
+  const cat = finder.loadCatalog();
+  for (const suffix of ['', ' Gateway', ' Identity', ' Memory', ' Observability', ' Runtime']) {
+    const title = `Amazon Bedrock AgentCore${suffix}`;
+    const hits = cat.icons.filter((i) => i.pack === 'aws' && i.title === title);
+    assert(hits.length >= 1, `missing ${title}`);
+  }
+  const aws = core.readLibrary(join(LIB_DIR, 'aws.drawio'));
+  eq(aws.filter((e) => /AgentCore/.test(e.title) && e.mime === 'image/png').length, 6, 'AgentCore PNGs');
+});
+
 test('both SVG and PNG entries decode with real dimensions', () => {
-  const pa = core.readLibrary(join(LIB_DIR, 'AWS-v1.drawio'));
-  const svg = pa.find((e) => e.mime === 'image/svg+xml');
-  const png = pa.find((e) => e.mime === 'image/png');
+  const aws = core.readLibrary(join(LIB_DIR, 'aws.drawio'));
+  const svg = aws.find((e) => e.mime === 'image/svg+xml');
+  const png = aws.find((e) => e.mime === 'image/png');
   assert(svg.intrinsic.width > 0 && svg.intrinsic.height > 0, 'svg dimensions');
   assert(png.intrinsic.width > 0 && png.intrinsic.height > 0, 'png dimensions');
 });
 
-test('duplicate titles are retained and disambiguated by index, size and hash', () => {
+test('duplicate titles are retained and disambiguated by id and hash', () => {
   const cat = finder.loadCatalog();
-  const dupes = cat.icons.filter((i) => i.title === 'Arch AWS-Compute-Optimizer 64');
+  const dupes = cat.icons.filter((i) => i.title === 'AWS Compute Optimizer');
   eq(dupes.length, 2, 'Compute Optimizer variants in catalog');
-  assert(dupes[0].index !== dupes[1].index, 'indexes differ');
+  assert(dupes[0].libraryIndex !== dupes[1].libraryIndex, 'library indices differ');
   assert(dupes[0].sha256 !== dupes[1].sha256, 'payload hashes differ');
   assert(dupes[0].id !== dupes[1].id, 'catalog ids differ');
-  const dims = dupes.map((d) => `${d.width}x${d.height}`).sort().join(',');
-  eq(dims, '80x80,81x81', 'variant dimensions');
   assert(dupes.every((d) => d.ambiguousTitle === true), 'both flagged ambiguous');
 });
 
-test('merged library keeps all 243 entries and round-trips', () => {
-  const merged = core.readLibrary(join(LIB_DIR, 'AWS-icons.merged.drawio'));
-  const pa = core.readLibrary(join(LIB_DIR, 'AWS-v1.drawio'));
-  eq(merged.length, 243, 'merged entry count');
-  assert(merged.every((e, i) => e.hash === pa[i].hash && e.title === pa[i].title), 'merged payloads match palette');
-  eq(merged.filter((e) => e.title === 'Arch AWS-Compute-Optimizer 64').length, 2, 'both duplicate variants survive the merge');
+test('the old palette captions still resolve as aliases', () => {
+  const cases = [
+    ['Arch Amazon-Bedrock 64', 'Amazon Bedrock'],
+    ['Arch AWS-Lambda 64', 'AWS Lambda'],
+    ['Arch Amazon-Simple-Storage-Service 64', 'Amazon Simple Storage Service'],
+  ];
+  for (const [legacy, expect] of cases) {
+    const r = finder.search(legacy);
+    assert(r.length, `no match for ${legacy}`);
+    eq(r[0].title, expect, `legacy caption "${legacy}"`);
+  }
 });
 
 test('catalog carries no base64 payloads', () => {
   const raw = readFileSync(join(SKILL, 'references', 'icon-catalog.json'), 'utf8');
   assert(!raw.includes('data:image/'), 'catalog embeds image data');
   const cat = JSON.parse(raw);
-  eq(cat.icons.length, 243, 'catalog size');
-  assert(cat.icons.every((i) => i.sha256 && i.id && i.title && i.provenance), 'catalog fields present');
+  assert(cat.icons.length > 4000, `catalog size ${cat.icons.length}`);
+  assert(cat.icons.every((i) => i.id && i.title && i.pack && i.licence), 'catalog fields present');
+  const committed = cat.icons.filter((i) => i.bytes === 'committed');
+  assert(committed.every((i) => i.sha256 && Number.isInteger(i.libraryIndex)), 'committed entries indexed');
+});
+
+test('every catalog id is unique', () => {
+  const ids = finder.loadCatalog().icons.map((i) => i.id);
+  eq(new Set(ids).size, ids.length, 'unique ids');
+});
+
+test('nothing ships bytes for a mark we lack permission to redistribute', () => {
+  const cat = finder.loadCatalog();
+  const onDemand = cat.icons.filter((i) => i.bytes === 'on-demand');
+  assert(onDemand.length > 0, 'expected on-demand entries');
+  for (const i of onDemand) {
+    assert(i.libraryIndex === undefined, `${i.id} has a library index`);
+    assert(i.fetch && i.fetch.includes('fetch-logo'), `${i.id} has no fetch command`);
+  }
+  // ...and the library genuinely does not contain them.
+  const lib = core.readLibrary(join(LIB_DIR, 'ai-frameworks.drawio'));
+  assert(!lib.some((e) => e.title === 'OpenAI'), 'an on-demand mark leaked into a library');
 });
 
 // ------------------------------------------------------------- icon lookup
 
 test('icon lookup resolves an exact service name', () => {
-  const r = finder.search('Arch Amazon-Bedrock 64');
-  eq(r[0].title, 'Arch Amazon-Bedrock 64', 'exact match');
+  const r = finder.search('Amazon Bedrock');
+  eq(r[0].title, 'Amazon Bedrock', 'exact match');
 });
 
-test('icon lookup resolves fuzzy service names', () => {
-  for (const [q, expect] of [['bedrock', 'Arch Amazon-Bedrock 64'], ['lambda', 'Arch AWS-Lambda 64'],
-    ['cloudwatch', 'Arch Amazon-CloudWatch 64'], ['agentcore runtime', 'AgentCoreRuntime'],
-    ['simple storage service', 'Arch Amazon-Simple-Storage-Service 64']]) {
-    const r = finder.search(q);
-    assert(r.length, `no match for ${q}`);
-    eq(r[0].title, expect, `fuzzy match for "${q}"`);
+test('icon lookup resolves fuzzy and abbreviated names', () => {
+  const cases = [['bedrock', 'Amazon Bedrock'], ['lambda', 'AWS Lambda'],
+    ['cloudwatch', 'Amazon CloudWatch'], ['s3', 'Amazon Simple Storage Service'],
+    ['kafka', 'Apache Kafka'], ['terraform', 'Terraform'], ['blob storage', 'Storage Accounts'],
+    ['gke', 'GKE'], ['snowflake', 'Snowflake']];
+  for (const [q, expect] of cases) {
+    const r = finder.resolve(q);
+    assert(r.groups.length, `no match for ${q}`);
+    eq(r.groups[0].title, expect, `lookup for "${q}"`);
   }
 });
 
-test('an ambiguous lookup returns every variant instead of choosing silently', () => {
-  const r = finder.search('compute optimizer');
-  eq(r[0].variants.length, 2, 'variant count');
+test('a curated pack outranks the catch-all', () => {
+  for (const q of ['docker', 'kubernetes', 'grafana', 'postgresql']) {
+    const r = finder.resolve(q);
+    assert(r.confident, `"${q}" should resolve confidently`);
+    assert(r.icon.pack !== 'brands', `"${q}" resolved into the catch-all`);
+  }
+});
+
+test('pack context breaks a tie toward the stack being drawn', () => {
+  const plain = finder.resolve('opensearch');
+  const aws = finder.resolve('opensearch', { packs: ['aws'] });
+  eq(aws.groups[0].pack, 'aws', 'AWS context wins');
+  assert(plain.groups[0].pack !== 'aws', 'context made no difference');
+});
+
+test('an ambiguous lookup is flagged rather than resolved silently', () => {
+  const r = finder.resolve('compute optimizer');
+  assert(!r.confident, 'should not be confident');
+  eq(r.groups[0].variants.length, 2, 'both variants offered');
 });
 
 test('an unknown service returns no match rather than a wrong icon', () => {
   eq(finder.search('nonexistent quantum widget').length, 0, 'match count');
+  // Across ~4,800 icons some query will always graze something. What must never
+  // happen is a confident answer to a question the catalog cannot answer.
+  for (const q of ['acme internal gateway', 'widget factory service', 'frobnicator']) {
+    assert(!finder.resolve(q).confident, `"${q}" resolved confidently`);
+  }
+});
+
+test('an on-demand icon refuses to produce bytes and hands back the command', () => {
+  const cat = finder.loadCatalog();
+  const icon = cat.icons.find((i) => i.id === 'ai-frameworks/openai');
+  assert(icon, 'openai catalog entry');
+  let threw = null;
+  try { finder.dataUriFor(icon); } catch (e) { threw = e; }
+  assert(threw, 'expected dataUriFor to refuse');
+  assert(threw.message.includes('fetch-logo'), 'error should name the fetch command');
 });
 
 test('cell styles use the comma-only data URI form draw.io can parse', () => {
   const cat = finder.loadCatalog();
-  const icon = cat.icons.find((i) => i.title === 'Arch AWS-Lambda 64');
-  const style = finder.styleFor(icon);
-  assert(!style.includes(';base64,'), 'style contains a semicolon that would split the style');
-  const parsed = core.parseStyle(style);
-  const data = core.parseDataUri(parsed.image);
-  assert(data && data.bytes.length > 0, 'embedded image does not decode');
-  eq(data.hash, icon.sha256, 'embedded payload matches catalog hash');
+  for (const id of ['aws/aws-lambda', 'azure/storage-accounts', 'agents/memory', 'file-types/py']) {
+    const icon = cat.icons.find((i) => i.id === id);
+    assert(icon, `catalog entry ${id}`);
+    const style = finder.styleFor(icon);
+    assert(!style.includes(';base64,'), `${id}: style holds a semicolon that would split it`);
+    const parsed = core.parseStyle(style);
+    const data = core.parseDataUri(parsed.image);
+    assert(data && data.bytes.length > 0, `${id}: embedded image does not decode`);
+    eq(data.hash, icon.sha256, `${id}: embedded payload matches catalog hash`);
+  }
+});
+
+test('every generated pack renders as a parseable SVG', () => {
+  for (const id of ['agents', 'primitives', 'github', 'file-types']) {
+    const entries = core.readLibrary(join(LIB_DIR, `${id}.drawio`));
+    for (const e of entries) {
+      const svg = e.dataUri && core.parseDataUri(e.dataUri);
+      assert(svg && svg.mime === 'image/svg+xml', `${id}/${e.title}: not an SVG`);
+      const text = svg.bytes.toString('utf8');
+      assert(text.startsWith('<svg') && text.trimEnd().endsWith('</svg>'), `${id}/${e.title}: malformed SVG`);
+    }
+  }
 });
 
 // ------------------------------------------------------------- generation
@@ -499,7 +568,7 @@ test('a generated diagram is valid, connected and portable', () => {
   const spec = JSON.parse(readFileSync(SPEC, 'utf8'));
   const { xml, report } = builder.buildDiagram(spec);
   writeFileSync(OUT, xml);
-  eq(report.missing.length, 0, `icons missing from the library: ${report.missing.join(', ')}`);
+  eq(report.missing.length, 0, `icons missing from the library: ${JSON.stringify(report.missing)}`);
 
   const r = validator.validateFile(OUT);
   assert(r.ok, `validation errors: ${r.errors.join('; ')}`);

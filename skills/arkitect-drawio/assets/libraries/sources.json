@@ -1,0 +1,4907 @@
+{
+  "version": 2,
+  "note": "Pinned build manifest for the Draw.io icon packs. Every source carries an exact version or a recorded sha256, so `build-packs.mjs --verify` can prove the committed libraries match it.",
+  "sources": {
+    "aws-palette": {
+      "type": "local",
+      "file": "aws.drawio",
+      "terms": "permission",
+      "licence": "AWS Architecture Icons terms",
+      "licenceUrl": "https://aws.amazon.com/architecture/icons/"
+    },
+    "simple-icons": {
+      "type": "npm",
+      "package": "simple-icons",
+      "version": "16.30.0",
+      "terms": "licence",
+      "licence": "CC0-1.0",
+      "licenceUrl": "https://github.com/simple-icons/simple-icons/blob/develop/LICENSE.md",
+      "urlTemplate": "https://cdn.jsdelivr.net/npm/simple-icons@16.30.0/icons/{id}.svg",
+      "dataUrl": "https://cdn.jsdelivr.net/npm/simple-icons@16.30.0/data/simple-icons.json",
+      "note": "The icons are CC0. The trademarks they depict are not."
+    },
+    "simple-icons-15": {
+      "type": "npm",
+      "package": "simple-icons",
+      "version": "15.22.0",
+      "terms": "licence",
+      "licence": "CC0-1.0",
+      "urlTemplate": "https://cdn.jsdelivr.net/npm/simple-icons@15.22.0/icons/{id}.svg",
+      "note": "On-demand only. These marks were removed in 16.x at the brand owners request, so no bytes ship here."
+    },
+    "devicon": {
+      "type": "npm",
+      "package": "devicon",
+      "version": "2.17.0",
+      "terms": "licence",
+      "licence": "MIT",
+      "licenceUrl": "https://github.com/devicons/devicon/blob/master/LICENSE",
+      "urlTemplate": "https://cdn.jsdelivr.net/npm/devicon@2.17.0/icons/{name}/{name}-{variant}.svg",
+      "dataUrl": "https://cdn.jsdelivr.net/npm/devicon@2.17.0/devicon.json"
+    },
+    "lucide": {
+      "type": "npm",
+      "package": "lucide-static",
+      "version": "1.45.0",
+      "terms": "licence",
+      "licence": "ISC",
+      "licenceUrl": "https://github.com/lucide-icons/lucide/blob/main/LICENSE",
+      "urlTemplate": "https://cdn.jsdelivr.net/npm/lucide-static@1.45.0/icons/{id}.svg"
+    },
+    "octicons": {
+      "type": "npm",
+      "package": "@primer/octicons",
+      "version": "19.36.0",
+      "terms": "licence",
+      "licence": "MIT",
+      "licenceUrl": "https://github.com/primer/octicons/blob/main/LICENSE",
+      "urlTemplate": "https://cdn.jsdelivr.net/npm/@primer/octicons@19.36.0/build/svg/{id}-24.svg"
+    },
+    "azure-v24": {
+      "type": "zip",
+      "url": "https://arch-center.azureedge.net/icons/Azure_Public_Service_Icons_V24.zip",
+      "sha256": "921594ccd1bf3d9c0a1bd7b6d924e050551a59342f2b353bb74bdcf761c35141",
+      "terms": "permission",
+      "licence": "Microsoft Azure architecture icon terms",
+      "licenceUrl": "https://learn.microsoft.com/en-us/azure/architecture/icons/",
+      "permission": "Copy, distribute and display for architecture diagrams only. Icon shape must not be altered. All other rights reserved by Microsoft."
+    },
+    "gcp-core": {
+      "type": "zip",
+      "url": "https://services.google.com/fh/files/misc/core-products-icons.zip",
+      "sha256": "6531a10f58bc599c24d9a455d81dd757c1a03c3c43da9cddf639b859c1c1eece",
+      "terms": "permission",
+      "licence": "Google Cloud icon terms",
+      "licenceUrl": "https://cloud.google.com/icons",
+      "permission": "Free to use to reference Google Cloud technology. Trademarks remain Google property."
+    },
+    "gcp-category": {
+      "type": "zip",
+      "url": "https://services.google.com/fh/files/misc/category-icons.zip",
+      "sha256": "e5bc3abd3527dc2500e9bff7f15870783e2c764129c49b7cd4c1b4e105345002",
+      "terms": "permission",
+      "licence": "Google Cloud icon terms",
+      "licenceUrl": "https://cloud.google.com/icons"
+    },
+    "gcp-legacy": {
+      "type": "zip",
+      "url": "https://services.google.com/fh/files/misc/google-cloud-legacy-icons.zip",
+      "sha256": "a6d9d7921758042538b462f03cf64614c2cebd96743b3ed63580a769fc7de3e9",
+      "terms": "permission",
+      "licence": "Google Cloud icon terms",
+      "licenceUrl": "https://cloud.google.com/icons",
+      "note": "Google now publishes per-service marks only as a legacy archive. On a title collision the 19 current core-product icons win."
+    }
+  },
+  "packs": [
+    {
+      "id": "aws",
+      "title": "AWS",
+      "description": "Amazon Web Services architecture icons",
+      "rank": 10,
+      "kind": "vendor",
+      "builder": "local-aws",
+      "source": "aws-palette",
+      "note": "Canonicalised from the committed AWS-v1 palette; artwork unchanged (PLAN decision 12). legacyTitles keeps the original palette captions searchable now that the palette files are gone.",
+      "legacyTitles": {
+        "amazon-augmented-ai-a2i": "Arch Amazon-Augmented-AI-A2I 64",
+        "amazon-bedrock": "Arch Amazon-Bedrock 64",
+        "amazon-bedrock-agentcore": "Arch Amazon-Bedrock-AgentCore 64",
+        "amazon-codeguru": "Arch Amazon-CodeGuru 64",
+        "amazon-codewhisperer": "Arch Amazon-CodeWhisperer 64",
+        "amazon-comprehend": "Arch Amazon-Comprehend 64",
+        "amazon-comprehend-medical": "Arch Amazon-Comprehend-Medical 64",
+        "amazon-devops-guru": "Arch Amazon-DevOps-Guru 64",
+        "amazon-elastic-inference": "Arch Amazon-Elastic-Inference 64",
+        "amazon-forecast": "Arch Amazon-Forecast 64",
+        "amazon-fraud-detector": "Arch Amazon-Fraud-Detector 64",
+        "amazon-kendra": "Arch Amazon-Kendra 64",
+        "amazon-lex": "Arch Amazon-Lex 64",
+        "amazon-lookout-for-equipment": "Arch Amazon-Lookout-for-Equipment 64",
+        "amazon-lookout-for-vision": "Arch Amazon-Lookout-for-Vision 64",
+        "amazon-monitron": "Arch Amazon-Monitron 64",
+        "amazon-nova": "Arch Amazon-Nova 64",
+        "amazon-personalize": "Arch Amazon-Personalize 64",
+        "amazon-polly": "Arch Amazon-Polly 64",
+        "amazon-q": "Arch Amazon-Q 64",
+        "amazon-rekognition": "Arch Amazon-Rekognition 64",
+        "amazon-sagemaker-ai": "Arch Amazon-SageMaker-AI 64",
+        "amazon-sagemaker-ground-truth": "Arch Amazon-SageMaker-Ground-Truth 64",
+        "amazon-sagemaker-studio-lab": "Arch Amazon-SageMaker-Studio-Lab 64",
+        "amazon-textract": "Arch Amazon-Textract 64",
+        "amazon-transcribe": "Arch Amazon-Transcribe 64",
+        "amazon-translate": "Arch Amazon-Translate 64",
+        "apache-mxnet-on-aws": "Arch Apache-MXNet-on-AWS 64",
+        "aws-app-studio": "Arch AWS-App-Studio 64",
+        "aws-deep-learning-amis": "Arch AWS-Deep-Learning-AMIs 64",
+        "aws-deep-learning-containers": "Arch AWS-Deep-Learning-Containers 64",
+        "aws-deepracer": "Arch AWS-DeepRacer 64",
+        "aws-healthimaging": "Arch AWS-HealthImaging 64",
+        "aws-healthlake": "Arch AWS-HealthLake 64",
+        "aws-healthomics": "Arch AWS-HealthOmics 64",
+        "aws-healthscribe": "Arch AWS-HealthScribe 64",
+        "aws-neuron": "Arch AWS-Neuron 64",
+        "aws-panorama": "Arch AWS-Panorama 64",
+        "pytorch-on-aws": "Arch PyTorch-on-AWS 64",
+        "tensorflow-on-aws": "Arch TensorFlow-on-AWS 64",
+        "amazon-appflow": "Arch Amazon-AppFlow 64",
+        "amazon-eventbridge": "Arch Amazon-EventBridge 64",
+        "amazon-managed-workflows-for-apache-airflow": "Arch Amazon-Managed-Workflows-for-Apache-Airflow 64",
+        "amazon-mq": "Arch Amazon-MQ 64",
+        "amazon-simple-notification-service": "Arch Amazon-Simple-Notification-Service 64",
+        "amazon-simple-queue-service": "Arch Amazon-Simple-Queue-Service 64",
+        "aws-appsync": "Arch AWS-AppSync 64",
+        "aws-b2b-data-interchange": "Arch AWS-B2B-Data-Interchange 64",
+        "aws-express-workflows": "Arch AWS-Express-Workflows 64",
+        "aws-step-functions": "Arch AWS-Step-Functions 64",
+        "amazon-athena": "Arch Amazon-Athena 64",
+        "amazon-cloudsearch": "Arch Amazon-CloudSearch 64",
+        "amazon-data-firehose": "Arch Amazon-Data-Firehose 64",
+        "amazon-datazone": "Arch Amazon-DataZone 64",
+        "amazon-emr": "Arch Amazon-EMR 64",
+        "amazon-finspace": "Arch Amazon-FinSpace 64",
+        "amazon-kinesis": "Arch Amazon-Kinesis 64",
+        "amazon-kinesis-data-streams": "Arch Amazon-Kinesis-Data-Streams 64",
+        "amazon-kinesis-video-streams": "Arch Amazon-Kinesis-Video-Streams 64",
+        "amazon-managed-service-for-apache-flink": "Arch Amazon-Managed-Service-for-Apache-Flink 64",
+        "amazon-managed-streaming-for-apache-kafka": "Arch Amazon-Managed-Streaming-for-Apache-Kafka 64",
+        "amazon-opensearch-service": "Arch Amazon-OpenSearch-Service 64",
+        "amazon-redshift": "Arch Amazon-Redshift 64",
+        "amazon-sagemaker": "Arch Amazon-SageMaker 64",
+        "aws-clean-rooms": "Arch AWS-Clean-Rooms 64",
+        "aws-data-exchange": "Arch AWS-Data-Exchange 64",
+        "aws-entity-resolution": "Arch AWS-Entity-Resolution 64",
+        "aws-glue": "Arch AWS-Glue 64",
+        "aws-glue-databrew": "Arch AWS-Glue-DataBrew 64",
+        "aws-lake-formation": "Arch AWS-Lake-Formation 64",
+        "amazon-api-gateway": "Arch Amazon-API-Gateway 64",
+        "amazon-application-recovery-controller": "Arch Amazon-Application-Recovery-Controller 64",
+        "amazon-cloudfront": "Arch Amazon-CloudFront 64",
+        "amazon-route-53": "Arch Amazon-Route-53 64",
+        "amazon-virtual-private-cloud": "Arch Amazon-Virtual-Private-Cloud 64",
+        "amazon-vpc-lattice": "Arch Amazon-VPC-Lattice 64",
+        "aws-app-mesh": "Arch AWS-App-Mesh 64",
+        "aws-client-vpn": "Arch AWS-Client-VPN 64",
+        "aws-cloud-map": "Arch AWS-Cloud-Map 64",
+        "aws-cloud-wan": "Arch AWS-Cloud-WAN 64",
+        "aws-direct-connect": "Arch AWS-Direct-Connect 64",
+        "aws-global-accelerator": "Arch AWS-Global-Accelerator 64",
+        "aws-privatelink": "Arch AWS-PrivateLink 64",
+        "aws-rtb-fabric": "Arch AWS-RTB-Fabric 64",
+        "aws-site-to-site-vpn": "Arch AWS-Site-to-Site-VPN 64",
+        "aws-transit-gateway": "Arch AWS-Transit-Gateway 64",
+        "aws-verified-access": "Arch AWS-Verified-Access 64",
+        "elastic-load-balancing": "Arch Elastic-Load-Balancing 64",
+        "amazon-location-service": "Arch Amazon-Location-Service 64",
+        "aws-amplify": "Arch AWS-Amplify 64",
+        "aws-device-farm": "Arch AWS-Device-Farm 64",
+        "amazon-efs": "Arch Amazon-EFS 64",
+        "amazon-elastic-block-store": "Arch Amazon-Elastic-Block-Store 64",
+        "amazon-file-cache": "Arch Amazon-File-Cache 64",
+        "amazon-fsx": "Arch Amazon-FSx 64",
+        "amazon-fsx-for-lustre": "Arch Amazon-FSx-for-Lustre 64",
+        "amazon-fsx-for-netapp-ontap": "Arch Amazon-FSx-for-NetApp-ONTAP 64",
+        "amazon-fsx-for-openzfs": "Arch Amazon-FSx-for-OpenZFS 64",
+        "amazon-fsx-for-wfs": "Arch Amazon-FSx-for-WFS 64",
+        "amazon-s3-on-outposts": "Arch Amazon-S3-on-Outposts 64",
+        "amazon-simple-storage-service": "Arch Amazon-Simple-Storage-Service 64",
+        "amazon-simple-storage-service-glacier": "Arch Amazon-Simple-Storage-Service-Glacier 64",
+        "aws-backup": "Arch AWS-Backup 64",
+        "aws-elastic-disaster-recovery": "Arch AWS-Elastic-Disaster-Recovery 64",
+        "aws-snowball": "Arch AWS-Snowball 64",
+        "aws-snowball-edge": "Arch AWS-Snowball-Edge 64",
+        "aws-storage-gateway": "Arch AWS-Storage-Gateway 64",
+        "amazon-codecatalyst": "Arch Amazon-CodeCatalyst 64",
+        "amazon-corretto": "Arch Amazon-Corretto 64",
+        "aws-cloud9": "Arch AWS-Cloud9 64",
+        "aws-cloud-control-api": "Arch AWS-Cloud-Control-API 64",
+        "aws-cloud-development-kit": "Arch AWS-Cloud-Development-Kit 64",
+        "aws-cloudshell": "Arch AWS-CloudShell 64",
+        "aws-codeartifact": "Arch AWS-CodeArtifact 64",
+        "aws-codebuild": "Arch AWS-CodeBuild 64",
+        "aws-codecommit": "Arch AWS-CodeCommit 64",
+        "aws-codedeploy": "Arch AWS-CodeDeploy 64",
+        "aws-codepipeline": "Arch AWS-CodePipeline 64",
+        "aws-command-line-interface": "Arch AWS-Command-Line-Interface 64",
+        "aws-fault-injection-service": "Arch AWS-Fault-Injection-Service 64",
+        "aws-infrastructure-composer": "Arch AWS-Infrastructure-Composer 64",
+        "aws-tools-and-sdks": "Arch AWS-Tools-and-SDKs 64",
+        "aws-x-ray": "Arch AWS-X-Ray 64",
+        "amazon-ecs-anywhere": "Arch Amazon-ECS-Anywhere 64",
+        "amazon-eks-anywhere": "Arch Amazon-EKS-Anywhere 64",
+        "amazon-eks-distro": "Arch Amazon-EKS-Distro 64",
+        "amazon-elastic-container-registry": "Arch Amazon-Elastic-Container-Registry 64",
+        "amazon-elastic-container-service": "Arch Amazon-Elastic-Container-Service 64",
+        "amazon-elastic-kubernetes-service": "Arch Amazon-Elastic-Kubernetes-Service 64",
+        "aws-fargate": "Arch AWS-Fargate 64",
+        "red-hat-openshift-service-on-aws": "Arch Red-Hat-OpenShift-Service-on-AWS 64",
+        "amazon-cloud-directory": "Arch Amazon-Cloud-Directory 64",
+        "amazon-cognito": "Arch Amazon-Cognito 64",
+        "amazon-detective": "Arch Amazon-Detective 64",
+        "amazon-guardduty": "Arch Amazon-GuardDuty 64",
+        "amazon-inspector": "Arch Amazon-Inspector 64",
+        "amazon-macie": "Arch Amazon-Macie 64",
+        "amazon-security-lake": "Arch Amazon-Security-Lake 64",
+        "amazon-verified-permissions": "Arch Amazon-Verified-Permissions 64",
+        "aws-artifact": "Arch AWS-Artifact 64",
+        "aws-audit-manager": "Arch AWS-Audit-Manager 64",
+        "aws-certificate-manager": "Arch AWS-Certificate-Manager 64",
+        "aws-cloudhsm": "Arch AWS-CloudHSM 64",
+        "aws-directory-service": "Arch AWS-Directory-Service 64",
+        "aws-firewall-manager": "Arch AWS-Firewall-Manager 64",
+        "aws-iam-identity-center": "Arch AWS-IAM-Identity-Center 64",
+        "aws-identity-and-access-management": "Arch AWS-Identity-and-Access-Management 64",
+        "aws-key-management-service": "Arch AWS-Key-Management-Service 64",
+        "aws-network-firewall": "Arch AWS-Network-Firewall 64",
+        "aws-payment-cryptography": "Arch AWS-Payment-Cryptography 64",
+        "aws-private-certificate-authority": "Arch AWS-Private-Certificate-Authority 64",
+        "aws-resource-access-manager": "Arch AWS-Resource-Access-Manager 64",
+        "aws-secrets-manager": "Arch AWS-Secrets-Manager 64",
+        "aws-security-agent": "Arch AWS-Security-Agent 64",
+        "aws-security-hub": "Arch AWS-Security-Hub 64",
+        "aws-security-incident-response": "Arch AWS-Security-Incident-Response 64",
+        "aws-shield": "Arch AWS-Shield 64",
+        "aws-signer": "Arch AWS-Signer 64",
+        "aws-waf": "Arch AWS-WAF 64",
+        "amazon-dcv": "Arch Amazon-DCV 64",
+        "amazon-ec2": "Arch Amazon-EC2 64",
+        "amazon-ec2-auto-scaling": "Arch Amazon-EC2-Auto-Scaling 64",
+        "amazon-ec2-image-builder": "Arch Amazon-EC2-Image-Builder 64",
+        "amazon-elastic-vmware-service": "Arch Amazon-Elastic-VMware-Service 64",
+        "amazon-lightsail": "Arch Amazon-Lightsail 64",
+        "amazon-lightsail-for-research": "Arch Amazon-Lightsail-for-Research 64",
+        "aws-app-runner": "Arch AWS-App-Runner 64",
+        "aws-batch": "Arch AWS-Batch 64",
+        "aws-compute-optimizer": "Arch AWS-Compute-Optimizer 64",
+        "aws-elastic-beanstalk": "Arch AWS-Elastic-Beanstalk 64",
+        "aws-lambda": "Arch AWS-Lambda 64",
+        "aws-local-zones": "Arch AWS-Local-Zones 64",
+        "aws-nitro-enclaves": "Arch AWS-Nitro-Enclaves 64",
+        "aws-outposts-family": "Arch AWS-Outposts-family 64",
+        "aws-outposts-rack": "Arch AWS-Outposts-rack 64",
+        "aws-outposts-servers": "Arch AWS-Outposts-servers 64",
+        "aws-parallel-cluster": "Arch AWS-Parallel-Cluster 64",
+        "aws-parallel-computing-service": "Arch AWS-Parallel-Computing-Service 64",
+        "aws-serverless-application-repository": "Arch AWS-Serverless-Application-Repository 64",
+        "aws-simspace-weaver": "Arch AWS-SimSpace-Weaver 64",
+        "aws-wavelength": "Arch AWS-Wavelength 64",
+        "bottlerocket": "Arch Bottlerocket 64",
+        "elastic-fabric-adapter": "Arch Elastic-Fabric-Adapter 64",
+        "amazon-aurora": "Arch Amazon-Aurora 64",
+        "amazon-documentdb": "Arch Amazon-DocumentDB 64",
+        "amazon-dynamodb": "Arch Amazon-DynamoDB 64",
+        "amazon-elasticache": "Arch Amazon-ElastiCache 64",
+        "amazon-keyspaces": "Arch Amazon-Keyspaces 64",
+        "amazon-memorydb": "Arch Amazon-MemoryDB 64",
+        "amazon-neptune": "Arch Amazon-Neptune 64",
+        "amazon-rds": "Arch Amazon-RDS 64",
+        "amazon-timestream": "Arch Amazon-Timestream 64",
+        "aws-database-migration-service": "Arch AWS-Database-Migration-Service 64",
+        "oracle-database-at-aws": "Arch Oracle-Database-at-AWS 64",
+        "amazon-workspaces": "Arch Amazon-WorkSpaces 64",
+        "aws-activate": "Arch AWS-Activate 64",
+        "aws-iq": "Arch AWS-IQ 64",
+        "aws-managed-services": "Arch AWS-Managed-Services 64",
+        "aws-professional-services": "Arch AWS-Professional-Services 64",
+        "aws-repost": "Arch AWS-rePost 64",
+        "aws-repost-private": "Arch AWS-rePost-Private 64",
+        "aws-support": "Arch AWS-Support 64",
+        "aws-training-certification": "Arch AWS-Training-Certification 64",
+        "aws-marketplace-dark": "Arch AWS-Marketplace Dark 64",
+        "aws-marketplace-light": "Arch AWS-Marketplace Light 64",
+        "amazon-cloudwatch": "Arch Amazon-CloudWatch 64",
+        "amazon-managed-grafana": "Arch Amazon-Managed-Grafana 64",
+        "amazon-managed-service-for-prometheus": "Arch Amazon-Managed-Service-for-Prometheus 64",
+        "aws-appconfig": "Arch AWS-AppConfig 64",
+        "aws-application-auto-scaling": "Arch AWS-Application-Auto-Scaling 64",
+        "aws-auto-scaling": "Arch AWS-Auto-Scaling 64",
+        "aws-backint-agent": "Arch AWS-Backint-Agent 64",
+        "aws-chatbot": "Arch AWS-Chatbot 64",
+        "aws-cloudformation": "Arch AWS-CloudFormation 64",
+        "aws-cloudtrail": "Arch AWS-CloudTrail 64",
+        "aws-compute-optimizer-2": "Arch AWS-Compute-Optimizer 64",
+        "aws-config": "Arch AWS-Config 64",
+        "aws-console-mobile-application": "Arch AWS-Console-Mobile-Application 64",
+        "aws-control-tower": "Arch AWS-Control-Tower 64",
+        "aws-devops-agent": "Arch AWS-DevOps-Agent 64",
+        "aws-distro-for-opentelemetry": "Arch AWS-Distro-for-OpenTelemetry 64",
+        "aws-health-dashboard": "Arch AWS-Health-Dashboard 64",
+        "aws-launch-wizard": "Arch AWS-Launch-Wizard 64",
+        "aws-license-manager": "Arch AWS-License-Manager 64",
+        "aws-management-console": "Arch AWS-Management-Console 64",
+        "aws-organizations": "Arch AWS-Organizations 64",
+        "aws-partner-central": "Arch AWS-Partner-Central 64",
+        "aws-proton": "Arch AWS-Proton 64",
+        "aws-resilience-hub": "Arch AWS-Resilience-Hub 64",
+        "aws-resource-explorer": "Arch AWS-Resource-Explorer 64",
+        "aws-service-catalog": "Arch AWS-Service-Catalog 64",
+        "aws-service-management-connector": "Arch AWS-Service-Management-Connector 64",
+        "aws-systems-manager": "Arch AWS-Systems-Manager 64",
+        "aws-telco-network-builder": "Arch AWS-Telco-Network-Builder 64",
+        "aws-trusted-advisor": "Arch AWS-Trusted-Advisor 64",
+        "aws-user-notifications": "Arch AWS-User-Notifications 64",
+        "aws-well-architected-tool": "Arch AWS-Well-Architected-Tool 64",
+        "amazon-bedrock-agentcore-2": "AgentCore",
+        "amazon-bedrock-agentcore-gateway": "AgentCoreGateway",
+        "amazon-bedrock-agentcore-identity": "AgentCoreIdentity",
+        "amazon-bedrock-agentcore-memory": "AgentCoreMemory",
+        "amazon-bedrock-agentcore-observability": "AgentCoreObservability",
+        "amazon-bedrock-agentcore-runtime": "AgentCoreRuntime"
+      },
+      "abbreviations": {
+        "amazon-simple-storage-service": [
+          "s3",
+          "amazon s3",
+          "object storage"
+        ],
+        "amazon-simple-storage-service-glacier": [
+          "glacier",
+          "s3 glacier",
+          "amazon glacier"
+        ],
+        "amazon-elastic-container-registry": [
+          "ecr",
+          "amazon ecr",
+          "container registry"
+        ],
+        "amazon-elastic-container-service": [
+          "ecs",
+          "amazon ecs"
+        ],
+        "amazon-elastic-kubernetes-service": [
+          "eks",
+          "amazon eks"
+        ],
+        "amazon-elastic-block-store": [
+          "ebs",
+          "amazon ebs",
+          "block storage"
+        ],
+        "amazon-virtual-private-cloud": [
+          "vpc",
+          "amazon vpc"
+        ],
+        "amazon-simple-queue-service": [
+          "sqs",
+          "amazon sqs",
+          "queue"
+        ],
+        "amazon-simple-notification-service": [
+          "sns",
+          "amazon sns",
+          "pub sub",
+          "notifications"
+        ],
+        "aws-identity-and-access-management": [
+          "iam",
+          "aws iam"
+        ],
+        "aws-key-management-service": [
+          "kms",
+          "aws kms"
+        ],
+        "aws-certificate-manager": [
+          "acm",
+          "aws acm"
+        ],
+        "aws-database-migration-service": [
+          "dms",
+          "aws dms"
+        ],
+        "aws-command-line-interface": [
+          "cli",
+          "aws cli"
+        ],
+        "aws-cloud-development-kit": [
+          "cdk",
+          "aws cdk"
+        ],
+        "elastic-load-balancing": [
+          "elb",
+          "alb",
+          "nlb",
+          "load balancer",
+          "application load balancer"
+        ],
+        "amazon-managed-streaming-for-apache-kafka": [
+          "msk",
+          "amazon msk",
+          "managed kafka"
+        ],
+        "amazon-managed-workflows-for-apache-airflow": [
+          "mwaa",
+          "managed airflow"
+        ],
+        "amazon-managed-service-for-apache-flink": [
+          "managed flink",
+          "kinesis data analytics"
+        ],
+        "amazon-managed-service-for-prometheus": [
+          "amp",
+          "managed prometheus"
+        ],
+        "amazon-opensearch-service": [
+          "opensearch",
+          "elasticsearch service"
+        ],
+        "amazon-route-53": [
+          "route53",
+          "route 53",
+          "dns"
+        ],
+        "amazon-api-gateway": [
+          "api gateway",
+          "apigw"
+        ],
+        "aws-waf": [
+          "waf",
+          "web application firewall"
+        ],
+        "amazon-rds": [
+          "rds",
+          "relational database service"
+        ],
+        "amazon-efs": [
+          "efs",
+          "elastic file system"
+        ],
+        "amazon-emr": [
+          "emr",
+          "elastic mapreduce"
+        ],
+        "amazon-ec2": [
+          "ec2",
+          "elastic compute cloud",
+          "virtual machine",
+          "instance"
+        ],
+        "amazon-dynamodb": [
+          "dynamodb",
+          "dynamo"
+        ],
+        "amazon-elasticache": [
+          "elasticache",
+          "redis cache",
+          "memcached cache"
+        ],
+        "amazon-cloudwatch": [
+          "cloudwatch",
+          "metrics",
+          "logs"
+        ],
+        "aws-lambda": [
+          "lambda",
+          "serverless function"
+        ],
+        "amazon-sagemaker-ai": [
+          "sagemaker"
+        ],
+        "aws-fargate": [
+          "fargate"
+        ],
+        "amazon-aurora": [
+          "aurora"
+        ],
+        "aws-step-functions": [
+          "step functions",
+          "state machine"
+        ],
+        "amazon-eventbridge": [
+          "eventbridge",
+          "event bus"
+        ],
+        "amazon-kinesis-data-streams": [
+          "kinesis",
+          "kinesis streams"
+        ],
+        "amazon-data-firehose": [
+          "firehose",
+          "kinesis firehose"
+        ],
+        "aws-glue": [
+          "glue",
+          "etl"
+        ],
+        "amazon-redshift": [
+          "redshift",
+          "data warehouse"
+        ],
+        "amazon-athena": [
+          "athena"
+        ],
+        "amazon-cloudfront": [
+          "cloudfront",
+          "cdn"
+        ]
+      }
+    },
+    {
+      "id": "azure",
+      "title": "Azure",
+      "description": "Microsoft Azure service icons",
+      "rank": 10,
+      "kind": "vendor",
+      "builder": "zip-tree",
+      "sources": [
+        {
+          "source": "azure-v24",
+          "include": "^Azure_Public_Service_Icons/Icons/(?<group>[^/]+)/(?<file>.+)\\.svg$",
+          "titleFrom": "azure-filename"
+        }
+      ],
+      "aliasExtras": {
+        "storage-accounts": [
+          "blob storage",
+          "azure blob",
+          "blob",
+          "azure storage"
+        ],
+        "azure-cosmos-db": [
+          "cosmos",
+          "cosmosdb"
+        ],
+        "function-apps": [
+          "azure functions",
+          "function app",
+          "serverless function"
+        ],
+        "kubernetes-services": [
+          "aks",
+          "azure kubernetes service"
+        ],
+        "app-services": [
+          "app service",
+          "web app",
+          "azure web app"
+        ],
+        "entra-id-protection": [
+          "entra id protection"
+        ],
+        "entra-connect": [
+          "aad connect",
+          "azure ad connect"
+        ],
+        "entra-domain-services": [
+          "azure ad domain services"
+        ],
+        "event-hubs": [
+          "event hub",
+          "azure event hub"
+        ],
+        "azure-service-bus": [
+          "service bus"
+        ],
+        "data-factories": [
+          "adf",
+          "azure data factory"
+        ],
+        "azure-synapse-analytics": [
+          "synapse"
+        ],
+        "azure-databricks": [
+          "databricks on azure"
+        ],
+        "sql-database": [
+          "azure sql",
+          "azure sql database"
+        ],
+        "sql-managed-instance": [
+          "azure sql managed instance"
+        ],
+        "key-vaults": [
+          "key vault",
+          "akv"
+        ],
+        "application-insights": [
+          "app insights"
+        ],
+        "log-analytics-workspaces": [
+          "log analytics"
+        ],
+        "container-registries": [
+          "acr",
+          "azure container registry"
+        ],
+        "container-instances": [
+          "aci",
+          "azure container instances"
+        ],
+        "virtual-machine": [
+          "azure vm"
+        ],
+        "load-balancers": [
+          "azure load balancer"
+        ],
+        "application-gateways": [
+          "app gateway",
+          "azure application gateway"
+        ],
+        "api-management-services": [
+          "apim",
+          "azure api management"
+        ],
+        "ai-foundry": [
+          "azure ai foundry",
+          "ai studio"
+        ],
+        "azure-openai": [
+          "azure openai service",
+          "aoai"
+        ],
+        "azure-machine-learning": [
+          "azure ml"
+        ],
+        "virtual-networks": [
+          "vnet",
+          "azure vnet"
+        ],
+        "azure-data-explorer-clusters": [
+          "adx",
+          "kusto"
+        ],
+        "azure-devops": [
+          "ado"
+        ],
+        "monitor": [
+          "azure monitor"
+        ]
+      }
+    },
+    {
+      "id": "gcp",
+      "title": "Google Cloud",
+      "description": "Google Cloud product and category icons",
+      "rank": 10,
+      "kind": "vendor",
+      "builder": "zip-tree",
+      "sources": [
+        {
+          "source": "gcp-core",
+          "include": "^Unique Icons/(?<group>[^/]+)/SVG/(?<file>.+)\\.svg$",
+          "titleFrom": "gcp-dirname",
+          "tier": "current"
+        },
+        {
+          "source": "gcp-category",
+          "include": "^Category Icons/(?<group>[^/]+)/SVG/(?<file>.+)\\.svg$",
+          "titleFrom": "gcp-dirname",
+          "tier": "category"
+        },
+        {
+          "source": "gcp-legacy",
+          "include": "^(?<group>[^/]+)/(?<file>.+)\\.svg$",
+          "titleFrom": "gcp-dirname",
+          "tier": "legacy"
+        }
+      ],
+      "dedupe": "first-tier-wins",
+      "aliasExtras": {
+        "cloud-storage": [
+          "gcs",
+          "google cloud storage",
+          "bucket"
+        ],
+        "bigquery": [
+          "bq"
+        ],
+        "cloud-functions": [
+          "gcf",
+          "google cloud functions"
+        ],
+        "cloud-run": [
+          "gcr run"
+        ],
+        "google-kubernetes-engine": [
+          "gke",
+          "kubernetes engine"
+        ],
+        "compute-engine": [
+          "gce",
+          "google compute engine"
+        ],
+        "cloud-sql": [
+          "google cloud sql"
+        ],
+        "pubsub": [
+          "pub sub",
+          "google pubsub"
+        ],
+        "cloud-composer": [
+          "composer",
+          "managed airflow"
+        ],
+        "vertex-ai": [
+          "vertex"
+        ],
+        "identity-and-access-management": [
+          "iam",
+          "google iam"
+        ],
+        "cloud-load-balancing": [
+          "glb",
+          "google load balancer"
+        ],
+        "artifact-registry": [
+          "gar"
+        ],
+        "cloud-spanner": [
+          "spanner"
+        ],
+        "firestore": [
+          "cloud firestore"
+        ],
+        "bigtable": [
+          "cloud bigtable"
+        ],
+        "memorystore": [
+          "google redis"
+        ],
+        "dataproc": [
+          "google spark"
+        ],
+        "dataflow": [
+          "google beam"
+        ],
+        "secret-manager": [
+          "google secret manager"
+        ],
+        "virtual-private-cloud": [
+          "vpc",
+          "google vpc"
+        ]
+      },
+      "supersedes": {
+        "google-kubernetes-engine": "gke",
+        "apigee-api-platform": "apigee"
+      },
+      "note": "Google publishes 19 current \"core product\" icons, 26 category icons and a legacy archive of per-service marks. Current artwork wins on a name clash; supersedes covers the pairs Google renamed rather than repeated."
+    },
+    {
+      "id": "data-platforms",
+      "title": "Data platforms",
+      "description": "Warehouses, lakehouses, query engines and BI",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks",
+      "icons": [
+        {
+          "slug": "snowflake",
+          "title": "Snowflake",
+          "hex": "29B5E8",
+          "aliases": [
+            "snowflake"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "databricks",
+          "title": "Databricks",
+          "hex": "FF3621",
+          "aliases": [
+            "databricks"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "clickhouse",
+          "title": "ClickHouse",
+          "hex": "FFCC01",
+          "aliases": [
+            "clickhouse"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "duckdb",
+          "title": "DuckDB",
+          "hex": "FFF000",
+          "aliases": [
+            "duckdb"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachespark",
+          "title": "Apache Spark",
+          "hex": "E25A1C",
+          "aliases": [
+            "apache spark",
+            "apachespark"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachehadoop",
+          "title": "Apache Hadoop",
+          "hex": "66CCFF",
+          "aliases": [
+            "apache hadoop",
+            "apachehadoop"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachehive",
+          "title": "Apache Hive",
+          "hex": "FDEE21",
+          "aliases": [
+            "apache hive",
+            "apachehive"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "trino",
+          "title": "Trino",
+          "hex": "DD00A1",
+          "aliases": [
+            "trino"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "presto",
+          "title": "Presto",
+          "hex": "5890FF",
+          "aliases": [
+            "presto"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "teradata",
+          "title": "Teradata",
+          "hex": "F37440",
+          "aliases": [
+            "teradata"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "cloudera",
+          "title": "Cloudera",
+          "hex": "F96702",
+          "aliases": [
+            "cloudera"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachedruid",
+          "title": "Apache Druid",
+          "hex": "29F1FB",
+          "aliases": [
+            "apache druid",
+            "apachedruid"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachedoris",
+          "title": "Apache Doris",
+          "hex": "444FD9",
+          "aliases": [
+            "apache doris",
+            "apachedoris"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "singlestore",
+          "title": "SingleStore",
+          "hex": "AA00FF",
+          "aliases": [
+            "singlestore"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "minio",
+          "title": "MinIO",
+          "hex": "C72E49",
+          "aliases": [
+            "minio"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apacheparquet",
+          "title": "Apache Parquet",
+          "hex": "50ABF1",
+          "aliases": [
+            "apache parquet",
+            "apacheparquet"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "looker",
+          "title": "Looker",
+          "hex": "4285F4",
+          "aliases": [
+            "looker"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "metabase",
+          "title": "Metabase",
+          "hex": "509EE3",
+          "aliases": [
+            "metabase"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachesuperset",
+          "title": "Apache Superset",
+          "hex": "20A6C9",
+          "aliases": [
+            "apache superset",
+            "apachesuperset"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "qlik",
+          "title": "Qlik",
+          "hex": "009848",
+          "aliases": [
+            "qlik"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "microstrategy",
+          "title": "MicroStrategy",
+          "hex": "D9232E",
+          "aliases": [
+            "microstrategy"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachekylin",
+          "title": "Apache Kylin",
+          "hex": "F09D13",
+          "aliases": [
+            "apache kylin",
+            "apachekylin"
+          ],
+          "source": "simple-icons@16.30.0"
+        }
+      ],
+      "onDemand": [
+        {
+          "slug": "apacheiceberg",
+          "title": "Apache Iceberg",
+          "aliases": [
+            "apache iceberg",
+            "apacheiceberg"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://iceberg.apache.org/"
+        },
+        {
+          "slug": "deltalake",
+          "title": "Delta Lake",
+          "aliases": [
+            "delta lake",
+            "deltalake"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://delta.io/"
+        },
+        {
+          "slug": "tableau",
+          "title": "Tableau",
+          "aliases": [
+            "tableau"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.tableau.com/about/media-kit"
+        },
+        {
+          "slug": "powerbi",
+          "title": "Power BI",
+          "aliases": [
+            "power bi",
+            "powerbi"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.microsoft.com/power-platform/products/power-bi"
+        },
+        {
+          "slug": "dremio",
+          "title": "Dremio",
+          "aliases": [
+            "dremio"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.dremio.com/"
+        },
+        {
+          "slug": "starrocks",
+          "title": "StarRocks",
+          "aliases": [
+            "starrocks"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.starrocks.io/"
+        },
+        {
+          "slug": "firebolt",
+          "title": "Firebolt",
+          "aliases": [
+            "firebolt"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.firebolt.io/"
+        },
+        {
+          "slug": "motherduck",
+          "title": "MotherDuck",
+          "aliases": [
+            "motherduck"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://motherduck.com/"
+        },
+        {
+          "slug": "vertica",
+          "title": "Vertica",
+          "aliases": [
+            "vertica"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.vertica.com/"
+        },
+        {
+          "slug": "greenplum",
+          "title": "Greenplum",
+          "aliases": [
+            "greenplum"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://greenplum.org/"
+        },
+        {
+          "slug": "apachehudi",
+          "title": "Apache Hudi",
+          "aliases": [
+            "apache hudi",
+            "apachehudi"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://hudi.apache.org/"
+        },
+        {
+          "slug": "apachepinot",
+          "title": "Apache Pinot",
+          "aliases": [
+            "apache pinot",
+            "apachepinot"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://pinot.apache.org/"
+        }
+      ]
+    },
+    {
+      "id": "databases",
+      "title": "Databases",
+      "description": "Relational, document, key-value, graph and vector stores",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks",
+      "icons": [
+        {
+          "slug": "postgresql",
+          "title": "PostgreSQL",
+          "hex": "4169E1",
+          "aliases": [
+            "postgresql"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "mysql",
+          "title": "MySQL",
+          "hex": "4479A1",
+          "aliases": [
+            "mysql"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "mariadb",
+          "title": "MariaDB",
+          "hex": "003545",
+          "aliases": [
+            "mariadb"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "sqlite",
+          "title": "SQLite",
+          "hex": "003B57",
+          "aliases": [
+            "sqlite"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "mongodb",
+          "title": "MongoDB",
+          "hex": "47A248",
+          "aliases": [
+            "mongodb"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "redis",
+          "title": "Redis",
+          "hex": "FF4438",
+          "aliases": [
+            "redis"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachecassandra",
+          "title": "Apache Cassandra",
+          "hex": "1287B1",
+          "aliases": [
+            "apache cassandra",
+            "apachecassandra"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "couchbase",
+          "title": "Couchbase",
+          "hex": "EA2328",
+          "aliases": [
+            "couchbase"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachecouchdb",
+          "title": "Apache CouchDB",
+          "hex": "E42528",
+          "aliases": [
+            "apache couchdb",
+            "apachecouchdb"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "neo4j",
+          "title": "Neo4j",
+          "hex": "4581C3",
+          "aliases": [
+            "neo4j"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "elasticsearch",
+          "title": "Elasticsearch",
+          "hex": "005571",
+          "aliases": [
+            "elasticsearch"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "opensearch",
+          "title": "OpenSearch",
+          "hex": "005EB8",
+          "aliases": [
+            "opensearch"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "influxdb",
+          "title": "InfluxDB",
+          "hex": "22ADF6",
+          "aliases": [
+            "influxdb"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "timescale",
+          "title": "Timescale",
+          "hex": "FDB515",
+          "aliases": [
+            "timescale"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "cockroachlabs",
+          "title": "Cockroach Labs",
+          "hex": "6933FF",
+          "aliases": [
+            "cockroach labs",
+            "cockroachlabs"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "planetscale",
+          "title": "PlanetScale",
+          "hex": "000000",
+          "aliases": [
+            "planetscale"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "supabase",
+          "title": "Supabase",
+          "hex": "3FCF8E",
+          "aliases": [
+            "supabase"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "firebase",
+          "title": "Firebase",
+          "hex": "DD2C00",
+          "aliases": [
+            "firebase"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "arangodb",
+          "title": "ArangoDB",
+          "hex": "DDDF72",
+          "aliases": [
+            "arangodb"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "dgraph",
+          "title": "Dgraph",
+          "hex": "E50695",
+          "aliases": [
+            "dgraph"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "etcd",
+          "title": "etcd",
+          "hex": "419EDA",
+          "aliases": [
+            "etcd"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "scylladb",
+          "title": "ScyllaDB",
+          "hex": "6CD5E7",
+          "aliases": [
+            "scylladb"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "surrealdb",
+          "title": "SurrealDB",
+          "hex": "FF00A0",
+          "aliases": [
+            "surrealdb"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "tidb",
+          "title": "TiDB",
+          "hex": "DC150B",
+          "aliases": [
+            "tidb"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "vitess",
+          "title": "Vitess",
+          "hex": "F16728",
+          "aliases": [
+            "vitess"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "prisma",
+          "title": "Prisma",
+          "hex": "2D3748",
+          "aliases": [
+            "prisma"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "sqlalchemy",
+          "title": "SQLAlchemy",
+          "hex": "D71F00",
+          "aliases": [
+            "sqlalchemy"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "dbeaver",
+          "title": "DBeaver",
+          "hex": "382923",
+          "aliases": [
+            "dbeaver"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "oracle",
+          "title": "Oracle Database",
+          "aliases": [
+            "oracle database",
+            "oracledatabase",
+            "oracle",
+            "oracle db",
+            "oracledb"
+          ],
+          "source": "devicon@2.17.0",
+          "deviconName": "oracle",
+          "deviconVariant": "original",
+          "hex": "EA1B22"
+        },
+        {
+          "slug": "microsoftsqlserver",
+          "title": "Microsoft SQL Server",
+          "aliases": [
+            "microsoft sql server",
+            "microsoftsqlserver",
+            "sql server",
+            "sqlserver",
+            "mssql",
+            "t sql",
+            "tsql",
+            "azure sql",
+            "azuresql"
+          ],
+          "source": "devicon@2.17.0",
+          "deviconName": "microsoftsqlserver",
+          "deviconVariant": "original",
+          "hex": "ee352c"
+        },
+        {
+          "slug": "memcached",
+          "title": "Memcached",
+          "aliases": [
+            "memcached",
+            "memcache"
+          ],
+          "source": "devicon@2.17.0",
+          "deviconName": "memcached",
+          "deviconVariant": "original",
+          "hex": "2A9790"
+        },
+        {
+          "slug": "yugabytedb",
+          "title": "YugabyteDB",
+          "aliases": [
+            "yugabytedb",
+            "yugabyte"
+          ],
+          "source": "devicon@2.17.0",
+          "deviconName": "yugabytedb",
+          "deviconVariant": "original",
+          "hex": "ff5f3b"
+        }
+      ],
+      "onDemand": [
+        {
+          "slug": "questdb",
+          "title": "QuestDB",
+          "aliases": [
+            "questdb"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://questdb.com/"
+        }
+      ]
+    },
+    {
+      "id": "ai-frameworks",
+      "title": "AI frameworks",
+      "description": "LLM orchestration, agent frameworks, model providers and tooling",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks",
+      "icons": [
+        {
+          "slug": "langchain",
+          "title": "LangChain",
+          "hex": "7FC8FF",
+          "aliases": [
+            "langchain"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "langgraph",
+          "title": "LangGraph",
+          "hex": "7FC8FF",
+          "aliases": [
+            "langgraph"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "crewai",
+          "title": "CrewAI",
+          "hex": "FF5A50",
+          "aliases": [
+            "crewai"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "n8n",
+          "title": "n8n",
+          "hex": "EA4B71",
+          "aliases": [
+            "n8n"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "anthropic",
+          "title": "Anthropic",
+          "hex": "191919",
+          "aliases": [
+            "anthropic"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "huggingface",
+          "title": "Hugging Face",
+          "hex": "FFD21E",
+          "aliases": [
+            "hugging face",
+            "huggingface"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "ollama",
+          "title": "Ollama",
+          "hex": "000000",
+          "aliases": [
+            "ollama"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "mistralai",
+          "title": "Mistral AI",
+          "hex": "FA520F",
+          "aliases": [
+            "mistral ai",
+            "mistralai"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "googlegemini",
+          "title": "Google Gemini",
+          "hex": "8E75B2",
+          "aliases": [
+            "google gemini",
+            "googlegemini",
+            "google bard",
+            "googlebard"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "perplexity",
+          "title": "Perplexity",
+          "hex": "1FB8CD",
+          "aliases": [
+            "perplexity"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "replicate",
+          "title": "Replicate",
+          "hex": "000000",
+          "aliases": [
+            "replicate"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "openrouter",
+          "title": "OpenRouter",
+          "hex": "94A3B8",
+          "aliases": [
+            "openrouter"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "dify",
+          "title": "Dify",
+          "hex": "0033FF",
+          "aliases": [
+            "dify"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "gradio",
+          "title": "Gradio",
+          "hex": "F97316",
+          "aliases": [
+            "gradio"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "streamlit",
+          "title": "Streamlit",
+          "hex": "FF4B4B",
+          "aliases": [
+            "streamlit"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "milvus",
+          "title": "Milvus",
+          "hex": "00A1EA",
+          "aliases": [
+            "milvus"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "pydantic",
+          "title": "Pydantic",
+          "hex": "E92063",
+          "aliases": [
+            "pydantic"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "zapier",
+          "title": "Zapier",
+          "hex": "FF4F00",
+          "aliases": [
+            "zapier"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "make",
+          "title": "Make",
+          "hex": "6D00CC",
+          "aliases": [
+            "make"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "haystack",
+          "title": "Haystack",
+          "hex": "0EAF9C",
+          "aliases": [
+            "haystack"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "deepseek",
+          "title": "DeepSeek",
+          "hex": "5786FE",
+          "aliases": [
+            "deepseek"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "meta",
+          "title": "Meta",
+          "hex": "0467DF",
+          "aliases": [
+            "meta"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "claude",
+          "title": "Claude",
+          "hex": "D97757",
+          "aliases": [
+            "claude"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "v0",
+          "title": "v0",
+          "hex": "000000",
+          "aliases": [
+            "v0"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "cursor",
+          "title": "Cursor",
+          "hex": "000000",
+          "aliases": [
+            "cursor"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "windsurf",
+          "title": "Windsurf",
+          "hex": "0B100F",
+          "aliases": [
+            "windsurf",
+            "codeium"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "lmstudio",
+          "title": "LM Studio",
+          "hex": "000000",
+          "aliases": [
+            "lm studio",
+            "lmstudio",
+            "bionic",
+            "lm studio bionic",
+            "lmstudiobionic"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "modelcontextprotocol",
+          "title": "Model Context Protocol",
+          "hex": "000000",
+          "aliases": [
+            "model context protocol",
+            "modelcontextprotocol",
+            "mcp"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "vllm",
+          "title": "vLLM",
+          "hex": "30A2FF",
+          "aliases": [
+            "vllm"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "qdrant",
+          "title": "Qdrant",
+          "hex": "DC244C",
+          "aliases": [
+            "qdrant"
+          ],
+          "source": "simple-icons@16.30.0"
+        }
+      ],
+      "onDemand": [
+        {
+          "slug": "openai",
+          "title": "OpenAI",
+          "aliases": [
+            "openai"
+          ],
+          "hex": "412991",
+          "source": "simple-icons@15.22.0",
+          "licence": "CC0-1.0",
+          "upstreamUrl": "https://cdn.jsdelivr.net/npm/simple-icons@15.22.0/icons/openai.svg",
+          "reason": "removed from Simple Icons 16 at the brand owner request"
+        },
+        {
+          "slug": "langsmith",
+          "title": "LangSmith",
+          "aliases": [
+            "langsmith"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.langchain.com/langsmith"
+        },
+        {
+          "slug": "llamaindex",
+          "title": "LlamaIndex",
+          "aliases": [
+            "llamaindex"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.llamaindex.ai/"
+        },
+        {
+          "slug": "pinecone",
+          "title": "Pinecone",
+          "aliases": [
+            "pinecone"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.pinecone.io/"
+        },
+        {
+          "slug": "weaviate",
+          "title": "Weaviate",
+          "aliases": [
+            "weaviate"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://weaviate.io/"
+        },
+        {
+          "slug": "chroma",
+          "title": "Chroma",
+          "aliases": [
+            "chroma"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.trychroma.com/"
+        },
+        {
+          "slug": "cohere",
+          "title": "Cohere",
+          "aliases": [
+            "cohere"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://cohere.com/"
+        },
+        {
+          "slug": "groq",
+          "title": "Groq",
+          "aliases": [
+            "groq"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://groq.com/"
+        },
+        {
+          "slug": "flowise",
+          "title": "Flowise",
+          "aliases": [
+            "flowise"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://flowiseai.com/"
+        },
+        {
+          "slug": "chainlit",
+          "title": "Chainlit",
+          "aliases": [
+            "chainlit"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://chainlit.io/"
+        },
+        {
+          "slug": "autogen",
+          "title": "AutoGen",
+          "aliases": [
+            "autogen"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://microsoft.github.io/autogen/"
+        },
+        {
+          "slug": "semantickernel",
+          "title": "Semantic Kernel",
+          "aliases": [
+            "semantic kernel",
+            "semantickernel"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://learn.microsoft.com/semantic-kernel/"
+        },
+        {
+          "slug": "xai",
+          "title": "xAI",
+          "aliases": [
+            "xai"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://x.ai/"
+        }
+      ]
+    },
+    {
+      "id": "ml-training",
+      "title": "ML and training",
+      "description": "Training frameworks, experiment tracking and the numeric stack",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks",
+      "icons": [
+        {
+          "slug": "pytorch",
+          "title": "PyTorch",
+          "hex": "EE4C2C",
+          "aliases": [
+            "pytorch"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "tensorflow",
+          "title": "TensorFlow",
+          "hex": "FF6F00",
+          "aliases": [
+            "tensorflow"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "keras",
+          "title": "Keras",
+          "hex": "D00000",
+          "aliases": [
+            "keras"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "scikitlearn",
+          "title": "scikit-learn",
+          "hex": "F7931E",
+          "aliases": [
+            "scikit learn",
+            "scikitlearn"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "numpy",
+          "title": "NumPy",
+          "hex": "013243",
+          "aliases": [
+            "numpy"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "pandas",
+          "title": "pandas",
+          "hex": "150458",
+          "aliases": [
+            "pandas"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "scipy",
+          "title": "SciPy",
+          "hex": "8CAAE6",
+          "aliases": [
+            "scipy"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "mlflow",
+          "title": "MLflow",
+          "hex": "0194E2",
+          "aliases": [
+            "mlflow"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "weightsandbiases",
+          "title": "Weights & Biases",
+          "hex": "FFBE00",
+          "aliases": [
+            "weights biases",
+            "weightsbiases",
+            "weightsandbiases"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "ray",
+          "title": "Ray",
+          "hex": "028CF0",
+          "aliases": [
+            "ray"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "dvc",
+          "title": "DVC",
+          "hex": "13ADC7",
+          "aliases": [
+            "dvc",
+            "data version control",
+            "dataversioncontrol"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "onnx",
+          "title": "ONNX",
+          "hex": "005CED",
+          "aliases": [
+            "onnx"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "nvidia",
+          "title": "NVIDIA",
+          "hex": "76B900",
+          "aliases": [
+            "nvidia"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "jupyter",
+          "title": "Jupyter",
+          "hex": "F37626",
+          "aliases": [
+            "jupyter"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "googlecolab",
+          "title": "Google Colab",
+          "hex": "F9AB00",
+          "aliases": [
+            "google colab",
+            "googlecolab"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "kaggle",
+          "title": "Kaggle",
+          "hex": "20BEFF",
+          "aliases": [
+            "kaggle"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "optuna",
+          "title": "Optuna",
+          "hex": "002C76",
+          "aliases": [
+            "optuna"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "polars",
+          "title": "Polars",
+          "hex": "0075FF",
+          "aliases": [
+            "polars"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "dask",
+          "title": "Dask",
+          "hex": "FC6E6B",
+          "aliases": [
+            "dask"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "roboflow",
+          "title": "Roboflow",
+          "hex": "6706CE",
+          "aliases": [
+            "roboflow"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "ultralytics",
+          "title": "Ultralytics",
+          "hex": "111F68",
+          "aliases": [
+            "ultralytics"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "opencv",
+          "title": "OpenCV",
+          "hex": "5C3EE8",
+          "aliases": [
+            "opencv"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "spacy",
+          "title": "spaCy",
+          "hex": "09A3D5",
+          "aliases": [
+            "spacy"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "bentoml",
+          "title": "BentoML",
+          "hex": "000000",
+          "aliases": [
+            "bentoml"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "kubeflow",
+          "title": "Kubeflow",
+          "aliases": [
+            "kubeflow",
+            "kubeflow pipelines",
+            "kubeflowpipelines"
+          ],
+          "source": "devicon@2.17.0",
+          "deviconName": "kubeflow",
+          "deviconVariant": "original",
+          "hex": "72a1e5"
+        }
+      ],
+      "onDemand": [
+        {
+          "slug": "xgboost",
+          "title": "XGBoost",
+          "aliases": [
+            "xgboost"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://xgboost.ai/"
+        },
+        {
+          "slug": "openvino",
+          "title": "OpenVINO",
+          "aliases": [
+            "openvino"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://docs.openvino.ai/"
+        },
+        {
+          "slug": "comet",
+          "title": "Comet ML",
+          "aliases": [
+            "comet ml",
+            "cometml",
+            "comet"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.comet.com/"
+        },
+        {
+          "slug": "clearml",
+          "title": "ClearML",
+          "aliases": [
+            "clearml"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://clear.ml/"
+        },
+        {
+          "slug": "tensorboard",
+          "title": "TensorBoard",
+          "aliases": [
+            "tensorboard"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.tensorflow.org/tensorboard"
+        },
+        {
+          "slug": "langfuse",
+          "title": "Langfuse",
+          "aliases": [
+            "langfuse"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://langfuse.com/"
+        }
+      ]
+    },
+    {
+      "id": "streaming-orchestration",
+      "title": "Streaming and orchestration",
+      "description": "Brokers, stream processors, schedulers and ingestion",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks",
+      "icons": [
+        {
+          "slug": "apachekafka",
+          "title": "Apache Kafka",
+          "hex": "231F20",
+          "aliases": [
+            "apache kafka",
+            "apachekafka"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apacheflink",
+          "title": "Apache Flink",
+          "hex": "E6526F",
+          "aliases": [
+            "apache flink",
+            "apacheflink"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachepulsar",
+          "title": "Apache Pulsar",
+          "hex": "188FFF",
+          "aliases": [
+            "apache pulsar",
+            "apachepulsar"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "rabbitmq",
+          "title": "RabbitMQ",
+          "hex": "FF6600",
+          "aliases": [
+            "rabbitmq"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "natsdotio",
+          "title": "NATS.io",
+          "hex": "27AAE1",
+          "aliases": [
+            "nats io",
+            "natsio",
+            "natsdotio"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apacheairflow",
+          "title": "Apache Airflow",
+          "hex": "017CEE",
+          "aliases": [
+            "apache airflow",
+            "apacheairflow"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "prefect",
+          "title": "Prefect",
+          "hex": "070E10",
+          "aliases": [
+            "prefect"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachenifi",
+          "title": "Apache NiFi",
+          "hex": "728E9B",
+          "aliases": [
+            "apache nifi",
+            "apachenifi"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "celery",
+          "title": "Celery",
+          "hex": "37814A",
+          "aliases": [
+            "celery"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "argo",
+          "title": "Argo",
+          "hex": "EF7B4D",
+          "aliases": [
+            "argo"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachestorm",
+          "title": "Apache Storm",
+          "hex": "225593",
+          "aliases": [
+            "apache storm",
+            "apachestorm"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "mqtt",
+          "title": "MQTT",
+          "hex": "660066",
+          "aliases": [
+            "mqtt"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "temporal",
+          "title": "Temporal",
+          "hex": "000000",
+          "aliases": [
+            "temporal"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "airbyte",
+          "title": "Airbyte",
+          "hex": "615EFF",
+          "aliases": [
+            "airbyte"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "matillion",
+          "title": "Matillion",
+          "hex": "19E57F",
+          "aliases": [
+            "matillion"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "talend",
+          "title": "Talend",
+          "hex": "FF6D70",
+          "aliases": [
+            "talend"
+          ],
+          "source": "simple-icons@16.30.0"
+        }
+      ],
+      "onDemand": [
+        {
+          "slug": "dbt",
+          "title": "dbt",
+          "aliases": [
+            "dbt"
+          ],
+          "hex": "FF694B",
+          "source": "simple-icons@15.22.0",
+          "licence": "CC0-1.0",
+          "upstreamUrl": "https://cdn.jsdelivr.net/npm/simple-icons@15.22.0/icons/dbt.svg",
+          "reason": "removed from Simple Icons 16 at the brand owner request"
+        },
+        {
+          "slug": "apachebeam",
+          "title": "Apache Beam",
+          "aliases": [
+            "apache beam",
+            "apachebeam"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://beam.apache.org/"
+        },
+        {
+          "slug": "redpanda",
+          "title": "Redpanda",
+          "aliases": [
+            "redpanda"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://redpanda.com/"
+        },
+        {
+          "slug": "confluent",
+          "title": "Confluent",
+          "aliases": [
+            "confluent"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.confluent.io/"
+        },
+        {
+          "slug": "debezium",
+          "title": "Debezium",
+          "aliases": [
+            "debezium"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://debezium.io/"
+        },
+        {
+          "slug": "apachesamza",
+          "title": "Apache Samza",
+          "aliases": [
+            "apache samza",
+            "apachesamza"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://samza.apache.org/"
+        },
+        {
+          "slug": "zeromq",
+          "title": "ZeroMQ",
+          "aliases": [
+            "zeromq"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://zeromq.org/"
+        },
+        {
+          "slug": "apacheactivemq",
+          "title": "Apache ActiveMQ",
+          "aliases": [
+            "apache activemq",
+            "apacheactivemq"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://activemq.apache.org/"
+        },
+        {
+          "slug": "apachezookeeper",
+          "title": "Apache ZooKeeper",
+          "aliases": [
+            "apache zookeeper",
+            "apachezookeeper"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://zookeeper.apache.org/"
+        },
+        {
+          "slug": "mage",
+          "title": "Mage",
+          "aliases": [
+            "mage"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.mage.ai/"
+        },
+        {
+          "slug": "kestra",
+          "title": "Kestra",
+          "aliases": [
+            "kestra"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://kestra.io/"
+        },
+        {
+          "slug": "dagster",
+          "title": "Dagster",
+          "aliases": [
+            "dagster"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://dagster.io/"
+        },
+        {
+          "slug": "luigi",
+          "title": "Luigi",
+          "aliases": [
+            "luigi"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://github.com/spotify/luigi"
+        },
+        {
+          "slug": "estuary",
+          "title": "Estuary",
+          "aliases": [
+            "estuary"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://estuary.dev/"
+        },
+        {
+          "slug": "fivetran",
+          "title": "Fivetran",
+          "aliases": [
+            "fivetran"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.fivetran.com/"
+        },
+        {
+          "slug": "informatica",
+          "title": "Informatica",
+          "aliases": [
+            "informatica"
+          ],
+          "hex": "FF4D00",
+          "source": "simple-icons@15.22.0",
+          "licence": "CC0-1.0",
+          "upstreamUrl": "https://cdn.jsdelivr.net/npm/simple-icons@15.22.0/icons/informatica.svg",
+          "reason": "removed from Simple Icons 16 at the brand owner request"
+        }
+      ]
+    },
+    {
+      "id": "observability",
+      "title": "Observability",
+      "description": "Metrics, logs, traces, alerting and incident response",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks",
+      "icons": [
+        {
+          "slug": "grafana",
+          "title": "Grafana",
+          "hex": "F46800",
+          "aliases": [
+            "grafana"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "prometheus",
+          "title": "Prometheus",
+          "hex": "E6522C",
+          "aliases": [
+            "prometheus"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "opentelemetry",
+          "title": "OpenTelemetry",
+          "hex": "000000",
+          "aliases": [
+            "opentelemetry",
+            "otel"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "datadog",
+          "title": "Datadog",
+          "hex": "632CA6",
+          "aliases": [
+            "datadog"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "elastic",
+          "title": "Elastic",
+          "hex": "005571",
+          "aliases": [
+            "elastic"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "elasticstack",
+          "title": "Elastic Stack",
+          "hex": "005571",
+          "aliases": [
+            "elastic stack",
+            "elasticstack"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "kibana",
+          "title": "Kibana",
+          "hex": "005571",
+          "aliases": [
+            "kibana"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "logstash",
+          "title": "Logstash",
+          "hex": "005571",
+          "aliases": [
+            "logstash"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "splunk",
+          "title": "Splunk",
+          "hex": "000000",
+          "aliases": [
+            "splunk"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "sentry",
+          "title": "Sentry",
+          "hex": "362D59",
+          "aliases": [
+            "sentry"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "newrelic",
+          "title": "New Relic",
+          "hex": "1CE783",
+          "aliases": [
+            "new relic",
+            "newrelic"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "dynatrace",
+          "title": "Dynatrace",
+          "hex": "1496FF",
+          "aliases": [
+            "dynatrace"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "jaeger",
+          "title": "Jaeger",
+          "hex": "66CFE3",
+          "aliases": [
+            "jaeger"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "pagerduty",
+          "title": "PagerDuty",
+          "hex": "06AC38",
+          "aliases": [
+            "pagerduty"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "opsgenie",
+          "title": "Opsgenie",
+          "hex": "172B4D",
+          "aliases": [
+            "opsgenie"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "uptimekuma",
+          "title": "Uptime Kuma",
+          "hex": "5CDD8B",
+          "aliases": [
+            "uptime kuma",
+            "uptimekuma"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "victoriametrics",
+          "title": "VictoriaMetrics",
+          "hex": "621773",
+          "aliases": [
+            "victoriametrics",
+            "vm"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "betterstack",
+          "title": "Better Stack",
+          "hex": "000000",
+          "aliases": [
+            "better stack",
+            "betterstack"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "graylog",
+          "title": "Graylog",
+          "hex": "FF3633",
+          "aliases": [
+            "graylog"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "fluentbit",
+          "title": "Fluent Bit",
+          "hex": "49BDA5",
+          "aliases": [
+            "fluent bit",
+            "fluentbit"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "fluentd",
+          "title": "Fluentd",
+          "hex": "0E83C8",
+          "aliases": [
+            "fluentd"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "statuspage",
+          "title": "Statuspage",
+          "hex": "172B4D",
+          "aliases": [
+            "statuspage"
+          ],
+          "source": "simple-icons@16.30.0"
+        }
+      ],
+      "onDemand": [
+        {
+          "slug": "nagios",
+          "title": "Nagios",
+          "aliases": [
+            "nagios"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.nagios.org/"
+        },
+        {
+          "slug": "zabbix",
+          "title": "Zabbix",
+          "aliases": [
+            "zabbix"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.zabbix.com/"
+        },
+        {
+          "slug": "honeycomb",
+          "title": "Honeycomb",
+          "aliases": [
+            "honeycomb"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.honeycomb.io/"
+        },
+        {
+          "slug": "grafanaloki",
+          "title": "Grafana Loki",
+          "aliases": [
+            "grafana loki",
+            "grafanaloki"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://grafana.com/oss/loki/"
+        }
+      ]
+    },
+    {
+      "id": "devops",
+      "title": "DevOps",
+      "description": "IaC, CI/CD, containers, service mesh, proxies and distributions",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks",
+      "icons": [
+        {
+          "slug": "terraform",
+          "title": "Terraform",
+          "hex": "844FBA",
+          "aliases": [
+            "terraform"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "ansible",
+          "title": "Ansible",
+          "hex": "EE0000",
+          "aliases": [
+            "ansible"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "jenkins",
+          "title": "Jenkins",
+          "hex": "D24939",
+          "aliases": [
+            "jenkins"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "kubernetes",
+          "title": "Kubernetes",
+          "hex": "326CE5",
+          "aliases": [
+            "kubernetes"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "docker",
+          "title": "Docker",
+          "hex": "2496ED",
+          "aliases": [
+            "docker"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "helm",
+          "title": "Helm",
+          "hex": "0F1689",
+          "aliases": [
+            "helm"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "gitlab",
+          "title": "GitLab",
+          "hex": "FC6D26",
+          "aliases": [
+            "gitlab"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "circleci",
+          "title": "CircleCI",
+          "hex": "343434",
+          "aliases": [
+            "circleci"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "travisci",
+          "title": "Travis CI",
+          "hex": "3EAAAF",
+          "aliases": [
+            "travis ci",
+            "travisci"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "teamcity",
+          "title": "TeamCity",
+          "hex": "000000",
+          "aliases": [
+            "teamcity"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "puppet",
+          "title": "Puppet",
+          "hex": "FFAE1A",
+          "aliases": [
+            "puppet"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "chef",
+          "title": "Chef",
+          "hex": "F09820",
+          "aliases": [
+            "chef"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "vagrant",
+          "title": "Vagrant",
+          "hex": "1868F2",
+          "aliases": [
+            "vagrant"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "packer",
+          "title": "Packer",
+          "hex": "02A8EF",
+          "aliases": [
+            "packer"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "consul",
+          "title": "Consul",
+          "hex": "F24C53",
+          "aliases": [
+            "consul"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "nomad",
+          "title": "Nomad",
+          "hex": "00CA8E",
+          "aliases": [
+            "nomad"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "podman",
+          "title": "Podman",
+          "hex": "892CA0",
+          "aliases": [
+            "podman"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "containerd",
+          "title": "containerd",
+          "hex": "575757",
+          "aliases": [
+            "containerd"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "rancher",
+          "title": "Rancher",
+          "hex": "0075A8",
+          "aliases": [
+            "rancher"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "redhatopenshift",
+          "title": "Red Hat Open Shift",
+          "hex": "EE0000",
+          "aliases": [
+            "red hat open shift",
+            "redhatopenshift"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "istio",
+          "title": "Istio",
+          "hex": "466BB0",
+          "aliases": [
+            "istio"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "linkerd",
+          "title": "Linkerd",
+          "hex": "2BEDA7",
+          "aliases": [
+            "linkerd"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "envoyproxy",
+          "title": "Envoy Proxy",
+          "hex": "AC6199",
+          "aliases": [
+            "envoy proxy",
+            "envoyproxy"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "nginx",
+          "title": "NGINX",
+          "hex": "009639",
+          "aliases": [
+            "nginx"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "traefikproxy",
+          "title": "Traefik Proxy",
+          "hex": "24A1C1",
+          "aliases": [
+            "traefik proxy",
+            "traefikproxy"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apache",
+          "title": "Apache",
+          "hex": "D22128",
+          "aliases": [
+            "apache"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "caddy",
+          "title": "Caddy",
+          "hex": "1F88C0",
+          "aliases": [
+            "caddy"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "cloudflare",
+          "title": "Cloudflare",
+          "hex": "F38020",
+          "aliases": [
+            "cloudflare"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "pulumi",
+          "title": "Pulumi",
+          "hex": "8A3391",
+          "aliases": [
+            "pulumi"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "tekton",
+          "title": "Tekton",
+          "hex": "FD495C",
+          "aliases": [
+            "tekton"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "spinnaker",
+          "title": "Spinnaker",
+          "hex": "139BB4",
+          "aliases": [
+            "spinnaker"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "jfrog",
+          "title": "JFrog",
+          "hex": "40BE46",
+          "aliases": [
+            "jfrog"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "k3s",
+          "title": "K3s",
+          "hex": "FFC61C",
+          "aliases": [
+            "k3s"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "skaffold",
+          "title": "Skaffold",
+          "hex": "2AA2D6",
+          "aliases": [
+            "skaffold"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "buildkite",
+          "title": "Buildkite",
+          "hex": "14CC80",
+          "aliases": [
+            "buildkite"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "gitea",
+          "title": "Gitea",
+          "hex": "609926",
+          "aliases": [
+            "gitea"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "bitbucket",
+          "title": "Bitbucket",
+          "hex": "0052CC",
+          "aliases": [
+            "bitbucket"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "kubespray",
+          "title": "Kubespray",
+          "hex": "3D647F",
+          "aliases": [
+            "kubespray"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "openstack",
+          "title": "OpenStack",
+          "hex": "ED1944",
+          "aliases": [
+            "openstack"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "vmware",
+          "title": "VMware",
+          "hex": "607078",
+          "aliases": [
+            "vmware"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "proxmox",
+          "title": "Proxmox",
+          "hex": "E57000",
+          "aliases": [
+            "proxmox"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "ubuntu",
+          "title": "Ubuntu",
+          "hex": "E95420",
+          "aliases": [
+            "ubuntu"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "debian",
+          "title": "Debian",
+          "hex": "A81D33",
+          "aliases": [
+            "debian"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "alpinelinux",
+          "title": "Alpine Linux",
+          "hex": "0D597F",
+          "aliases": [
+            "alpine linux",
+            "alpinelinux"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "redhat",
+          "title": "Red Hat",
+          "hex": "EE0000",
+          "aliases": [
+            "red hat",
+            "redhat"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "nixos",
+          "title": "NixOS",
+          "hex": "5277C3",
+          "aliases": [
+            "nixos"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "sonarqube",
+          "title": "SonarQube",
+          "aliases": [
+            "sonarqube",
+            "sonar",
+            "sonarcloud"
+          ],
+          "source": "devicon@2.17.0",
+          "deviconName": "sonarqube",
+          "deviconVariant": "original",
+          "hex": "549dd0"
+        }
+      ],
+      "onDemand": [
+        {
+          "slug": "haproxy",
+          "title": "HAProxy",
+          "aliases": [
+            "haproxy"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.haproxy.org/"
+        },
+        {
+          "slug": "crossplane",
+          "title": "Crossplane",
+          "aliases": [
+            "crossplane"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.crossplane.io/"
+        },
+        {
+          "slug": "fluxcd",
+          "title": "Flux CD",
+          "aliases": [
+            "flux cd",
+            "fluxcd"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://fluxcd.io/"
+        },
+        {
+          "slug": "harness",
+          "title": "Harness",
+          "aliases": [
+            "harness"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.harness.io/"
+        },
+        {
+          "slug": "minikube",
+          "title": "minikube",
+          "aliases": [
+            "minikube"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://minikube.sigs.k8s.io/"
+        },
+        {
+          "slug": "systemd",
+          "title": "systemd",
+          "aliases": [
+            "systemd"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://systemd.io/"
+        }
+      ]
+    },
+    {
+      "id": "security-identity",
+      "title": "Security and identity",
+      "description": "Secrets, SSO, scanning, runtime security and VPN",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks",
+      "icons": [
+        {
+          "slug": "vault",
+          "title": "Vault",
+          "hex": "FFEC6E",
+          "aliases": [
+            "vault"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "keycloak",
+          "title": "Keycloak",
+          "hex": "4D4D4D",
+          "aliases": [
+            "keycloak"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "auth0",
+          "title": "Auth0",
+          "hex": "EB5424",
+          "aliases": [
+            "auth0"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "okta",
+          "title": "Okta",
+          "hex": "007DC1",
+          "aliases": [
+            "okta"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "owasp",
+          "title": "OWASP",
+          "hex": "000000",
+          "aliases": [
+            "owasp"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "snyk",
+          "title": "Snyk",
+          "hex": "4C4A73",
+          "aliases": [
+            "snyk"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "trivy",
+          "title": "Trivy",
+          "hex": "1904DA",
+          "aliases": [
+            "trivy"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "falco",
+          "title": "Falco",
+          "hex": "00AEC7",
+          "aliases": [
+            "falco"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "cilium",
+          "title": "Cilium",
+          "hex": "F8C517",
+          "aliases": [
+            "cilium"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "letsencrypt",
+          "title": "Let's Encrypt",
+          "hex": "003A70",
+          "aliases": [
+            "let s encrypt",
+            "letsencrypt"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "openssl",
+          "title": "OpenSSL",
+          "hex": "721412",
+          "aliases": [
+            "openssl"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "jsonwebtokens",
+          "title": "JSON Web Tokens",
+          "hex": "000000",
+          "aliases": [
+            "json web tokens",
+            "jsonwebtokens"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "openid",
+          "title": "OpenID",
+          "hex": "F78C40",
+          "aliases": [
+            "openid"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "1password",
+          "title": "1Password",
+          "hex": "145FE4",
+          "aliases": [
+            "1password"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "bitwarden",
+          "title": "Bitwarden",
+          "hex": "175DDC",
+          "aliases": [
+            "bitwarden"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "hashicorp",
+          "title": "HashiCorp",
+          "hex": "000000",
+          "aliases": [
+            "hashicorp"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "fortinet",
+          "title": "Fortinet",
+          "hex": "EE3124",
+          "aliases": [
+            "fortinet"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "paloaltonetworks",
+          "title": "Palo Alto Networks",
+          "hex": "F04E23",
+          "aliases": [
+            "palo alto networks",
+            "paloaltonetworks"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "wireguard",
+          "title": "WireGuard",
+          "hex": "88171A",
+          "aliases": [
+            "wireguard"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "openvpn",
+          "title": "OpenVPN",
+          "hex": "EA7E20",
+          "aliases": [
+            "openvpn"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "tailscale",
+          "title": "Tailscale",
+          "hex": "242424",
+          "aliases": [
+            "tailscale"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "authelia",
+          "title": "Authelia",
+          "hex": "113155",
+          "aliases": [
+            "authelia"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "authentik",
+          "title": "Authentik",
+          "hex": "FD4B2D",
+          "aliases": [
+            "authentik"
+          ],
+          "source": "simple-icons@16.30.0"
+        }
+      ],
+      "onDemand": [
+        {
+          "slug": "onelogin",
+          "title": "OneLogin",
+          "aliases": [
+            "onelogin"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.onelogin.com/"
+        },
+        {
+          "slug": "openpolicyagent",
+          "title": "Open Policy Agent",
+          "aliases": [
+            "open policy agent",
+            "openpolicyagent"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.openpolicyagent.org/"
+        },
+        {
+          "slug": "crowdstrike",
+          "title": "CrowdStrike",
+          "aliases": [
+            "crowdstrike"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.crowdstrike.com/"
+        }
+      ]
+    },
+    {
+      "id": "github",
+      "title": "GitHub",
+      "description": "GitHub brand marks plus Octicon workflow concepts",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks+tiles",
+      "icons": [
+        {
+          "slug": "github",
+          "title": "GitHub",
+          "hex": "181717",
+          "aliases": [
+            "github"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "githubactions",
+          "title": "GitHub Actions",
+          "hex": "2088FF",
+          "aliases": [
+            "github actions",
+            "githubactions"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "githubcopilot",
+          "title": "GitHub Copilot",
+          "hex": "000000",
+          "aliases": [
+            "github copilot",
+            "githubcopilot"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "githubpages",
+          "title": "GitHub Pages",
+          "hex": "222222",
+          "aliases": [
+            "github pages",
+            "githubpages"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "githubsponsors",
+          "title": "GitHub Sponsors",
+          "hex": "EA4AAA",
+          "aliases": [
+            "github sponsors",
+            "githubsponsors"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "git",
+          "title": "Git",
+          "hex": "F03C2E",
+          "aliases": [
+            "git"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "gitlfs",
+          "title": "Git LFS",
+          "hex": "F64935",
+          "aliases": [
+            "git lfs",
+            "gitlfs"
+          ],
+          "source": "simple-icons@16.30.0"
+        }
+      ],
+      "onDemand": [],
+      "tiles": {
+        "source": "octicons",
+        "style": "fill",
+        "tileColour": "#24292F",
+        "glyphColour": "#FFFFFF",
+        "concepts": {
+          "git-pull-request": "git-pull-request",
+          "git-merge": "git-merge",
+          "git-branch": "git-branch",
+          "git-commit": "git-commit",
+          "git-compare": "git-compare",
+          "issue-opened": "issue-opened",
+          "issue-closed": "issue-closed",
+          "issue-reopened": "issue-reopened",
+          "repo": "repo",
+          "repo-forked": "repo-forked",
+          "tag": "tag",
+          "milestone": "milestone",
+          "project": "project",
+          "package": "package",
+          "workflow": "workflow",
+          "shield-check": "shield-check",
+          "bug": "bug",
+          "comment-discussion": "comment-discussion",
+          "people": "people",
+          "rocket": "rocket",
+          "codespaces": "codespaces",
+          "code-review": "code-review",
+          "star": "star",
+          "eye": "eye",
+          "check-circle": "check-circle",
+          "x-circle": "x-circle",
+          "alert": "alert",
+          "dependabot": "dependabot",
+          "codescan": "codescan",
+          "container": "container",
+          "gear": "gear"
+        }
+      }
+    },
+    {
+      "id": "saas-collab",
+      "title": "SaaS and collaboration",
+      "description": "Issue trackers, docs, design, comms and business SaaS",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks",
+      "icons": [
+        {
+          "slug": "jira",
+          "title": "Jira",
+          "hex": "0052CC",
+          "aliases": [
+            "jira"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "atlassian",
+          "title": "Atlassian",
+          "hex": "0052CC",
+          "aliases": [
+            "atlassian"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "confluence",
+          "title": "Confluence",
+          "hex": "172B4D",
+          "aliases": [
+            "confluence"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "notion",
+          "title": "Notion",
+          "hex": "000000",
+          "aliases": [
+            "notion"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "linear",
+          "title": "Linear",
+          "hex": "5E6AD2",
+          "aliases": [
+            "linear"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "asana",
+          "title": "Asana",
+          "hex": "F06A6A",
+          "aliases": [
+            "asana"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "trello",
+          "title": "Trello",
+          "hex": "0052CC",
+          "aliases": [
+            "trello"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "discord",
+          "title": "Discord",
+          "hex": "5865F2",
+          "aliases": [
+            "discord"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "zoom",
+          "title": "Zoom",
+          "hex": "0B5CFF",
+          "aliases": [
+            "zoom"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "miro",
+          "title": "Miro",
+          "hex": "050038",
+          "aliases": [
+            "miro"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "figma",
+          "title": "Figma",
+          "hex": "F24E1E",
+          "aliases": [
+            "figma"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "googledrive",
+          "title": "Google Drive",
+          "hex": "4285F4",
+          "aliases": [
+            "google drive",
+            "googledrive"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "zendesk",
+          "title": "Zendesk",
+          "hex": "03363D",
+          "aliases": [
+            "zendesk"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "intercom",
+          "title": "Intercom",
+          "hex": "6AFDEF",
+          "aliases": [
+            "intercom"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "hubspot",
+          "title": "HubSpot",
+          "hex": "FF7A59",
+          "aliases": [
+            "hubspot"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "stripe",
+          "title": "Stripe",
+          "hex": "635BFF",
+          "aliases": [
+            "stripe"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "mailchimp",
+          "title": "MailChimp",
+          "hex": "FFE01B",
+          "aliases": [
+            "mailchimp"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "airtable",
+          "title": "Airtable",
+          "hex": "18BFFF",
+          "aliases": [
+            "airtable"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "clickup",
+          "title": "ClickUp",
+          "hex": "7B68EE",
+          "aliases": [
+            "clickup"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "basecamp",
+          "title": "Basecamp",
+          "hex": "1D2D35",
+          "aliases": [
+            "basecamp"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "loom",
+          "title": "Loom",
+          "hex": "625DF5",
+          "aliases": [
+            "loom"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "calendly",
+          "title": "Calendly",
+          "hex": "006BFF",
+          "aliases": [
+            "calendly"
+          ],
+          "source": "simple-icons@16.30.0"
+        }
+      ],
+      "onDemand": [
+        {
+          "slug": "slack",
+          "title": "Slack",
+          "aliases": [
+            "slack"
+          ],
+          "hex": "4A154B",
+          "source": "simple-icons@15.22.0",
+          "licence": "CC0-1.0",
+          "upstreamUrl": "https://cdn.jsdelivr.net/npm/simple-icons@15.22.0/icons/slack.svg",
+          "reason": "removed from Simple Icons 16 at the brand owner request"
+        },
+        {
+          "slug": "microsoftteams",
+          "title": "Microsoft Teams",
+          "aliases": [
+            "microsoft teams",
+            "microsoftteams"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.microsoft.com/microsoft-teams"
+        },
+        {
+          "slug": "servicenow",
+          "title": "ServiceNow",
+          "aliases": [
+            "servicenow"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://www.servicenow.com/"
+        },
+        {
+          "slug": "salesforce",
+          "title": "Salesforce",
+          "aliases": [
+            "salesforce"
+          ],
+          "hex": "00A1E0",
+          "source": "simple-icons@15.22.0",
+          "licence": "CC0-1.0",
+          "upstreamUrl": "https://cdn.jsdelivr.net/npm/simple-icons@15.22.0/icons/salesforce.svg",
+          "reason": "removed from Simple Icons 16 at the brand owner request"
+        },
+        {
+          "slug": "twilio",
+          "title": "Twilio",
+          "aliases": [
+            "twilio"
+          ],
+          "hex": "F22F46",
+          "source": "simple-icons@15.22.0",
+          "licence": "CC0-1.0",
+          "upstreamUrl": "https://cdn.jsdelivr.net/npm/simple-icons@15.22.0/icons/twilio.svg",
+          "reason": "removed from Simple Icons 16 at the brand owner request"
+        },
+        {
+          "slug": "sendgrid",
+          "title": "SendGrid",
+          "aliases": [
+            "sendgrid"
+          ],
+          "hex": "51A9E3",
+          "source": "simple-icons@15.22.0",
+          "licence": "CC0-1.0",
+          "upstreamUrl": "https://cdn.jsdelivr.net/npm/simple-icons@15.22.0/icons/sendgrid.svg",
+          "reason": "removed from Simple Icons 16 at the brand owner request"
+        },
+        {
+          "slug": "monday",
+          "title": "monday.com",
+          "aliases": [
+            "monday com",
+            "mondaycom",
+            "monday"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://monday.com/"
+        }
+      ]
+    },
+    {
+      "id": "languages-runtimes",
+      "title": "Languages and runtimes",
+      "description": "Programming languages, frameworks and package managers",
+      "rank": 20,
+      "kind": "brands",
+      "builder": "brand-marks",
+      "icons": [
+        {
+          "slug": "python",
+          "title": "Python",
+          "hex": "3776AB",
+          "aliases": [
+            "python"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "openjdk",
+          "title": "OpenJDK",
+          "hex": "000000",
+          "aliases": [
+            "openjdk"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "go",
+          "title": "Go",
+          "hex": "00ADD8",
+          "aliases": [
+            "go"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "rust",
+          "title": "Rust",
+          "hex": "000000",
+          "aliases": [
+            "rust"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "javascript",
+          "title": "JavaScript",
+          "hex": "F7DF1E",
+          "aliases": [
+            "javascript"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "typescript",
+          "title": "TypeScript",
+          "hex": "3178C6",
+          "aliases": [
+            "typescript"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "nodedotjs",
+          "title": "Node.js",
+          "hex": "5FA04E",
+          "aliases": [
+            "node js",
+            "nodejs",
+            "nodedotjs"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "deno",
+          "title": "Deno",
+          "hex": "000000",
+          "aliases": [
+            "deno"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "bun",
+          "title": "Bun",
+          "hex": "000000",
+          "aliases": [
+            "bun"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "scala",
+          "title": "Scala",
+          "hex": "DC322F",
+          "aliases": [
+            "scala"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "kotlin",
+          "title": "Kotlin",
+          "hex": "7F52FF",
+          "aliases": [
+            "kotlin"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "swift",
+          "title": "Swift",
+          "hex": "F05138",
+          "aliases": [
+            "swift"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "ruby",
+          "title": "Ruby",
+          "hex": "CC342D",
+          "aliases": [
+            "ruby"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "php",
+          "title": "PHP",
+          "hex": "777BB4",
+          "aliases": [
+            "php"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "cplusplus",
+          "title": "C++",
+          "hex": "00599C",
+          "aliases": [
+            "cplusplus"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "c",
+          "title": "C",
+          "hex": "A8B9CC",
+          "aliases": [
+            "c"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "r",
+          "title": "R",
+          "hex": "276DC3",
+          "aliases": [
+            "r"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "julia",
+          "title": "Julia",
+          "hex": "9558B2",
+          "aliases": [
+            "julia"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "perl",
+          "title": "Perl",
+          "hex": "0073A1",
+          "aliases": [
+            "perl"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "elixir",
+          "title": "Elixir",
+          "hex": "4B275F",
+          "aliases": [
+            "elixir"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "haskell",
+          "title": "Haskell",
+          "hex": "5D4F85",
+          "aliases": [
+            "haskell"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "lua",
+          "title": "Lua",
+          "hex": "000080",
+          "aliases": [
+            "lua"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "dart",
+          "title": "Dart",
+          "hex": "0175C2",
+          "aliases": [
+            "dart"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "flutter",
+          "title": "Flutter",
+          "hex": "02569B",
+          "aliases": [
+            "flutter"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "react",
+          "title": "React",
+          "hex": "61DAFB",
+          "aliases": [
+            "react"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "vuedotjs",
+          "title": "Vue.js",
+          "hex": "4FC08D",
+          "aliases": [
+            "vue js",
+            "vuejs",
+            "vuedotjs"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "angular",
+          "title": "Angular",
+          "hex": "0F0F11",
+          "aliases": [
+            "angular"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "svelte",
+          "title": "Svelte",
+          "hex": "FF3E00",
+          "aliases": [
+            "svelte"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "nextdotjs",
+          "title": "Next.js",
+          "hex": "000000",
+          "aliases": [
+            "next js",
+            "nextjs",
+            "nextdotjs"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "django",
+          "title": "Django",
+          "hex": "092E20",
+          "aliases": [
+            "django"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "flask",
+          "title": "Flask",
+          "hex": "3BABC3",
+          "aliases": [
+            "flask"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "fastapi",
+          "title": "FastAPI",
+          "hex": "009688",
+          "aliases": [
+            "fastapi"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "spring",
+          "title": "Spring",
+          "hex": "6DB33F",
+          "aliases": [
+            "spring"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "dotnet",
+          "title": ".NET",
+          "hex": "512BD4",
+          "aliases": [
+            "net",
+            "dotnet"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "express",
+          "title": "Express",
+          "hex": "0A0A0A",
+          "aliases": [
+            "express",
+            "express js",
+            "expressjs"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "rubyonrails",
+          "title": "Ruby on Rails",
+          "hex": "D30001",
+          "aliases": [
+            "ruby on rails",
+            "rubyonrails"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "laravel",
+          "title": "Laravel",
+          "hex": "FF2D20",
+          "aliases": [
+            "laravel"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "graphql",
+          "title": "GraphQL",
+          "hex": "E10098",
+          "aliases": [
+            "graphql"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "openapiinitiative",
+          "title": "OpenAPI Initiative",
+          "hex": "6BA539",
+          "aliases": [
+            "openapi initiative",
+            "openapiinitiative"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "apachemaven",
+          "title": "Apache Maven",
+          "hex": "C71A36",
+          "aliases": [
+            "apache maven",
+            "apachemaven"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "gradle",
+          "title": "Gradle",
+          "hex": "02303A",
+          "aliases": [
+            "gradle"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "npm",
+          "title": "npm",
+          "hex": "CB3837",
+          "aliases": [
+            "npm"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "pnpm",
+          "title": "pnpm",
+          "hex": "F69220",
+          "aliases": [
+            "pnpm"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "yarn",
+          "title": "Yarn",
+          "hex": "2C8EBB",
+          "aliases": [
+            "yarn"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "anaconda",
+          "title": "Anaconda",
+          "hex": "44A833",
+          "aliases": [
+            "anaconda"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "pypi",
+          "title": "PyPI",
+          "hex": "3775A9",
+          "aliases": [
+            "pypi"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "quarkus",
+          "title": "Quarkus",
+          "hex": "4695EB",
+          "aliases": [
+            "quarkus"
+          ],
+          "source": "simple-icons@16.30.0"
+        },
+        {
+          "slug": "csharp",
+          "title": "C#",
+          "aliases": [
+            "csharp",
+            "c sharp",
+            "dotnet language",
+            "dotnetlanguage"
+          ],
+          "source": "devicon@2.17.0",
+          "deviconName": "csharp",
+          "deviconVariant": "original",
+          "hex": "68217a"
+        },
+        {
+          "slug": "grpc",
+          "title": "gRPC",
+          "aliases": [
+            "grpc",
+            "g rpc"
+          ],
+          "source": "devicon@2.17.0",
+          "deviconName": "grpc",
+          "deviconVariant": "original",
+          "hex": "00b0ad"
+        }
+      ],
+      "onDemand": [
+        {
+          "slug": "micronaut",
+          "title": "Micronaut",
+          "aliases": [
+            "micronaut"
+          ],
+          "source": "vendor",
+          "licence": "none - nominative use only",
+          "reason": "no permissively licensed mark exists",
+          "brandUrl": "https://micronaut.io/"
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "title": "Agents",
+      "description": "Agent-architecture concepts as violet tiles",
+      "rank": 20,
+      "kind": "concepts",
+      "builder": "tiles",
+      "tiles": {
+        "source": "lucide",
+        "style": "stroke",
+        "tileColour": "#6D4AFF",
+        "glyphColour": "#FFFFFF",
+        "concepts": {
+          "agent": "bot",
+          "multi-agent": "boxes",
+          "orchestrator": "workflow",
+          "router": "route",
+          "handoff": "arrow-right-left",
+          "thinking": "brain",
+          "reasoning": "brain-circuit",
+          "planning": "list-checks",
+          "memory": "memory-stick",
+          "short-term-memory": "timer",
+          "long-term-memory": "archive",
+          "tracing": "activity",
+          "tokens": "coins",
+          "context-window": "scan-text",
+          "tool-call": "wrench",
+          "function-calling": "square-function",
+          "mcp-server": "plug",
+          "retrieval": "search",
+          "rag": "book-open-text",
+          "vector-store": "layout-grid",
+          "embedding": "binary",
+          "knowledge-base": "book-open",
+          "prompt": "message-square",
+          "system-prompt": "terminal",
+          "guardrail": "shield-check",
+          "evaluation": "clipboard-check",
+          "human-in-the-loop": "user-check",
+          "feedback-loop": "refresh-cw",
+          "checkpoint": "flag",
+          "streaming": "radio",
+          "session": "clock",
+          "sandbox": "box",
+          "fine-tuning": "sliders-horizontal"
+        }
+      }
+    },
+    {
+      "id": "primitives",
+      "title": "Primitives",
+      "description": "Generic architecture concepts as slate tiles",
+      "rank": 20,
+      "kind": "concepts",
+      "builder": "tiles",
+      "tiles": {
+        "source": "lucide",
+        "style": "stroke",
+        "tileColour": "#4A5568",
+        "glyphColour": "#FFFFFF",
+        "concepts": {
+          "user": "user",
+          "actor": "circle-user",
+          "admin": "user-cog",
+          "server": "server",
+          "database": "database",
+          "datastore": "hard-drive",
+          "queue": "list-ordered",
+          "topic": "megaphone",
+          "api": "braces",
+          "api-gateway": "door-open",
+          "load-balancer": "scale",
+          "firewall": "brick-wall",
+          "cache": "zap",
+          "lock": "lock",
+          "key": "key",
+          "secret": "key-round",
+          "certificate": "badge-check",
+          "cluster": "grid-2x2",
+          "container": "container",
+          "scheduler": "calendar-clock",
+          "cron": "timer",
+          "webhook": "webhook",
+          "file": "file",
+          "folder": "folder",
+          "bucket": "cylinder",
+          "network": "network",
+          "vpn": "shield",
+          "dns": "globe",
+          "cdn": "cloud",
+          "monitor": "gauge",
+          "alert": "bell",
+          "report": "file-text",
+          "dashboard": "layout-dashboard",
+          "pipeline": "waypoints",
+          "transform": "shuffle",
+          "batch": "layers",
+          "stream": "waves",
+          "event": "circle-dot",
+          "mobile": "smartphone",
+          "browser": "app-window",
+          "desktop": "monitor",
+          "iot-device": "cpu",
+          "edge": "radio-tower"
+        }
+      }
+    },
+    {
+      "id": "file-types",
+      "title": "File types",
+      "description": "Document sheets badged with an extension",
+      "rank": 20,
+      "kind": "file-sheets",
+      "builder": "sheets",
+      "icons": [
+        {
+          "ext": "md",
+          "kind": "brand-glyph",
+          "glyph": "markdown",
+          "source": "simple-icons@16.30.0",
+          "hex": "000000",
+          "title": "Markdown file (.md)"
+        },
+        {
+          "ext": "py",
+          "kind": "brand-glyph",
+          "glyph": "python",
+          "source": "simple-icons@16.30.0",
+          "hex": "3776AB",
+          "title": "Python file (.py)"
+        },
+        {
+          "ext": "json",
+          "kind": "brand-glyph",
+          "glyph": "json",
+          "source": "simple-icons@16.30.0",
+          "hex": "000000",
+          "title": "JSON file (.json)"
+        },
+        {
+          "ext": "yaml",
+          "kind": "brand-glyph",
+          "glyph": "yaml",
+          "source": "simple-icons@16.30.0",
+          "hex": "CB171E",
+          "title": "YAML file (.yaml)"
+        },
+        {
+          "ext": "xml",
+          "kind": "brand-glyph",
+          "glyph": "xml",
+          "source": "simple-icons@16.30.0",
+          "hex": "005FAD",
+          "title": "XML file (.xml)"
+        },
+        {
+          "ext": "html",
+          "kind": "brand-glyph",
+          "glyph": "html5",
+          "source": "simple-icons@16.30.0",
+          "hex": "E34F26",
+          "title": "HTML5 file (.html)"
+        },
+        {
+          "ext": "css",
+          "kind": "brand-glyph",
+          "glyph": "css",
+          "source": "simple-icons@16.30.0",
+          "hex": "663399",
+          "title": "CSS file (.css)"
+        },
+        {
+          "ext": "js",
+          "kind": "brand-glyph",
+          "glyph": "javascript",
+          "source": "simple-icons@16.30.0",
+          "hex": "F7DF1E",
+          "title": "JavaScript file (.js)"
+        },
+        {
+          "ext": "ts",
+          "kind": "brand-glyph",
+          "glyph": "typescript",
+          "source": "simple-icons@16.30.0",
+          "hex": "3178C6",
+          "title": "TypeScript file (.ts)"
+        },
+        {
+          "ext": "parquet",
+          "kind": "brand-glyph",
+          "glyph": "apacheparquet",
+          "source": "simple-icons@16.30.0",
+          "hex": "50ABF1",
+          "title": "Apache Parquet file (.parquet)"
+        },
+        {
+          "ext": "ipynb",
+          "kind": "brand-glyph",
+          "glyph": "jupyter",
+          "source": "simple-icons@16.30.0",
+          "hex": "F37626",
+          "title": "Jupyter file (.ipynb)"
+        },
+        {
+          "ext": "tf",
+          "kind": "brand-glyph",
+          "glyph": "terraform",
+          "source": "simple-icons@16.30.0",
+          "hex": "844FBA",
+          "title": "Terraform file (.tf)"
+        },
+        {
+          "ext": "sh",
+          "kind": "brand-glyph",
+          "glyph": "gnubash",
+          "source": "simple-icons@16.30.0",
+          "hex": "4EAA25",
+          "title": "GNU Bash file (.sh)"
+        },
+        {
+          "ext": "dockerfile",
+          "kind": "brand-glyph",
+          "glyph": "docker",
+          "source": "simple-icons@16.30.0",
+          "hex": "2496ED",
+          "title": "Docker file (.dockerfile)"
+        },
+        {
+          "ext": "toml",
+          "kind": "brand-glyph",
+          "glyph": "toml",
+          "source": "simple-icons@16.30.0",
+          "hex": "9C4121",
+          "title": "TOML file (.toml)"
+        },
+        {
+          "ext": "svg",
+          "kind": "brand-glyph",
+          "glyph": "svg",
+          "source": "simple-icons@16.30.0",
+          "hex": "FFB13B",
+          "title": "SVG file (.svg)"
+        },
+        {
+          "ext": "graphql",
+          "kind": "brand-glyph",
+          "glyph": "graphql",
+          "source": "simple-icons@16.30.0",
+          "hex": "E10098",
+          "title": "GraphQL file (.graphql)"
+        },
+        {
+          "ext": "avro",
+          "kind": "brand-glyph",
+          "glyph": "apacheavro",
+          "source": "simple-icons@16.30.0",
+          "hex": "30638E",
+          "title": "Apache Avro file (.avro)"
+        },
+        {
+          "ext": "env",
+          "kind": "brand-glyph",
+          "glyph": "dotenv",
+          "source": "simple-icons@16.30.0",
+          "hex": "ECD53F",
+          "title": ".ENV file (.env)"
+        },
+        {
+          "ext": "mmd",
+          "kind": "brand-glyph",
+          "glyph": "mermaid",
+          "source": "simple-icons@16.30.0",
+          "hex": "FF3670",
+          "title": "Mermaid file (.mmd)"
+        },
+        {
+          "ext": "drawio",
+          "kind": "brand-glyph",
+          "glyph": "diagramsdotnet",
+          "source": "simple-icons@16.30.0",
+          "hex": "F08705",
+          "title": "diagrams.net file (.drawio)"
+        },
+        {
+          "ext": "excalidraw",
+          "kind": "brand-glyph",
+          "glyph": "excalidraw",
+          "source": "simple-icons@16.30.0",
+          "hex": "6965DB",
+          "title": "Excalidraw file (.excalidraw)"
+        },
+        {
+          "ext": "sql",
+          "kind": "house",
+          "glyph": "database",
+          "source": "lucide",
+          "hex": "336791",
+          "title": "SQL script (.sql)"
+        },
+        {
+          "ext": "csv",
+          "kind": "house",
+          "glyph": "table",
+          "source": "lucide",
+          "hex": "217346",
+          "title": "CSV data (.csv)"
+        },
+        {
+          "ext": "txt",
+          "kind": "house",
+          "glyph": "file-text",
+          "source": "lucide",
+          "hex": "6B7280",
+          "title": "Plain text (.txt)"
+        },
+        {
+          "ext": "log",
+          "kind": "house",
+          "glyph": "scroll-text",
+          "source": "lucide",
+          "hex": "78716C",
+          "title": "Log file (.log)"
+        },
+        {
+          "ext": "ini",
+          "kind": "house",
+          "glyph": "settings",
+          "source": "lucide",
+          "hex": "6B7280",
+          "title": "INI config (.ini)"
+        },
+        {
+          "ext": "orc",
+          "kind": "house",
+          "glyph": "columns-3",
+          "source": "lucide",
+          "hex": "B45309",
+          "title": "ORC columnar data (.orc)"
+        },
+        {
+          "ext": "proto",
+          "kind": "house",
+          "glyph": "file-code",
+          "source": "lucide",
+          "hex": "4285F4",
+          "title": "Protocol Buffers schema (.proto)"
+        },
+        {
+          "ext": "png",
+          "kind": "house",
+          "glyph": "image",
+          "source": "lucide",
+          "hex": "8B5CF6",
+          "title": "PNG image (.png)"
+        },
+        {
+          "ext": "zip",
+          "kind": "house",
+          "glyph": "file-archive",
+          "source": "lucide",
+          "hex": "A16207",
+          "title": "ZIP archive (.zip)"
+        },
+        {
+          "ext": "pdf",
+          "kind": "house",
+          "glyph": "file-type",
+          "source": "lucide",
+          "hex": "D32F2F",
+          "title": "PDF document (.pdf)"
+        },
+        {
+          "ext": "docx",
+          "kind": "house",
+          "glyph": "file-text",
+          "source": "lucide",
+          "hex": "2B579A",
+          "title": "Word-style document (.docx)"
+        },
+        {
+          "ext": "xlsx",
+          "kind": "house",
+          "glyph": "table",
+          "source": "lucide",
+          "hex": "217346",
+          "title": "Spreadsheet (.xlsx)"
+        },
+        {
+          "ext": "pptx",
+          "kind": "house",
+          "glyph": "presentation",
+          "source": "lucide",
+          "hex": "D24726",
+          "title": "Presentation deck (.pptx)"
+        }
+      ],
+      "note": "The Word, Excel and PowerPoint marks are trademarked and not licensed for redistribution, so .docx/.xlsx/.pptx use house sheets in the familiar colours rather than the product logos."
+    },
+    {
+      "id": "brands",
+      "title": "Brands (catch-all)",
+      "description": "Every Simple Icons mark; ranked below all curated packs",
+      "rank": 90,
+      "kind": "brands",
+      "builder": "brand-marks-all",
+      "source": "simple-icons@16.30.0",
+      "note": "Every mark in simple-icons@16.30.0, minus any slug a curated pack already owns."
+    }
+  ]
+}

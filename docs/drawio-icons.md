@@ -2,52 +2,76 @@
 
 Where a `.drawio` diagram's marks come from, in resolution order:
 
-1. **The bundled AWS palette** — 243 entries, searched by product name.
+1. **The bundled icon packs** — eighteen libraries, ~4,700 marks, searched together
+   by product name.
 2. **Draw.io's own `mxgraph.aws4.*` shapes** — every AWS service the built-in
    set covers, no embedding needed.
 3. **The MCP `search_shapes` tool**, if the Draw.io MCP server is connected.
-4. **A real product logo**, fetched and embedded, for anything not from AWS.
+4. **A real product logo**, fetched and embedded, for anything the packs miss.
 
 If none of those fits, the answer is a labelled box *and a note in the report*
-saying the icon is missing. Never a different service's icon.
+saying the icon is missing. Never a different product's icon.
 
 ```bash
 node bin/arkitect.mjs drawio icon "bedrock"
+node bin/arkitect.mjs drawio icon "cloud run" --context gcp
 node bin/arkitect.mjs drawio icon --cell node1 --label "Amazon Bedrock" --x 0 --y 0
-node bin/arkitect.mjs drawio logo --url https://.../snowflake.svg --name snowflake
+node bin/arkitect.mjs drawio logo --url https://.../acme.svg --name acme
 ```
 
-> The palette is built from the **AWS Architecture Icons** asset package published by
-> Amazon Web Services. The icons remain AWS's property and are used here for the purpose
-> that package exists for — drawing architecture diagrams. See [NOTICE](../NOTICE).
+## The packs
 
-## The three library files
+One file per pack in `skills/arkitect-drawio/assets/libraries/`, one row per pack in
+`references/pack-index.md`, one contact sheet per pack in `contact-sheets/`.
 
-Three files in `skills/arkitect-drawio/assets/libraries/`:
-
-| file | entries | what it is |
+| Tier | Packs | Where the artwork comes from |
 |---|---|---|
-| `AWS-icons.drawio.xml` | 237 SVG | the explicit draw.io export |
-| `AWS-v1.drawio` | 243 (237 SVG + 6 PNG) | the working palette |
-| `AWS-icons.merged.drawio` | 243 | deterministic merge, in palette order |
+| Vendor | `aws` `azure` `gcp` | The vendors' own published icon sets, embedded verbatim |
+| Curated | `data-platforms` `databases` `ai-frameworks` `ml-training` `streaming-orchestration` `observability` `devops` `security-identity` `github` `saas-collab` `languages-runtimes` | Simple Icons and devicon, painted in the brand's own colour |
+| Generated | `agents` `primitives` `file-types` | Lucide and Octicon glyphs composed into tiles and document sheets |
+| Catch-all | `brands` | Every remaining Simple Icons mark, ranked last |
 
-## Why the merge is trivial
+`node bin/arkitect.mjs drawio icon --list-packs` prints the live counts.
 
-The palette is a **strict superset** of the export: indices 0–236 are byte-identical in
-the same order, with six AgentCore PNGs appended. So the merge preserves palette order
-and records provenance in the catalog rather than in the library file, which keeps the
-merged file loadable by draw.io unchanged.
+## Resolution is ranked, and refuses to guess
 
-The six palette-only entries are `AgentCore`, `AgentCoreGateway`, `AgentCoreIdentity`,
-`AgentCoreMemory`, `AgentCoreObservability`, `AgentCoreRuntime` — PNGs at ~1024px, which
-`find-icon.mjs` normalises down to the 78px service-icon footprint.
+Search runs across every pack at once. A pack's `rank` breaks ties — vendor packs at 10,
+curated at 20, the catch-all at 90 — so `docker` resolves to `devops/docker` rather than
+to whichever Simple Icons entry happened to match first.
+
+Two knobs steer it, and one gate stops it:
+
+```json
+{ "context": { "packs": ["gcp", "devops"] },
+  "nodes": [{ "id": "q", "icon": "kafka", "pack": "streaming-orchestration" }] }
+```
+
+`context.packs` biases ties toward the stack being drawn. A node's own `pack` pins it.
+And when the leader is neither strong nor clearly ahead, the result comes back
+`confident: false` with its alternatives — `build-diagram.mjs` reports it rather than
+drawing it. That is what stops a GCP diagram quietly receiving an Azure icon.
+
+## What ships, and what deliberately does not
+
+Vendor artwork is embedded **byte-for-byte**. Microsoft and Google grant permission to
+use their icons in architecture diagrams and forbid altering the icon shape, so there is
+no optimisation pass — and the untouched bytes keep the recorded SHA-256 meaningful.
+
+Sixty-nine products are catalogued with a URL, a licence note and the exact
+`fetch-logo` command, but **no bytes**, because no permissively licensed mark for them
+exists. Seven of those were removed from Simple Icons 16 at the brand owner's request;
+shipping them from an older pin would have made the rest of `ATTRIBUTION.md` dishonest.
+`find-icon` hands back the command; `build-diagram` refuses to draw them.
+
+See `assets/libraries/ATTRIBUTION.md` for per-source terms and
+`references/pack-index.md` for the full on-demand list.
 
 ## Duplicate titles are kept, not deduplicated
 
-Two entries share the title `Arch AWS-Compute-Optimizer 64` — one 81×81, one 80×80, with
-different payloads. Both survive the merge. Lookups disambiguate by **index, dimensions
-and decoded-image hash**, never by title alone, and an ambiguous search returns every
-variant with its provenance instead of silently choosing:
+Two AWS entries share the title `AWS Compute Optimizer` — one 81×81, one 80×80, with
+different payloads — and the AgentCore PNG drop repeats a service the SVG set already
+has. All four survive, under distinct ids, flagged `ambiguousTitle`. Lookups disambiguate
+by id, dimensions and decoded-image hash, never by title alone:
 
 ```bash
 node skills/arkitect-drawio/scripts/find-icon.mjs "compute optimizer"
@@ -55,50 +79,67 @@ node skills/arkitect-drawio/scripts/find-icon.mjs "compute optimizer"
 
 ## The catalog
 
-`references/icon-catalog.json` holds metadata only — stable id, source index, exact
-title, normalized aliases, MIME type, dimensions, and the SHA-256 of the decoded image.
-Image payloads are **not** duplicated there; they are read from the bundled libraries on
-demand, so a search never drags base64 into context.
+`references/icon-catalog.json` holds metadata only — namespaced id, pack, title,
+aliases, source, licence, dimensions, and the SHA-256 of the decoded image. Image
+payloads are **not** duplicated there; they are read from the pack library by
+`libraryIndex` when a style is actually requested, so a search never drags base64 into
+context.
 
-Regenerate both the merge and the catalog with:
+## Rebuilding
+
+`assets/libraries/sources.json` is the pinned manifest: every upstream carries an exact
+version or a recorded sha256. The builder is rerunnable and offline after the first
+fetch — archives cache in a gitignored `.cache/`.
 
 ```bash
-node skills/arkitect-drawio/scripts/extract-library.mjs --build
+S=skills/arkitect-drawio/scripts
+node $S/build-packs.mjs --list              # what the manifest declares
+node $S/build-packs.mjs --all               # rebuild every pack and the catalog
+node $S/build-packs.mjs --pack azure        # just one
+node $S/build-packs.mjs --refresh azure-v24 # re-download, report hash drift
+node $S/write-pack-docs.mjs                 # regenerate pack-index.md + ATTRIBUTION.md
+node $S/contact-sheet.mjs --all --png       # regenerate the review sheets
 ```
 
-## Coverage, honestly
-
-Across the five reference diagrams, only 20 of 97 embedded image placements — 9 distinct
-icons — came from this library. Most AWS services are drawn with built-in
-`mxgraph.aws4.*` shapes; the custom library fills the gaps the built-in set lacks
-(Bedrock AgentCore, Timestream, Forecast). The remaining placements are pasted
-third-party vendor logos, which are deliberately not bundled here.
-
-So the resolution order for **AWS** components is: private catalog first, built-in
-`mxgraph.aws4.*` as fallback, MCP `search_shapes` only if both come up empty. If nothing
-fits, the skill says the icon is missing rather than substituting a different service's
-icon.
-
-**Non-AWS products** take a different route entirely — their real logo is downloaded and
-embedded. See [Third-party product logos](#third-party-product-logos) below.
+A source whose bytes no longer match its pin **fails the build** rather than quietly
+absorbing the change. Re-pin deliberately, after looking at what changed.
 
 ## Integrity
 
-The two source palettes are verified byte-for-byte against the originals by 14
-invariants:
-
 ```bash
-node skills/arkitect-drawio/scripts/extract-library.mjs --verify
+node skills/arkitect-drawio/scripts/build-packs.mjs --verify
 ```
+
+Fifty-eight checks: every committed library matches the sha256 the catalog recorded,
+every pack has the entry count the catalog claims, every catalog index still points at
+the title it names, every id is unique, and nothing marked on-demand carries bytes.
 
 `.gitattributes` marks every `.drawio`/`.xml` as binary so line-ending normalisation
 cannot rewrite them — without that, a checkout on Windows would break every hash.
 
+## Seeing what you shipped
+
+Structural checks cannot notice that "Cloud Run" is wearing Cloud Scheduler's artwork.
+Contact sheets can. Every pack is rendered as a labelled grid and committed as a PNG in
+`assets/libraries/contact-sheets/`, so a reviewer can look rather than trust.
+
+## Coverage, honestly
+
+Across the five reference diagrams, only 20 of 97 embedded image placements — 9 distinct
+icons — came from the original AWS library. Most AWS services are drawn with built-in
+`mxgraph.aws4.*` shapes. The remaining 77 were pasted third-party vendor logos, which is
+exactly the gap these packs close: the products those diagrams reached for by hand —
+Snowflake, Grafana, Databricks, Datadog, GitHub — now resolve from bundled bytes.
+
+The AWS pack is still a *partial* extraction of Amazon's published set, kept as-is
+deliberately rather than rebuilt. Rebuilding it from the official Asset Package is a
+recorded follow-up.
+
 ## Third-party product logos
 
-The bundled library covers AWS. Everything else in a real architecture — Snowflake,
-Streamlit, Pinecone, Grafana, Milvus, Qdrant, Databricks, Talend, Datadog, GitHub — gets
-its actual logo, downloaded and embedded.
+The packs cover most of a real architecture. Everything else — a niche vendor, an
+internal product, one of the sixty-nine marks catalogued without artwork — gets its
+actual logo, downloaded and embedded.
 
 This is not a nice-to-have: in the five reference diagrams, **77 of 97 embedded images
 were third-party logos**, not AWS icons. A grey box labelled "Snowflake" is a

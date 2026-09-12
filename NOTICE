@@ -7,28 +7,65 @@ licence above covers Arkitect's own code, documentation, generators and style
 records. It does not, and cannot, relicense any of the following.
 
 --------------------------------------------------------------------------------
-AWS Architecture Icons
+Draw.io icon packs
 --------------------------------------------------------------------------------
 
-  skills/arkitect-drawio/assets/libraries/AWS-icons.drawio.xml
-  skills/arkitect-drawio/assets/libraries/AWS-v1.drawio
-  skills/arkitect-drawio/assets/libraries/AWS-icons.merged.drawio
+  skills/arkitect-drawio/assets/libraries/*.drawio
 
-The 243-entry Draw.io palette is built from the AWS Architecture Icons asset
-package published by Amazon Web Services, Inc. at
+Eighteen libraries, about 4,725 marks, built from the sources pinned in
 
-  https://aws.amazon.com/architecture/icons/
+  skills/arkitect-drawio/assets/libraries/sources.json
 
-The icons remain the property of Amazon Web Services, Inc. and are used here to
-draw architecture diagrams, which is what the asset package is published for.
-Their use is subject to the AWS Trademark Guidelines and the terms stated on
-that page:
+Per-source terms, exact versions and archive hashes are recorded in
 
-  https://aws.amazon.com/trademark-guidelines/
+  skills/arkitect-drawio/assets/libraries/ATTRIBUTION.md
+
+Two different kinds of terms apply, and conflating them would be a mistake.
+
+PERMISSIONS, not licences. Amazon, Microsoft and Google publish icon sets for
+drawing architecture diagrams, permit copying, distribution and display for
+that purpose, and reserve every other right - including the right to withdraw
+permission. Icon shape must not be altered, which is why this repository
+embeds vendor artwork byte-for-byte with no optimisation pass.
+
+  aws     243 icons   AWS Architecture Icons
+                      https://aws.amazon.com/architecture/icons/
+                      subject also to the AWS Trademark Guidelines at
+                      https://aws.amazon.com/trademark-guidelines/
+  azure   638 icons   Azure architecture icons
+                      https://learn.microsoft.com/en-us/azure/architecture/icons/
+  gcp     249 icons   Google Cloud icons
+                      https://cloud.google.com/icons
+
+LICENCES. The remaining packs are built from icon sets published under
+permissive licences:
+
+  simple-icons 16.30.0     CC0-1.0    https://github.com/simple-icons/simple-icons
+  devicon 2.17.0           MIT        https://github.com/devicons/devicon
+  lucide-static 1.45.0     ISC        https://github.com/lucide-icons/lucide
+  @primer/octicons 19.36.0 MIT        https://github.com/primer/octicons
+
+A LICENCE ON ARTWORK IS NOT A LICENCE ON A TRADEMARK. Simple Icons is CC0, but
+the marks it draws remain the property of the companies they identify. Every
+brand mark in these packs is included for nominative use - identifying a product
+in an architecture diagram - and nothing here implies affiliation with,
+endorsement by or sponsorship from any of those companies.
 
 Amazon Web Services, AWS and the marks of individual AWS services are
-trademarks of Amazon.com, Inc. or its affiliates. Arkitect is not affiliated
-with, endorsed by, or sponsored by Amazon Web Services.
+trademarks of Amazon.com, Inc. or its affiliates. Microsoft, Azure and the marks
+of individual Azure services are trademarks of Microsoft Corporation. Google,
+Google Cloud and the marks of individual Google Cloud services are trademarks of
+Google LLC. Arkitect is not affiliated with, endorsed by, or sponsored by any of
+them.
+
+Sixty-nine products are catalogued in references/icon-catalog.json with a source
+URL and a licence note but WITHOUT artwork, because no permissively licensed
+mark for them exists, or because the brand owner asked for its removal from the
+source that would otherwise have supplied it. Nothing is shipped for those.
+
+If you own one of these marks and want it removed, open an issue at
+https://github.com/mouadja02/arkitect/issues and it will be taken out of the
+next release.
 
 --------------------------------------------------------------------------------
 Excalidraw libraries

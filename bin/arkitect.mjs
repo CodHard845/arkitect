@@ -25,13 +25,14 @@ const EXCALI = join(ROOT, 'skills', 'arkitect-excalidraw', 'scripts');
 // engine -> verb -> [script directory, script file, one-line help]
 const COMMANDS = {
   drawio: {
-    icon: [DRAWIO, 'find-icon.mjs', 'search the bundled AWS icon catalog'],
+    icon: [DRAWIO, 'find-icon.mjs', 'search the eighteen bundled icon packs'],
     logo: [DRAWIO, 'fetch-logo.mjs', 'cache a third-party product logo for embedding'],
     build: [DRAWIO, 'build-diagram.mjs', 'generate a .drawio diagram from a spec'],
     validate: [DRAWIO, 'validate-drawio.mjs', 'structural and layout checks on a .drawio file'],
     render: [DRAWIO, 'render-drawio.mjs', 'export pages locally using Draw.io Desktop'],
     analyze: [DRAWIO, 'analyze-drawio.mjs', 'summarize a .drawio file without loading its XML'],
-    library: [DRAWIO, 'extract-library.mjs', 'verify or rebuild the icon library and catalog'],
+    packs: [DRAWIO, 'build-packs.mjs', 'verify or rebuild the icon packs and catalog'],
+    sheets: [DRAWIO, 'contact-sheet.mjs', 'render a pack as a labelled grid for review'],
     learn: [DRAWIO, 'build-knowledge.mjs', 'rebuild the style record from your own diagrams'],
   },
   excalidraw: {
@@ -86,7 +87,8 @@ function doctor() {
   (major >= 20 ? ok : warn)('node >= 20', `found ${process.version}`);
 
   for (const [label, p] of [
-    ['draw.io icon palette', join(ROOT, 'skills', 'arkitect-drawio', 'assets', 'libraries', 'AWS-v1.drawio')],
+    ['draw.io icon packs', join(ROOT, 'skills', 'arkitect-drawio', 'assets', 'libraries', 'sources.json')],
+    ['draw.io AWS pack', join(ROOT, 'skills', 'arkitect-drawio', 'assets', 'libraries', 'aws.drawio')],
     ['draw.io icon catalog', join(ROOT, 'skills', 'arkitect-drawio', 'references', 'icon-catalog.json')],
     ['excalidraw libraries', join(ROOT, 'skills', 'arkitect-excalidraw', 'assets', 'libraries', 'bundled', 'index.json')],
     ['plugin manifest', join(ROOT, '.claude-plugin', 'plugin.json')],

@@ -29,9 +29,17 @@ architecture", "for the client", "AWS" → Draw.io. "system design", "quick",
 
 ## 2. The loop, both engines
 
-1. **Understand the system.** Ask only for what you cannot infer: the
-   components, what flows between them, the trust or ownership boundaries. Never
-   interrogate anyone about styling — that is what Arkitect is for.
+1. **Interview until you both mean the same thing.** A diagram is a claim about
+   someone's system, and a wrong claim drawn beautifully gets believed. Ask one
+   question at a time, each carrying your recommended answer, walking the design
+   tree in dependency order: purpose and audience, scope boundary, level of
+   abstraction, as-is or to-be, the components by their real product names, the
+   flows worth drawing, the trust boundaries, what must be visible, pages, and
+   how to treat what the user does not know. Stop when the remaining unknowns
+   could not change the drawing — a three-box flowchart needs two questions, a
+   review-board architecture needs the ladder. Never interrogate anyone about
+   styling; that is what Arkitect is for. The full ladder is in each engine's
+   SKILL.md under "Interview first".
 2. **Pick a pattern.** `skills/arkitect-<engine>/references/pattern-catalog.md`
    holds the reusable layouts. State every architectural assumption you make;
    they go into your report and, where they matter, into a note on the canvas.

@@ -4,6 +4,66 @@ All notable changes to Arkitect are recorded here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] — 2026-09-12
+
+Eighteen Draw.io icon packs instead of one AWS palette, and a resolver that says
+when it is not sure.
+
+### Added
+
+- **Seventeen new icon packs**, ~4,500 new marks, built by `build-packs.mjs`
+  from `assets/libraries/sources.json` — a pinned manifest where every upstream
+  carries an exact version or a recorded sha256.
+  - Vendor sets, embedded verbatim: `azure` (638), `gcp` (249).
+  - Curated: `data-platforms`, `databases`, `ai-frameworks`, `ml-training`,
+    `streaming-orchestration`, `observability`, `devops`, `security-identity`,
+    `github`, `saas-collab`, `languages-runtimes`.
+  - Generated from Lucide and Octicon glyphs: `agents` (33 agent-architecture
+    concepts), `primitives` (43 generic concepts), `file-types` (35 document
+    sheets badged with an extension).
+  - `brands` (3,158) as a catch-all, ranked strictly below every curated pack.
+- **Pack-aware resolution.** `find-icon.mjs` ranks across every pack, gains
+  `--list-packs`, `--pack` and `--context`, and returns a confidence verdict
+  with alternatives instead of always handing back its best guess.
+- **Spec-level icon steering.** `context.packs` on a spec biases ties toward the
+  stack being drawn; `pack` on a node pins it outright.
+- **On-demand catalogue entries.** 69 products whose marks carry no
+  redistribution licence are catalogued with a URL, a licence note and the exact
+  `fetch-logo` command — and no bytes. `build-diagram.mjs` refuses to draw them
+  rather than substituting another product's mark.
+- **Contact sheets** for every pack, committed as PNGs, because no structural
+  check can notice that a service is wearing the wrong artwork.
+- `contact-sheet.mjs` and `write-pack-docs.mjs`; `arkitect drawio packs` and
+  `arkitect drawio sheets`.
+- `references/pack-index.md` and `assets/libraries/ATTRIBUTION.md`, both
+  generated from the catalog so they cannot drift from what shipped.
+
+### Changed
+
+- **Icon titles are readable.** `Arch Amazon-Route-53 64` is now
+  `Amazon Route 53`. The old palette captions, plural forms and acronyms are all
+  kept as aliases, so `s3`, `data factory` and
+  `Arch Amazon-Simple-Storage-Service 64` all still resolve.
+- `icon-catalog.json` is pack-aware: namespaced ids, per-icon licence and
+  source, and `bytes: committed | on-demand`. Still metadata only.
+- `arkitect drawio library` is now `arkitect drawio packs`.
+
+### Removed
+
+- `AWS-v1.drawio` and `AWS-icons.merged.drawio` were content-identical, and
+  `AWS-icons.drawio.xml` was a 237-entry subset missing the six AgentCore
+  icons. One survives as `aws.drawio` with its artwork untouched; deleting the
+  other two reclaims 8.8 MB, which nearly pays for everything added above.
+- `extract-library.mjs`, which verified that two AWS palettes byte-matched.
+  `build-packs.mjs --verify` checks what matters now: that every committed
+  library still matches the manifest it was built from.
+
+### Fixed
+
+- Simple Icons lists "Terraform" as an alias of OpenTofu, which put a fork one
+  point behind the real product. The catch-all no longer carries names a curated
+  pack already owns.
+
 ## [1.0.0] — 2026-09-08
 
 First public release. Two diagram engines, one contract, no dependencies.

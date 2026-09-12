@@ -16,7 +16,7 @@
 
 import { readFileSync, writeFileSync, existsSync, copyFileSync } from 'node:fs';
 import { dirname, join, basename, extname } from 'node:path';
-import { search, recommendedSize, styleSafeDataUri, loadCatalog } from './find-icon.mjs';
+import { resolve, recommendedSize, styleSafeDataUri, loadCatalog } from './find-icon.mjs';
 import { getLogo, logoStyle, logoBox, DEFAULT_LOGO_SIZE } from './fetch-logo.mjs';
 
 // ---------------------------------------------------------------- tokens
@@ -97,23 +97,54 @@ export function backupExisting(path) {
   return backup;
 }
 
-function resolveIcon(query, catalog, report) {
+// Resolution never guesses. `spec.context.packs` biases the search toward the
+// stack being drawn, a node's own `pack` pins it outright, and anything the
+// resolver is not confident about is reported rather than silently drawn - a
+// GCP diagram must not quietly receive an Azure icon.
+function resolveIcon(node, catalog, report, contextPacks) {
+  const query = typeof node === 'string' ? node : node.icon;
   if (!query) return null;
-  const groups = search(query, { catalog, limit: 3 });
-  if (!groups.length) { report.missing.push(query); return null; }
-  const g = groups[0];
-  if (g.variants.length > 1) {
-    report.ambiguous.push({ query, title: g.title, chose: g.variants[0].id, alternatives: g.variants.slice(1).map((v) => v.id) });
+  const pinned = typeof node === 'object' ? node.pack ?? null : null;
+
+  const r = resolve(query, { catalog, limit: 3, packs: contextPacks, pack: pinned });
+  if (!r.groups.length) {
+    report.missing.push({ query, ...(pinned ? { pack: pinned } : {}) });
+    return null;
   }
-  report.used.push({ query, title: g.title, id: g.variants[0].id });
-  return g.variants[0];
+
+  const g = r.groups[0];
+  const chosen = g.variants[0];
+
+  if (!r.confident) {
+    report.ambiguous.push({
+      query,
+      reason: r.reason,
+      chose: chosen.id,
+      alternatives: r.groups.slice(0, 4).flatMap((x) => x.variants.slice(0, 2)).map((v) => v.id)
+        .filter((id) => id !== chosen.id),
+      fix: 'pin it with "pack": "<id>" on the node, or name the product more precisely',
+    });
+  }
+
+  if (chosen.bytes === 'on-demand') {
+    report.needsFetch.push({
+      query, id: chosen.id, licence: chosen.licence, reason: chosen.reason, fetch: chosen.fetch,
+    });
+    return null;
+  }
+
+  report.used.push({ query, title: chosen.title, id: chosen.id, pack: chosen.pack });
+  return chosen;
 }
 
 // ---------------------------------------------------------------- build
 
 export function buildDiagram(spec) {
   const catalog = loadCatalog();
-  const report = { used: [], missing: [], ambiguous: [], logos: [], missingLogos: [], opaqueLogos: [] };
+  const report = { used: [], missing: [], ambiguous: [], needsFetch: [], logos: [], missingLogos: [], opaqueLogos: [] };
+  // Packs named by the spec win ties, so a diagram declared as GCP resolves
+  // "cloud run" inside GCP rather than wherever the string happens to match.
+  const contextPacks = spec.context?.packs ?? null;
   const L = { originX: 80, originY: 100, colPitch: T.colPitch, rowPitch: T.rowPitch, ...(spec.layout ?? {}) };
   const cells = [];
   const push = (xml) => cells.push(xml);
@@ -180,7 +211,7 @@ export function buildDiagram(spec) {
     else if (n.kind === 'text') style = STYLE.text(n.fontSize ?? T.fontBody, n.color ?? T.text, n.bold ?? false, n.align ?? 'center');
     else if (n.kind === 'aws4') style = STYLE.aws4(n.resIcon, n.color ?? '#ED7100');
     else if (n.kind === 'icon') {
-      const icon = resolveIcon(n.icon ?? n.label, catalog, report);
+      const icon = resolveIcon(n.icon ? n : { ...n, icon: n.label }, catalog, report, contextPacks);
       if (icon) {
         const dim = recommendedSize(icon, n.width ?? T.iconSize);
         style = STYLE.icon(styleSafeDataUri(icon));
@@ -272,7 +303,13 @@ function main(argv) {
 
   console.log(JSON.stringify({
     wrote: out, bytes: Buffer.byteLength(xml), backup,
-    icons: { resolved: report.used.length, missing: report.missing, ambiguous: report.ambiguous },
+    icons: {
+      resolved: report.used.length,
+      missing: report.missing,
+      ambiguous: report.ambiguous,
+      needsFetch: report.needsFetch,
+      ...(spec.context?.packs ? { contextPacks: spec.context.packs } : {}),
+    },
     logos: { embedded: report.logos.length, missing: report.missingLogos, opaqueBackground: report.opaqueLogos },
   }, null, 2));
 }
