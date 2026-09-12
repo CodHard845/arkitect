@@ -551,9 +551,19 @@ function loadLikeDrawio(text) {
     const uri = typeof e.data === 'string' && /^data:(image\/[a-z0-9.+-]+);base64,([A-Za-z0-9+/]+={0,2})$/.exec(e.data);
     if (!uri || uri[2].length % 4 !== 0) throw new Error(`${where}: not a base64 image data URI`);
     const bytes = Buffer.from(uri[2], 'base64');
-    if (uri[1] === 'image/svg+xml'
-      && !/^﻿?\s*(?:<\?xml[\s\S]*?\?>\s*)?(?:<!--[\s\S]*?-->\s*)*(?:<!DOCTYPE[^>]*>\s*)?(?:<!--[\s\S]*?-->\s*)*<svg[\s>]/.test(bytes.toString('utf8'))) {
-      throw new Error(`${where}: payload is not an SVG document`);
+    if (uri[1] === 'image/svg+xml') {
+      const text = bytes.toString('utf8');
+      if (!/^﻿?\s*(?:<\?xml[\s\S]*?\?>\s*)?(?:<!--[\s\S]*?-->\s*)*(?:<!DOCTYPE[^>]*>\s*)?(?:<!--[\s\S]*?-->\s*)*<svg[\s>]/.test(text)) {
+        throw new Error(`${where}: payload is not an SVG document`);
+      }
+      // A namespace prefix used without its xmlns declaration - an attribute like
+      // xlink:href, or a prefixed element - makes the image invalid XML, and the
+      // browser inside Draw.io refuses to paint any of it.
+      const used = [...text.matchAll(/\s([A-Za-z_][\w.-]*):[A-Za-z_][\w.-]*\s*=/g), ...text.matchAll(/<\/?([A-Za-z_][\w.-]*):[A-Za-z_][\w.-]*[\s/>]/g)]
+        .map((hit) => hit[1]).filter((prefix) => prefix !== 'xmlns' && prefix !== 'xml');
+      for (const prefix of new Set(used)) {
+        if (!new RegExp(`\\sxmlns:${prefix}\\s*=`).test(text)) throw new Error(`${where}: SVG uses the "${prefix}:" prefix without declaring it`);
+      }
     }
     if (uri[1] === 'image/png' && bytes.subarray(0, 8).toString('hex') !== '89504e470d0a1a0a') {
       throw new Error(`${where}: payload is not a PNG`);
@@ -598,6 +608,8 @@ test('the Draw.io-strict loader round-trips awkward titles and rejects a mis-esc
     'a truncated payload': good.replace(/base64,[^"]+/, (s) => s.slice(0, -3)),
     'an entry with no title': good.replace(',"title":"ok"', ''),
     'JSON that is not an array': '<mxlibrary>{}</mxlibrary>',
+    'an SVG using a namespace prefix it never declares': good.replace(svg, `data:image/svg+xml;base64,${Buffer.from(
+      '<svg xmlns="http://www.w3.org/2000/svg"><use xlink:href="#a"/></svg>').toString('base64')}`),
   };
   for (const [what, text] of Object.entries(broken)) {
     let threw = false;
