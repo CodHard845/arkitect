@@ -47,9 +47,29 @@ Two knobs steer it, and one gate stops it:
 ```
 
 `context.packs` biases ties toward the stack being drawn. A node's own `pack` pins it.
-And when the leader is neither strong nor clearly ahead, the result comes back
-`confident: false` with its alternatives — `build-diagram.mjs` reports it rather than
-drawing it. That is what stops a GCP diagram quietly receiving an Azure icon.
+And when the leader is not strong, not clearly ahead, or matched only by a fragment of
+its name, the result comes back `confident: false` with the reason and the alternatives —
+`build-diagram.mjs` still draws its best guess, but lists it under `ambiguous` in the
+report with the fix. That is what stops a GCP diagram quietly receiving an Azure icon.
+
+### A fragment of a name is not a name
+
+A prefix counts only when what it leaves off is a generic tail: `postgres` names
+PostgreSQL (`ql`), `rabbit` names RabbitMQ (`mq`), `envoy` names Envoy Proxy. It does
+not count when it is the start of a different word — `tempo` ranks Temporal first, and
+comes back flagged, because Grafana Tempo is a different product. A plural the builder
+generated for a one-word vendor title is treated the same way: Azure's `Cubes` answers to
+`cube`, but a bare common noun is not a product name, so it is never used unattended.
+
+Neither rule changes a score, only whether the top result may be used without asking.
+Lowering the score instead would widen the margin over the runner-up and hand confidence
+to a *different* wrong answer — `delta` would become the airline.
+
+This is measured, not asserted. `tests/icon-queries.json` is an answer key of 362
+queries — the vocabulary of data, ML, platform and cloud engineers, plus 36 that must
+come back flagged — and the suite fails on any confident wrong answer, or if precision
+at rank 1 drops below its floor. Change a judgement row deliberately, never to make a
+tuning change pass.
 
 ## What ships, and what deliberately does not
 
@@ -97,6 +117,8 @@ node $S/build-packs.mjs --list              # what the manifest declares
 node $S/build-packs.mjs --all               # rebuild every pack and the catalog
 node $S/build-packs.mjs --pack azure        # just one
 node $S/build-packs.mjs --refresh azure-v24 # re-download, report hash drift
+node $S/build-packs.mjs --check-upstream    # has Simple Icons removed a mark we ship?
+node $S/build-packs.mjs --check-drift       # have the pinned sources moved on?
 node $S/write-pack-docs.mjs                 # regenerate pack-index.md + ATTRIBUTION.md
 node $S/contact-sheet.mjs --all --png       # regenerate the review sheets
 ```

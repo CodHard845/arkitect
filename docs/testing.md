@@ -42,7 +42,8 @@ process, so they cannot tread on each other.
 | Duplicate titles | both Compute Optimizer variants retained, disambiguated by index, size and payload hash |
 | Merged library | 243 entries, round-trips against the palette |
 | Catalog | no base64 payloads, required fields present |
-| Icon lookup | exact and fuzzy matches; an ambiguous query returns every variant; an unknown service returns no match |
+| Icon lookup | exact and fuzzy matches; an ambiguous query returns every variant; an unknown service returns no match; a fragment of a different product's name (`tempo`, `cube`) is flagged, not resolved |
+| Resolution accuracy | the 362-query answer key in `tests/icon-queries.json`: zero confident wrong answers, precision at rank 1 above its floor, and the numbers printed on every run |
 | Cell styles | the comma-only data URI form; the embedded payload matches the catalog hash |
 | Logos | transparency read from the IHDR; an opaque PNG flagged; sizing fits the longest side and preserves aspect; non-images refused |
 | Validator | rejects duplicate ids, missing parents, broken edge endpoints |

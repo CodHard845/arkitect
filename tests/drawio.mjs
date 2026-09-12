@@ -613,6 +613,103 @@ test('committed libraries still match the manifest they were built from', async 
   assert(checks.length >= 50, `expected at least 50 checks, got ${checks.length}`);
 });
 
+// ------------------------------------------------------------- upstream watch
+
+// The checks reach the network, so the suite drives them with fake fetchers.
+// test() is synchronous: settle the promises first, assert afterwards.
+const upstream = await import(`file://${join(SCRIPTS, 'lib', 'upstream.mjs').replace(/\\/g, '/')}`);
+const settle = async (promise) => { try { return { value: await promise }; } catch (error) { return { error }; } };
+
+const fakeCatalog = { icons: [
+  { id: 'brands/gonebrand', bytes: 'committed', source: 'simple-icons@1.0.0', upstreamId: 'gonebrand' },
+  { id: 'brands/oldname', bytes: 'committed', source: 'simple-icons@1.0.0', upstreamId: 'oldname' },
+  { id: 'languages-runtimes/rome', bytes: 'committed', source: 'simple-icons@1.0.0', upstreamId: 'rome' },
+  { id: 'devops/docker', bytes: 'committed', source: 'simple-icons@1.0.0', upstreamId: 'docker' },
+  { id: 'file-types/dockerfile', bytes: 'committed', source: 'simple-icons@1.0.0', upstreamId: 'icons/docker.svg' },
+  { id: 'ai-frameworks/openai', bytes: 'on-demand', source: 'simple-icons@0.9.0', upstreamId: 'openai' },
+  { id: 'vendor/queue', bytes: 'committed', source: 'vendor-zip', upstreamId: 'queue.svg' },
+] };
+const fakeManifest = { sources: {
+  'simple-icons': { type: 'npm', package: 'simple-icons', version: '1.0.0',
+    dataUrl: 'https://cdn.example/npm/simple-icons@1.0.0/data/simple-icons.json' },
+  'simple-icons-withdrawn': { type: 'npm', package: 'simple-icons', version: '0.9.0' },
+  'vendor-zip': { type: 'zip', url: 'https://vendor.example/icons.zip', sha256: 'a'.repeat(64) },
+  'unused-zip': { type: 'zip', url: 'https://vendor.example/other.zip', sha256: 'b'.repeat(64) },
+  palette: { type: 'local' },
+} };
+// 2.0.0 withdraws "gonebrand", moves "Old Name" to a new slug, and renames Rome
+// to Biome while keeping the old title under aliases.old.
+const pinnedRelease = [{ title: 'Gone Brand', slug: 'gonebrand' }, { title: 'Old Name', slug: 'oldname' },
+  { title: 'Rome', slug: 'rome' }, { title: 'Docker', slug: 'docker' }];
+const latestRelease = [{ title: 'Old Name', slug: 'newname' },
+  { title: 'Biome', slug: 'biome', aliases: { old: ['Rome'] } }, { title: 'Docker', slug: 'docker' }];
+const fetched = [];
+const hashed = [];
+const fakeGet = async (url) => {
+  fetched.push(url);
+  if (url === `${upstream.REGISTRY}/simple-icons/latest`) return { version: '2.0.0' };
+  if (url.includes('@1.0.0/')) return pinnedRelease;
+  if (url.includes('@2.0.0/')) return latestRelease;
+  throw new Error(`unexpected fetch ${url}`);
+};
+const fakeHash = async (url) => { hashed.push(url); return 'c'.repeat(64); };
+
+const removals = await settle(upstream.checkSimpleIcons({ catalog: fakeCatalog, manifest: fakeManifest, get: fakeGet }));
+const drift = await settle(upstream.checkDrift({ catalog: fakeCatalog, manifest: fakeManifest, get: fakeGet, hash: fakeHash }));
+const offline = await settle(upstream.checkSimpleIcons({ catalog: fakeCatalog, manifest: fakeManifest,
+  get: async () => { throw new Error('network down'); } }));
+
+test('the upstream check tells a removal from a rename, and ignores marks that ship no bytes (#10)', () => {
+  assert(!removals.error, `check threw: ${removals.error?.message}`);
+  const r = removals.value;
+  eq(`${r.pinned}->${r.latest}`, '1.0.0->2.0.0', 'versions compared');
+  eq(r.shipped, 4, 'distinct shipped slugs, the file-type glyph folded into docker');
+  eq(r.removed.map((m) => m.slug).join(), 'gonebrand', 'removed');
+  eq(r.removed[0].title, 'Gone Brand', 'title taken from the pinned release');
+  eq(r.renamed.map((m) => `${m.slug}->${m.to}`).sort().join(), 'oldname->newname,rome->biome', 'renamed');
+  assert(fetched.includes('https://cdn.example/npm/simple-icons@2.0.0/data/simple-icons.json'), 'latest data fetched at the new version');
+  assert(!r.removed.concat(r.renamed).some((m) => m.slug === 'openai'), 'an on-demand mark is not "shipped"');
+});
+
+test('every shipped Simple Icons mark in the real catalog is watched', () => {
+  const version = packs.loadManifest().sources['simple-icons'].version;
+  const cat = finder.loadCatalog();
+  const shipped = upstream.shippedSimpleIcons(cat, version);
+  const committed = cat.icons.filter((i) => i.bytes === 'committed' && i.source === `simple-icons@${version}`);
+  eq([...shipped.values()].reduce((n, s) => n + s.ids.length, 0), committed.length, 'every committed mark counted once');
+  assert(shipped.size > 3000, `only ${shipped.size} slugs watched`);
+  assert(shipped.has('markdown') && !shipped.has('icons/markdown.svg'), 'file-type glyph paths fold into their slug');
+});
+
+test('a removal report names the mark and the fix, and a failed check is an error, not a finding', () => {
+  const report = upstream.removalReport(removals.value);
+  for (const needle of ['`gonebrand`', 'Gone Brand', '`brands/gonebrand`', 'onDemand', 'oldname', 'Nothing in the repository was changed']) {
+    assert(report.includes(needle), `report is missing ${needle}`);
+  }
+  assert(offline.error && /network down/.test(offline.error.message), 'a network failure must reject, never report clean');
+});
+
+test('the drift check flags moved pins and skips sources nothing ships from (#9)', () => {
+  assert(!drift.error, `check threw: ${drift.error?.message}`);
+  const row = (key) => drift.value.find((r) => r.key === key);
+  assert(row('simple-icons').drifted, 'a newer npm release is drift');
+  assert(row('vendor-zip').drifted, 'a changed archive hash is drift');
+  assert(!row('simple-icons-withdrawn').drifted && row('simple-icons-withdrawn').note, 'a pin kept for withdrawn marks is skipped');
+  assert(!row('unused-zip').drifted && row('unused-zip').note, 'an archive nothing ships from is skipped');
+  assert(!row('palette').drifted, 'a local source has no upstream');
+  eq(hashed.join(), 'https://vendor.example/icons.zip', 'only the watched archive is downloaded');
+  const report = upstream.driftReport(drift.value);
+  assert(report.includes('`vendor-zip`') && !report.includes('unused-zip'), 'report lists only what drifted');
+});
+
+test('the upstream workflow can open issues and nothing else', () => {
+  const yml = readFileSync(join(ROOT, '.github', 'workflows', 'upstream-watch.yml'), 'utf8');
+  assert(/permissions:\s*\n\s*contents: read\s*\n\s*issues: write/.test(yml), 'expected contents: read, issues: write');
+  assert(!/contents:\s*write|pull-requests:\s*write|git push/.test(yml), 'the watch must never write to the repository');
+  assert(yml.includes("'17 6 * * 1'") && yml.includes("'41 6 1 1,4,7,10 *'"), 'weekly and quarterly schedules');
+  assert((yml.match(/"\$code" -ge 2/g) ?? []).length === 2, 'a failed check must not open an issue');
+});
+
 test('the AWS artwork is unchanged by the move to aws.drawio', () => {
   const aws = core.readLibrary(join(LIB_DIR, 'aws.drawio'));
   eq(aws.length, 243, 'AWS entry count');
@@ -737,6 +834,50 @@ test('an unknown service returns no match rather than a wrong icon', () => {
   for (const q of ['acme internal gateway', 'widget factory service', 'frobnicator']) {
     assert(!finder.resolve(q).confident, `"${q}" resolved confidently`);
   }
+});
+
+test('a name that only starts a different product flags itself instead of resolving (#21)', () => {
+  // Each ranks a real icon first, and each is the wrong product: Grafana Tempo is
+  // not Temporal, Cube is not Azure's generic "Cubes", and Active Directory is not
+  // its Connect Health sub-product.
+  for (const q of ['tempo', 'cube', 'active directory']) {
+    const r = finder.resolve(q);
+    assert(r.groups.length, `"${q}" should still offer candidates`);
+    assert(!r.confident, `"${q}" resolved confidently to ${r.icon?.id}`);
+  }
+  // A prefix that only drops a generic tail still names the product.
+  for (const [q, id] of [['postgres', 'databases/postgresql'], ['rabbit', 'streaming-orchestration/rabbitmq'],
+    ['envoy', 'devops/envoyproxy'], ['key vault', 'azure/key-vaults'], ['storage account', 'azure/storage-accounts']]) {
+    const r = finder.resolve(q);
+    assert(r.confident, `"${q}" lost confidence: ${r.reason}`);
+    eq(r.icon.id, id, `"${q}"`);
+  }
+  // Doubt must not work by lowering a score: that widens the margin and hands
+  // confidence to a different wrong answer - here, the airline.
+  assert(!finder.resolve('delta').confident, '"delta" became confident');
+});
+
+test('icon resolution corpus: never confidently wrong, and precision at rank 1 holds its floor (#15)', () => {
+  const key = JSON.parse(readFileSync(join(HERE, 'icon-queries.json'), 'utf8'));
+  const m = { answerable: 0, top1: 0, gated: 0, refusals: 0, held: 0 };
+  const wrong = [];
+  for (const [q, accept, context] of key.queries) {
+    const r = finder.resolve(q, context ? { packs: context.split(',') } : {});
+    const right = accept !== null && [].concat(accept).includes(r.icon?.id);
+    if (accept === null) { m.refusals++; if (!r.confident) m.held++; } else {
+      m.answerable++;
+      if (right) m.top1++;
+      if (!r.confident) m.gated++;
+    }
+    // A wrong confident answer gets drawn; a right unconfident one gets asked about.
+    if (r.confident && !right) wrong.push(`${q}${context ? ` [${context}]` : ''} -> ${r.icon.id}`);
+  }
+  const pct = (a, b) => `${((100 * a) / b).toFixed(1)}%`;
+  console.log(`        corpus: precision@1 ${pct(m.top1, m.answerable)} (${m.top1}/${m.answerable}), `
+    + `gate fires on ${pct(m.gated, m.answerable)}, refusals held ${m.held}/${m.refusals}, confident-wrong ${wrong.length}`);
+  assert(!wrong.length, `confident and wrong: ${wrong.join('; ')}`);
+  assert(m.top1 / m.answerable >= key.precisionFloor,
+    `precision@1 ${pct(m.top1, m.answerable)} fell below the ${key.precisionFloor * 100}% floor`);
 });
 
 test('an on-demand icon refuses to produce bytes and hands back the command', () => {

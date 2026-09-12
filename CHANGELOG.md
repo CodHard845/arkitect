@@ -8,6 +8,16 @@ All notable changes to Arkitect are recorded here. Format loosely follows
 
 ### Added
 
+- **An accuracy measure for icon resolution** (#15). `tests/icon-queries.json`
+  is a 362-query answer key; the suite fails on any confident wrong answer or if
+  precision at rank 1 drops below 92%, and prints the numbers on every run.
+  Today: 94.5% at rank 1, zero confident wrong answers, 36 of 36 refusals held.
+- **The pins are watched.** `build-packs.mjs --check-upstream` compares every
+  Simple Icons slug we ship with the latest release and reports removals,
+  telling a rename apart (#10). `--check-drift` compares every pinned source with
+  what upstream publishes now (#9). `.github/workflows/upstream-watch.yml` runs
+  the first weekly and the second quarterly. Each opens an issue, or comments on
+  the open one, and never changes the repository.
 - **Proof that a built library opens in Draw.io** (#12). Every committed
   library is loaded the way `EditorUi.loadLibrary` reads one, by a strict loader
   that shares no code with `readLibrary`. `drawio-desktop.yml` installs a pinned,
@@ -16,6 +26,17 @@ All notable changes to Arkitect are recorded here. Format loosely follows
 - The five GCP legacy marks drawn with luminance masks and filters ride along in
   that export. They render correctly, so #13 is closed with evidence and guarded
   from now on.
+
+### Fixed
+
+- **A fragment of a different product's name no longer resolves confidently.**
+  `tempo` resolved to Temporal, `cube` to Azure's generic "Cubes" and
+  `active directory` to its Connect Health sub-product, all without comment
+  (#21). A prefix now counts only when what it leaves off is a generic tail
+  (`postgres` → PostgreSQL still does), and a plural the builder generated for a
+  one-word vendor title is never used unattended. Scores and ranking are
+  unchanged; only the confidence verdict moved. The catalog records
+  `generatedAliases` so the resolver can tell them apart.
 
 ## [1.1.0] — 2026-09-12
 

@@ -5,6 +5,8 @@
 //   node build-packs.mjs --pack azure           build one pack
 //   node build-packs.mjs --verify               committed libraries match the manifest?
 //   node build-packs.mjs --refresh azure-v24    re-download one source, report hash drift
+//   node build-packs.mjs --check-upstream       has Simple Icons removed a mark we ship?
+//   node build-packs.mjs --check-drift          have the pinned sources moved on?
 //   node build-packs.mjs --list                 what the manifest declares
 //
 // Upstream archives land in a gitignored .cache/ - they are inputs, not
@@ -22,6 +24,7 @@ import {
   fileSheet, dataUri, writeLibrary, prettyTitle, slugify, aliasSet, withPlurals, withShortName,
   normalise,
 } from './lib/icon-build.mjs';
+import { checkSimpleIcons, checkDrift, removalReport, driftReport } from './lib/upstream.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SKILL_ROOT = join(HERE, '..');
@@ -165,9 +168,11 @@ async function buildVendorZipPack(pack, manifest, cache) {
     if (/^Azure /.test(c.title)) extra.push(c.title.replace(/^Azure /, ''));
     if (/^Google /.test(c.title)) extra.push(c.title.replace(/^Google /, ''));
     if (/^Cloud /.test(c.title)) extra.push(c.title.replace(/^Cloud /, ''));
+    const given = aliasSet(c.title, c.slug, ...extra);
+    const aliases = withPlurals(given);
     entries.push({
       slug: c.slug, title: c.title, svg: c.svg,
-      aliases: withPlurals(aliasSet(c.title, c.slug, ...extra)),
+      aliases, generatedAliases: aliases.filter((a) => !given.includes(a)),
       source: `${c.source}`, upstreamId: c.upstreamPath, render: 'verbatim',
       group: c.group, tier: c.tier,
     });
@@ -201,10 +206,12 @@ function buildAwsPack(pack) {
     used.set(base, nth);
     const slug = nth === 1 ? base : `${base}-${nth}`;
     const original = legacy[slug] ?? e.title;
+    const given = aliasSet(title, short, original, ...titleAliases(original), ...(abbrev[slug] ?? []));
+    const aliases = withPlurals(given);
     return {
       slug, title,
       data: e.dataUri, w: e.w, h: e.h, aspect: e.aspect,
-      aliases: withPlurals(aliasSet(title, short, original, ...titleAliases(original), ...(abbrev[slug] ?? []))),
+      aliases, generatedAliases: aliases.filter((a) => !given.includes(a)),
       source: 'aws-palette', upstreamId: original, render: 'verbatim',
       mime: e.mime, width: e.w, height: e.h, sha256: e.hash,
     };
@@ -382,6 +389,9 @@ async function buildPack(pack, manifest, cache, claimed) {
       pack: pack.id,
       title: e.title,
       aliases: e.aliases,
+      // Which aliases withPlurals invented. find-icon will not act unattended on
+      // one of these when the title is a single word.
+      ...(e.generatedAliases?.length ? { generatedAliases: e.generatedAliases } : {}),
       source: e.source,
       upstreamId: e.upstreamId,
       licence: licenceOf(e.source, manifest),
@@ -607,6 +617,39 @@ async function main(argv) {
     return;
   }
 
+  // Exit 0: checked, nothing found. 1: findings, written to --report if given.
+  // 2: the check itself failed - distinct, so a network error never opens an issue.
+  if (mode === '--check-upstream' || mode === '--check-drift') {
+    const reportFile = argv.includes('--report') ? argv[argv.indexOf('--report') + 1] : null;
+    let findings;
+    let report;
+    try {
+      const manifest = loadManifest();
+      const catalog = JSON.parse(readFileSync(CATALOG_FILE, 'utf8'));
+      if (mode === '--check-upstream') {
+        const r = await checkSimpleIcons({ catalog, manifest });
+        console.log(`simple-icons  pinned ${r.pinned}, latest ${r.latest}, ${r.shipped} slugs shipped`);
+        console.log(`  removed upstream  ${r.removed.length}${r.removed.length ? `  ${r.removed.map((m) => m.slug).join(', ')}` : ''}`);
+        console.log(`  renamed upstream  ${r.renamed.length}${r.renamed.length ? `  ${r.renamed.map((m) => `${m.slug}->${m.to}`).join(', ')}` : ''}`);
+        findings = r.removed.length > 0;
+        report = removalReport(r);
+      } else {
+        const rows = await checkDrift({ catalog, manifest });
+        for (const row of rows) {
+          const state = row.note ? 'skip ' : row.drifted ? 'DRIFT' : 'ok   ';
+          console.log(`  ${state}  ${row.key.padEnd(16)} ${row.note ?? `pinned ${String(row.pinned).slice(0, 12)}  upstream ${String(row.current).slice(0, 12)}`}`);
+        }
+        findings = rows.some((row) => row.drifted);
+        report = driftReport(rows);
+      }
+    } catch (err) {
+      console.error(`upstream check failed: ${err.message}`);
+      process.exit(2);
+    }
+    if (findings && reportFile) writeFileSync(reportFile, report);
+    process.exit(findings ? 1 : 0);
+  }
+
   if (mode === '--all' || mode === '--pack') {
     const only = mode === '--pack' ? argv[1] : null;
     if (mode === '--pack' && !only) { console.error('usage: build-packs.mjs --pack <id>'); process.exit(2); }
@@ -625,7 +668,8 @@ async function main(argv) {
     return;
   }
 
-  console.error('usage: build-packs.mjs [--list|--all|--pack <id>|--verify|--refresh <source>]');
+  console.error('usage: build-packs.mjs [--list|--all|--pack <id>|--verify|--refresh <source>|'
+    + '--check-upstream [--report <file>]|--check-drift [--report <file>]]');
   process.exit(2);
 }
 
