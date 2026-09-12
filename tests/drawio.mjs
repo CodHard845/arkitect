@@ -523,6 +523,50 @@ test('an unknown service returns no match rather than a wrong icon', () => {
   }
 });
 
+test('a name that only starts a different product flags itself instead of resolving (#21)', () => {
+  // Each ranks a real icon first, and each is the wrong product: Grafana Tempo is
+  // not Temporal, Cube is not Azure's generic "Cubes", and Active Directory is not
+  // its Connect Health sub-product.
+  for (const q of ['tempo', 'cube', 'active directory']) {
+    const r = finder.resolve(q);
+    assert(r.groups.length, `"${q}" should still offer candidates`);
+    assert(!r.confident, `"${q}" resolved confidently to ${r.icon?.id}`);
+  }
+  // A prefix that only drops a generic tail still names the product.
+  for (const [q, id] of [['postgres', 'databases/postgresql'], ['rabbit', 'streaming-orchestration/rabbitmq'],
+    ['envoy', 'devops/envoyproxy'], ['key vault', 'azure/key-vaults'], ['storage account', 'azure/storage-accounts']]) {
+    const r = finder.resolve(q);
+    assert(r.confident, `"${q}" lost confidence: ${r.reason}`);
+    eq(r.icon.id, id, `"${q}"`);
+  }
+  // Doubt must not work by lowering a score: that widens the margin and hands
+  // confidence to a different wrong answer - here, the airline.
+  assert(!finder.resolve('delta').confident, '"delta" became confident');
+});
+
+test('icon resolution corpus: never confidently wrong, and precision at rank 1 holds its floor (#15)', () => {
+  const key = JSON.parse(readFileSync(join(HERE, 'icon-queries.json'), 'utf8'));
+  const m = { answerable: 0, top1: 0, gated: 0, refusals: 0, held: 0 };
+  const wrong = [];
+  for (const [q, accept, context] of key.queries) {
+    const r = finder.resolve(q, context ? { packs: context.split(',') } : {});
+    const right = accept !== null && [].concat(accept).includes(r.icon?.id);
+    if (accept === null) { m.refusals++; if (!r.confident) m.held++; } else {
+      m.answerable++;
+      if (right) m.top1++;
+      if (!r.confident) m.gated++;
+    }
+    // A wrong confident answer gets drawn; a right unconfident one gets asked about.
+    if (r.confident && !right) wrong.push(`${q}${context ? ` [${context}]` : ''} -> ${r.icon.id}`);
+  }
+  const pct = (a, b) => `${((100 * a) / b).toFixed(1)}%`;
+  console.log(`        corpus: precision@1 ${pct(m.top1, m.answerable)} (${m.top1}/${m.answerable}), `
+    + `gate fires on ${pct(m.gated, m.answerable)}, refusals held ${m.held}/${m.refusals}, confident-wrong ${wrong.length}`);
+  assert(!wrong.length, `confident and wrong: ${wrong.join('; ')}`);
+  assert(m.top1 / m.answerable >= key.precisionFloor,
+    `precision@1 ${pct(m.top1, m.answerable)} fell below the ${key.precisionFloor * 100}% floor`);
+});
+
 test('an on-demand icon refuses to produce bytes and hands back the command', () => {
   const cat = finder.loadCatalog();
   const icon = cat.icons.find((i) => i.id === 'ai-frameworks/openai');
