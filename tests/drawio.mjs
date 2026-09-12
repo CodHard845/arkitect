@@ -13,7 +13,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync, readdirSync
 import { fileURLToPath } from 'node:url';
 import { dirname, join, relative } from 'node:path';
 import { createHash } from 'node:crypto';
-import { deflateRawSync, deflateSync } from 'node:zlib';
+import { deflateRawSync, deflateSync, inflateSync } from 'node:zlib';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -358,14 +358,27 @@ test('renderer preserves standalone graph models after declarations and leading 
 
 // Opt-in local integration: ARKITECT_DRAWIO_SMOKE=1 node tests/drawio.mjs.
 // Default tests remain offline/deterministic with no new prerequisite skips.
-if (process.env.ARKITECT_DRAWIO_SMOKE === '1') test('installed Desktop exports distinct synthetic pages as real PNGs', () => {
-  let exe;
-  try { exe = renderer.discoverDrawio(); } catch { return 'skip'; }
+// ARKITECT_DRAWIO_SMOKE=required is what CI sets: a missing Desktop then fails
+// the run instead of skipping, so a broken install cannot pass as green.
+const SMOKE = process.env.ARKITECT_DRAWIO_SMOKE;
+const smokeEnabled = SMOKE === '1' || SMOKE === 'required';
+function desktopOrSkip() {
+  try { return renderer.discoverDrawio(); } catch (error) {
+    if (SMOKE === 'required') throw new Error(`ARKITECT_DRAWIO_SMOKE=required, but ${error.message.split('\n')[0]}`);
+    return null;
+  }
+}
+// Ubuntu's AppArmor refuses Electron's sandbox for an unprivileged runner.
+const electronFlags = ['--disable-gpu', ...(process.platform === 'linux' && process.env.CI ? ['--no-sandbox'] : [])];
+
+if (smokeEnabled) test('installed Desktop exports distinct synthetic pages as real PNGs', () => {
+  const exe = desktopOrSkip();
+  if (!exe) return 'skip';
   const file = join(TMP, 'desktop-smoke.drawio');
   const page = (id, color, width) => `<diagram id="${id}" name="${id}"><mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="2" value="${id}" style="fillColor=${color};" vertex="1" parent="1"><mxGeometry x="10" y="10" width="${width}" height="80" as="geometry"/></mxCell></root></mxGraphModel></diagram>`;
   writeFileSync(file, `<mxfile>${page('first', '#ff0000', 160)}${page('second', '#0000ff', 320)}</mxfile>`);
   const outDir = join(TMP, 'desktop-smoke');
-  const result = spawnSync(process.execPath, [join(ROOT, 'bin', 'arkitect.mjs'), 'drawio', 'render', file, '--all', '--width', '600', '--out-dir', outDir, '--drawio-exe', exe, '--disable-gpu'], { encoding: 'utf8', timeout: 120000 });
+  const result = spawnSync(process.execPath, [join(ROOT, 'bin', 'arkitect.mjs'), 'drawio', 'render', file, '--all', '--width', '600', '--out-dir', outDir, '--drawio-exe', exe, ...electronFlags], { encoding: 'utf8', timeout: 120000 });
   eq(result.status, 0, `Desktop export: ${result.stdout} ${result.stderr}`);
   const pages = [0, 1].map(i => readFileSync(join(outDir, `desktop-smoke.p${i}.png`)));
   for (const png of pages) {
@@ -374,6 +387,120 @@ if (process.env.ARKITECT_DRAWIO_SMOKE === '1') test('installed Desktop exports d
     assert(png.length > 100, 'nontrivial PNG');
   }
   assert(!pages[0].equals(pages[1]), 'both exports selected the same page');
+});
+
+// Share of pixels that carry ink - opaque and not near-white. Enough PNG to read
+// what Desktop exports (8-bit, non-interlaced grey/RGB/RGBA), written out
+// longhand because the toolkit takes no dependencies.
+function pngInk(buf) {
+  let offset = 8;
+  let ihdr = null;
+  const idat = [];
+  while (offset < buf.length) {
+    const length = buf.readUInt32BE(offset);
+    const type = buf.toString('latin1', offset + 4, offset + 8);
+    const data = buf.subarray(offset + 8, offset + 8 + length);
+    if (type === 'IHDR') ihdr = { width: data.readUInt32BE(0), height: data.readUInt32BE(4), depth: data[8], colour: data[9], interlace: data[12] };
+    else if (type === 'IDAT') idat.push(data);
+    else if (type === 'IEND') break;
+    offset += 12 + length;
+  }
+  const channels = { 0: 1, 2: 3, 4: 2, 6: 4 }[ihdr?.colour];
+  if (!ihdr || ihdr.depth !== 8 || ihdr.interlace !== 0 || !channels) {
+    throw new Error(`unsupported PNG layout ${JSON.stringify(ihdr)}`);
+  }
+  const raw = inflateSync(Buffer.concat(idat));
+  const stride = ihdr.width * channels;
+  let previous = Buffer.alloc(stride);
+  let ink = 0;
+  for (let y = 0; y < ihdr.height; y++) {
+    const start = y * (stride + 1);
+    const filter = raw[start];
+    const line = Buffer.from(raw.subarray(start + 1, start + 1 + stride));
+    for (let x = 0; x < stride; x++) {
+      const left = x >= channels ? line[x - channels] : 0;
+      const up = previous[x];
+      const upLeft = x >= channels ? previous[x - channels] : 0;
+      let predictor = 0;
+      if (filter === 1) predictor = left;
+      else if (filter === 2) predictor = up;
+      else if (filter === 3) predictor = (left + up) >> 1;
+      else if (filter === 4) {
+        const p = left + up - upLeft;
+        const [pa, pb, pc] = [Math.abs(p - left), Math.abs(p - up), Math.abs(p - upLeft)];
+        predictor = pa <= pb && pa <= pc ? left : pb <= pc ? up : upLeft;
+      }
+      line[x] = (line[x] + predictor) & 0xff;
+    }
+    for (let x = 0; x < stride; x += channels) {
+      const alpha = channels === 4 ? line[x + 3] : channels === 2 ? line[x + 1] : 255;
+      const darkest = channels >= 3 ? Math.min(line[x], line[x + 1], line[x + 2]) : line[x];
+      if (alpha > 32 && darkest < 235) ink++;
+    }
+    previous = line;
+  }
+  return ink / (ihdr.width * ihdr.height);
+}
+
+test('the PNG ink reader tells a drawn page from a blank one', () => {
+  const png = (width, height, pixel) => {
+    const chunk = (type, data) => {
+      const head = Buffer.alloc(8);
+      head.writeUInt32BE(data.length, 0);
+      head.write(type, 4, 'latin1');
+      return Buffer.concat([head, data, Buffer.alloc(4)]);
+    };
+    const ihdr = Buffer.alloc(13);
+    ihdr.writeUInt32BE(width, 0); ihdr.writeUInt32BE(height, 4); ihdr[8] = 8; ihdr[9] = 6;
+    const rows = [];
+    for (let y = 0; y < height; y++) {
+      rows.push(Buffer.from([0]));
+      for (let x = 0; x < width; x++) rows.push(Buffer.from(pixel(x, y)));
+    }
+    return Buffer.concat([Buffer.from('89504e470d0a1a0a', 'hex'), chunk('IHDR', ihdr),
+      chunk('IDAT', deflateSync(Buffer.concat(rows))), chunk('IEND', Buffer.alloc(0))]);
+  };
+  eq(pngInk(png(10, 10, () => [255, 255, 255, 255])), 0, 'white page');
+  eq(pngInk(png(10, 10, () => [0, 0, 0, 0])), 0, 'transparent page');
+  eq(pngInk(png(10, 10, (x) => (x < 3 ? [30, 90, 200, 255] : [255, 255, 255, 255]))), 0.3, 'three columns of ink');
+});
+
+// The whole point of #12: bytes this repository built, embedded the way
+// find-icon embeds them, exported by the real application. The five GCP legacy
+// marks with luminance masks and filters ride along, because an export that
+// silently drops a mask is exactly what #13 feared.
+const MASKED_GCP = ['Cloud Healthcare API', 'My Cloud', 'OS Inventory Management', 'Pub/Sub', 'Security Health Advisor'];
+
+if (smokeEnabled) test('one icon from every pack, and the masked GCP marks, survive a real Desktop export (#12, #13)', () => {
+  const exe = desktopOrSkip();
+  if (!exe) return 'skip';
+  const cat = finder.loadCatalog();
+  const icons = [
+    ...cat.packs.map((p) => cat.icons.find((i) => i.pack === p.id && i.bytes === 'committed')),
+    ...MASKED_GCP.map((title) => cat.icons.find((i) => i.pack === 'gcp' && i.title === title)),
+  ];
+  icons.forEach((icon, n) => assert(icon, `no catalog entry for smoke icon #${n}`));
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  const pages = icons.map((icon, n) => `<diagram id="p${n}" name="p${n}"><mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>`
+    + `<mxCell id="icon" value="" style="${esc(finder.styleFor(icon))}" vertex="1" parent="1">`
+    + '<mxGeometry x="0" y="0" width="78" height="78" as="geometry"/></mxCell></root></mxGraphModel></diagram>');
+  const file = join(TMP, 'every-pack.drawio');
+  writeFileSync(file, `<mxfile>${pages.join('')}</mxfile>`);
+  const outDir = join(TMP, 'every-pack');
+  const result = spawnSync(process.execPath, [join(ROOT, 'bin', 'arkitect.mjs'), 'drawio', 'render', file, '--all',
+    '--width', '200', '--out-dir', outDir, '--drawio-exe', exe, ...electronFlags], { encoding: 'utf8', timeout: 600000 });
+  eq(result.status, 0, `Desktop export: ${result.stdout} ${result.stderr}`);
+  const digests = new Set();
+  icons.forEach((icon, n) => {
+    const png = readFileSync(join(outDir, `every-pack.p${n}.png`));
+    eq(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a', `${icon.id}: PNG signature`);
+    const ink = pngInk(png);
+    // A 78px mark scaled to 200px covers far more than 1% of its own crop; an
+    // image the exporter could not paint covers none of it.
+    assert(ink > 0.01, `${icon.id} exported blank (${(ink * 100).toFixed(2)}% ink)`);
+    digests.add(createHash('sha256').update(png).digest('hex'));
+  });
+  eq(digests.size, icons.length, 'every page exported its own icon');
 });
 
 // ------------------------------------------------------------- packs
@@ -387,6 +514,95 @@ test('every pack the manifest declares is committed and parses', () => {
   for (const p of cat.packs) {
     const entries = core.readLibrary(join(LIB_DIR, p.file));
     eq(entries.length, p.count, `${p.id} entry count`);
+  }
+});
+
+// Draw.io opens a library in EditorUi.loadLibrary: mxUtils.parseXml, an
+// <mxlibrary> root, then JSON.parse(mxUtils.getTextContent(root)). Then
+// addLibraryEntries turns each entry's `data` into `image=<data>` at w x h under
+// its title. This loader follows that path, at least as strictly as a browser's
+// XML parser, and shares no code with readLibrary, so an escaping bug in
+// writeLibrary cannot pass by being read back by an equally forgiving reader.
+const iconBuild = await import(`file://${join(SCRIPTS, 'lib', 'icon-build.mjs').replace(/\\/g, '/')}`);
+const XML_TEXT_ENTITIES = { lt: '<', gt: '>', amp: '&', quot: '"', apos: "'" };
+const XML_CHAR = /^[\t\n\r\x20-퟿-�\u{10000}-\u{10FFFF}]*$/u;
+
+function loadLikeDrawio(text) {
+  if (!XML_CHAR.test(text)) throw new Error('a character XML does not allow');
+  const m = /^﻿?(?:<\?xml[^?]*\?>)?\s*<mxlibrary((?:\s+[A-Za-z_:][\w.:-]*\s*=\s*(?:"[^"<]*"|'[^'<]*'))*)\s*>([^<]*)<\/mxlibrary>\s*$/.exec(text);
+  if (!m) throw new Error('not a single <mxlibrary> root holding only text');
+  const body = m[2];
+  if (body.includes(']]>')) throw new Error('"]]>" inside XML text');
+  const reference = /&(#x[0-9A-Fa-f]+|#[0-9]+|lt|gt|amp|quot|apos);/g;
+  if (body.replace(reference, '').includes('&')) throw new Error('an unescaped "&" or an entity XML does not define');
+  const decoded = body.replace(reference, (_, ref) => {
+    if (ref[0] !== '#') return XML_TEXT_ENTITIES[ref];
+    const ch = String.fromCodePoint(ref[1] === 'x' ? parseInt(ref.slice(2), 16) : Number(ref.slice(1)));
+    if (!XML_CHAR.test(ch)) throw new Error(`character reference &${ref}; is not an XML character`);
+    return ch;
+  });
+  const entries = JSON.parse(decoded);
+  if (!Array.isArray(entries)) throw new Error('the library JSON is not an array');
+  return entries.map((e, i) => {
+    const where = `entry ${i}${typeof e?.title === 'string' ? ` (${e.title})` : ''}`;
+    if (!e || typeof e !== 'object' || Array.isArray(e)) throw new Error(`${where}: not an object`);
+    if (typeof e.title !== 'string' || !e.title) throw new Error(`${where}: no title`);
+    if (!(Number.isFinite(e.w) && e.w > 0 && Number.isFinite(e.h) && e.h > 0)) throw new Error(`${where}: no usable size`);
+    const uri = typeof e.data === 'string' && /^data:(image\/[a-z0-9.+-]+);base64,([A-Za-z0-9+/]+={0,2})$/.exec(e.data);
+    if (!uri || uri[2].length % 4 !== 0) throw new Error(`${where}: not a base64 image data URI`);
+    const bytes = Buffer.from(uri[2], 'base64');
+    if (uri[1] === 'image/svg+xml'
+      && !/^﻿?\s*(?:<\?xml[\s\S]*?\?>\s*)?(?:<!--[\s\S]*?-->\s*)*(?:<!DOCTYPE[^>]*>\s*)?(?:<!--[\s\S]*?-->\s*)*<svg[\s>]/.test(bytes.toString('utf8'))) {
+      throw new Error(`${where}: payload is not an SVG document`);
+    }
+    if (uri[1] === 'image/png' && bytes.subarray(0, 8).toString('hex') !== '89504e470d0a1a0a') {
+      throw new Error(`${where}: payload is not a PNG`);
+    }
+    return { title: e.title, mime: uri[1], sha256: createHash('sha256').update(bytes).digest('hex') };
+  });
+}
+
+test('every committed library loads the way Draw.io reads one (#12)', () => {
+  const cat = finder.loadCatalog();
+  for (const p of cat.packs) {
+    const file = join(LIB_DIR, p.file);
+    let loaded;
+    try { loaded = loadLikeDrawio(readFileSync(file, 'utf8')); } catch (e) { throw new Error(`${p.file}: ${e.message}`); }
+    eq(loaded.length, p.count, `${p.id}: entries Draw.io would list`);
+    const lenient = core.readLibrary(file);
+    loaded.forEach((entry, i) => eq(entry.title, lenient[i].title, `${p.id}[${i}]: title agrees with readLibrary`));
+    for (const icon of cat.icons.filter((i) => i.pack === p.id && i.bytes === 'committed')) {
+      eq(loaded[icon.libraryIndex].sha256, icon.sha256, `${icon.id}: payload Draw.io would show matches the catalog`);
+    }
+  }
+});
+
+test('the Draw.io-strict loader round-trips awkward titles and rejects a mis-escaped library', () => {
+  const svg = `data:image/svg+xml;base64,${Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"/>').toString('base64')}`;
+  const titles = ['Weights & Biases', '<script>alert(1)</script>', 'a "quoted" ]]> title', "it's",
+    'rocket \u{1F680}', 'line separator', 'tab\tand\\backslash'];
+  const file = join(TMP, 'awkward.drawio');
+  iconBuild.writeLibrary(file, titles.map((title) => ({ data: svg, title })));
+  eq(loadLikeDrawio(readFileSync(file, 'utf8')).map((e) => e.title).join('|'), titles.join('|'), 'titles survive writeLibrary exactly');
+
+  const escapeText = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const good = `<mxlibrary>${escapeText(JSON.stringify([{ data: svg, w: 78, h: 78, title: 'ok' }]))}</mxlibrary>`;
+  eq(loadLikeDrawio(good).length, 1, 'a well-formed library loads');
+  const broken = {
+    'a raw ampersand': good.replace('"ok"', '"A & B"'),
+    'a raw angle bracket': good.replace('"ok"', '"<b>"'),
+    'an entity only HTML defines': good.replace('"ok"', '"A&nbsp;B"'),
+    'a control character': good.replace('"ok"', '"AB"'),
+    'the wrong root': good.replace(/mxlibrary/g, 'mxfile'),
+    'a second element': `${good}<extra/>`,
+    'a truncated payload': good.replace(/base64,[^"]+/, (s) => s.slice(0, -3)),
+    'an entry with no title': good.replace(',"title":"ok"', ''),
+    'JSON that is not an array': '<mxlibrary>{}</mxlibrary>',
+  };
+  for (const [what, text] of Object.entries(broken)) {
+    let threw = false;
+    try { loadLikeDrawio(text); } catch { threw = true; }
+    assert(threw, `a library with ${what} loaded`);
   }
 });
 

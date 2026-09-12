@@ -4,6 +4,19 @@ All notable changes to Arkitect are recorded here. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Proof that a built library opens in Draw.io** (#12). Every committed
+  library is loaded the way `EditorUi.loadLibrary` reads one, by a strict loader
+  that shares no code with `readLibrary`. `drawio-desktop.yml` installs a pinned,
+  checksum-verified Draw.io Desktop and exports one icon from every pack. The job
+  fails on any blank page. It runs when Draw.io files change.
+- The five GCP legacy marks drawn with luminance masks and filters ride along in
+  that export. They render correctly, so #13 is closed with evidence and guarded
+  from now on.
+
 ## [1.1.0] — 2026-09-12
 
 Eighteen Draw.io icon packs instead of one AWS palette, and a resolver that says

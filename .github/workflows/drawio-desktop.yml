@@ -1,0 +1,65 @@
+name: draw.io desktop
+
+# Proves the built icon libraries survive the real application: every library
+# loaded the way Draw.io parses one, and one icon from every pack - plus the GCP
+# marks with masks and filters - exported to PNG by Draw.io Desktop (#12, #13).
+#
+# Desktop is a 120 MB install, so this runs only when something that could break
+# a library changes. The main suite in ci.yml stays offline and dependency-free.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/arkitect-drawio/**'
+      - 'tests/drawio.mjs'
+      - '.github/workflows/drawio-desktop.yml'
+  pull_request:
+    paths:
+      - 'skills/arkitect-drawio/**'
+      - 'tests/drawio.mjs'
+      - '.github/workflows/drawio-desktop.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  desktop:
+    name: Draw.io Desktop export
+    runs-on: ubuntu-latest
+    env:
+      DRAWIO_VERSION: 31.4.5
+      # GitHub's published digest for drawio-amd64-31.4.5.deb. Bump both together.
+      DRAWIO_SHA256: 296729ee18f781dc82deb757de2b3399fbe04fe0ddad3093909013e707ee2ae4
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Cache the Desktop package
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/drawio-desktop
+          key: drawio-desktop-${{ env.DRAWIO_VERSION }}-amd64
+
+      - name: Install Draw.io Desktop (pinned, checksum verified)
+        run: |
+          mkdir -p ~/.cache/drawio-desktop
+          deb="$HOME/.cache/drawio-desktop/drawio-amd64-$DRAWIO_VERSION.deb"
+          if [ ! -f "$deb" ]; then
+            curl -fsSL -o "$deb" \
+              "https://github.com/jgraph/drawio-desktop/releases/download/v$DRAWIO_VERSION/drawio-amd64-$DRAWIO_VERSION.deb"
+          fi
+          echo "$DRAWIO_SHA256  $deb" | sha256sum -c -
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends xvfb "$deb"
+
+      # "required": a missing or unlaunchable Desktop fails the job rather than
+      # skipping, so a broken install can never pass as green.
+      - name: Strict library load and Desktop export
+        env:
+          ARKITECT_DRAWIO_SMOKE: required
+        run: node tests/drawio.mjs
